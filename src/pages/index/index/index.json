@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "商城",
+  "backgroundColor": "#000000",
+  "usingComponents": {
+    "preview": "../../../component/preview/preview",
+    "seckill": "../../../component/seckill/seckill"
+  }
+}

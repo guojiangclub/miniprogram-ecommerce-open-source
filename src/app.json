@@ -1,0 +1,12 @@
+{
+  "pages": [
+    "pages/index/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ff2741",
+    "navigationBarTitleText": "商城首页",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F3F3F3"
+  }
+}

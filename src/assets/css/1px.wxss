@@ -1,0 +1,526 @@
+.mx-1px {
+    position: relative
+}
+.mx-1px:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    box-sizing: border-box
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px:before {
+        width: 150%;
+        height: 150%;
+        -webkit-transform: scale(.6667);
+        transform: scale(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px:before {
+        width: 200%;
+        height: 200%;
+        -webkit-transform: scale(.5);
+        transform: scale(.5)
+    }
+}
+.mx-1px-top {
+    position: relative
+}
+.mx-1px-top:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-top:before {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-top:before {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-top:before {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-bottom {
+    position: relative
+}
+.mx-1px-bottom:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    bottom: -1px;
+    border-bottom: 1px solid #ccc;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-bottom:before {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-bottom:before {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-bottom:before {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-left {
+    position: relative
+}
+.mx-1px-left:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-right {
+    position: relative
+}
+.mx-1px-right:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    top: 0;
+    right: -1px
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-right:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-right:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-right:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-left-right {
+    position: relative
+}
+.mx-1px-left-right:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left-right:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left-right:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left-right:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-left-right:after {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    top: 0;
+    right: -1px
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left-right:after {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left-right:after {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left-right:after {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-top-bottom {
+    position: relative
+}
+.mx-1px-top-bottom:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-top-bottom:before {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-top-bottom:before {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-top-bottom:before {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-top-bottom:after {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    bottom: -1px;
+    border-bottom: 1px solid #ccc;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-top-bottom:after {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-top-bottom:after {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-top-bottom:after {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-left-top {
+    position: relative
+}
+.mx-1px-left-top:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left-top:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left-top:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left-top:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-left-top:after {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left-top:after {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left-top:after {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left-top:after {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-left-bottom {
+    position: relative
+}
+.mx-1px-left-bottom:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left-bottom:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left-bottom:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left-bottom:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-left-bottom:after {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    bottom: -1px;
+    border-bottom: 1px solid #ccc;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-left-bottom:after {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-left-bottom:after {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-left-bottom:after {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-right-top {
+    position: relative
+}
+.mx-1px-right-top:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    top: 0;
+    right: -1px
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-right-top:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-right-top:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-right-top:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-right-top:after {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #ccc;
+    top: 0;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-right-top:after {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-right-top:after {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-right-top:after {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
+.mx-1px-right-bottom {
+    position: relative
+}
+.mx-1px-right-bottom:before {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    top: 0;
+    right: -1px
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-right-bottom:before {
+        -webkit-transform: scaleX(.6667);
+        transform: scaleX(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-right-bottom:before {
+        -webkit-transform: scaleX(.5);
+        transform: scaleX(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-right-bottom:before {
+        -webkit-transform: scaleX(.333);
+        transform: scaleX(.333)
+    }
+}
+.mx-1px-right-bottom:after {
+    position: absolute;
+    content: "";
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 1px;
+    bottom: -1px;
+    border-bottom: 1px solid #ccc;
+    left: 0
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+    .mx-1px-right-bottom:after {
+        -webkit-transform: scaleY(.6667);
+        transform: scaleY(.6667)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .mx-1px-right-bottom:after {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+    .mx-1px-right-bottom:after {
+        -webkit-transform: scaleY(.333);
+        transform: scaleY(.333)
+    }
+}
