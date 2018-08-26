@@ -1,6 +1,9 @@
 {
   "pages": [
-    "pages/index/index/index"
+    "pages/index/index/index",
+    "pages/user/register/register",
+    "pages/user/login/login",
+    "pages/user/user/user"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -8,5 +11,26 @@
     "navigationBarTitleText": "商城首页",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#F3F3F3"
+  },
+  "tabBar": {
+    "backgroundColor": "#fff",
+    "color": "#9B9B9B",
+    "selectedColor": "#ff2741",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index/index",
+        "text": "购物",
+        "iconPath": "assets/image/shop.png",
+        "selectedIconPath": "assets/image/shop-r.png"
+      },
+      {
+        "pagePath": "pages/user/user/user",
+        "text": "我的",
+        "iconPath": "assets/image/user.png",
+        "selectedIconPath": "assets/image/user-r.png"
+      }
+    ]
+
   }
 }

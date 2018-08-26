@@ -1,0 +1,21 @@
+<view id="login">
+    <view class="tips" hidden="{{!message}}">{{message}}</view>
+    <view class="register_input">
+        <view class="tellphone">
+            <input type="text" placeholder="手机号码" bindinput="changeCode" placeholder-class="input-placeholder"/>
+        </view>
+        <view class="code">
+            <view class="writecode">
+                <input type="text" placeholder="验证码" bindinput="changeIdentifyCode" placeholder-class="input-placeholder"/>
+            </view>
+            <view class="getCode" catchtap="getCode">{{codes.codeText}}</view>
+        </view>
+    </view>
+    <view class="submit">
+        <button type="default"  class="{{checked ? 'check' : ''}}" catchtap="submit" disabled="{{showLoading}}" loading="{{showLoading}}">快速登录/注册</button>
+    </view>
+    <view class="select">
+        <checkbox bindtap="changeChecked" color="#fff" checked="{{checked}}" />
+        <text> 同意《{{brand}}》用户协议</text>
+    </view>
+</view>

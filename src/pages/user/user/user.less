@@ -1,0 +1,128 @@
+page{
+  background: #F3F3F3;
+}
+#user{
+  .banner{
+    //height:150px;
+    background: url("http://ovef29y3v.bkt.clouddn.com/%E4%B8%AA%E4%BA%BA%E4%B8%AD%E5%BF%83-%E8%83%8C%E6%99%AF.png") no-repeat;
+    background-size: cover;
+    padding: 30px 0;
+   /* display: flex;
+    justify-content: space-between;
+    align-items: flex-end;*/
+
+    .ban-item-l{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .user-avatar{
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background-color: yellow;
+        margin-right: 15px;
+        image{
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+      .user-text{
+        font-size: 0px;
+        .nick-name{
+          font-size: 16px;
+          color: #ffffff;
+          padding-bottom: 8px;
+        }
+      }
+    }
+    .unlogin{
+      margin: 0 auto;
+      text-align: center;
+      height:125px;
+      line-height: 125px;
+      color: #ffffff;
+      font-size: 24px;
+    }
+  }
+  .all-orders{
+    background-color: #ffffff;
+    margin-bottom: 12px;
+    .order-header{
+      display: flex;
+      align-items: center;
+      justify-content:space-between ;
+      padding: 11px 15px 9px 15px;
+      .order-text{
+        font-size: 14px;
+        color: #000000;
+        line-height: 20px;
+        font-weight: bold;
+      }
+      .iconfont{
+        font-size: 12px;
+        color: #B3B3B3;
+      }
+    }
+    .order-content{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0 10px 0;
+      .item{
+        flex: 1;
+        text-align: center;
+        font-size:12px;
+        color:#6A6A6A ;
+        position: relative;
+        .iconfont{
+          font-size: 20px;
+          color:#6A6A6A;
+        }
+        .position-num{
+          position: absolute;
+          top: -5px;
+          right: 23px;
+          width:16px;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          background-color: #ffffff;
+          border: 1px solid #EA4448;
+          color: #EA4448;
+          font-size:10px;
+          border-radius: 50%;
+          overflow: hidden;
+          white-space: nowrap;
+          //text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  .info-detail{
+    display: flex;
+    padding: 15px 0px;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    margin-bottom: 12px;
+    .item{
+      flex: 1;
+      text-align: center;
+      font-size:12px;
+      color:#6A6A6A ;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      .number{
+        font-size: 16px;
+        color: #FF2741;
+        line-height: 15px;
+        padding-bottom:7px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

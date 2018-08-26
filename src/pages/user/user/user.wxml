@@ -1,0 +1,53 @@
+<view id="user">
+    <view class="banner">
+        <view class="ban-item-l" wx:if="{{token}}">
+            <view class="user-avatar">
+                <image src="{{detail.avatar}}"></image>
+            </view>
+            <view class="user-text">
+                <view class="nick-name">{{detail.nick_name}}</view>
+            </view>
+        </view>
+        <view class="unlogin" wx:if="{{!token}}" bindtap="jumpLogin">
+            登录/注册
+        </view>
+    </view>
+    <view class="all-orders">
+        <view class="order-header mx-1px-bottom" data-status="0" bindtap="jump">
+            <view class="order-text">全部订单</view>
+            <view class="iconfont icon-Chevron"></view>
+        </view>
+        <view class="order-content">
+            <view class="item" data-status="1" bindtap="jump">
+                <view class="iconfont icon--daifukuan"></view>
+                <view>待付款</view>
+                <view class="position-num" wx:if="{{orderInfo.newCount}}">{{orderInfo.newCount}}</view>
+            </view>
+            <view class="item"  data-status="2" bindtap="jump">
+                <view class="iconfont icon--daifahuo"></view>
+                <view>待发货</view>
+                <view class="position-num" wx:if="{{orderInfo.paidCount}}">{{orderInfo.paidCount}}</view>
+            </view>
+            <view class="item"  data-status="3" bindtap="jump">
+                <view class="iconfont icon--daishouhuo"></view>
+                <view>待收货</view>
+                <view class="position-num" wx:if="{{orderInfo.deliveredCount}}">{{orderInfo.deliveredCount}}</view>
+            </view>
+            <view class="item" bindtap="jumpComment">
+                <view class="iconfont icon--daipingjia"></view>
+                <view>待评价</view>
+                <view class="position-num" wx:if="{{orderInfo.receiveCount}}">{{orderInfo.receiveCount}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="info-detail">
+        <view class="item" data-url="/pages/address/list/list"  bindtap="jumpItem">
+            <view class="number"><text>{{orderInfo.favCount || 0}}</text></view>
+            <view>收藏</view>
+        </view>
+        <view class="item" data-url="/pages/favorite/index/index"  bindtap="jumpItem">
+            <view class="number"><text>{{orderInfo.addressCount || 0}}</text></view>
+            <view>地址</view>
+        </view>
+    </view>
+</view>
