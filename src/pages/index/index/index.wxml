@@ -1,3 +1,106 @@
-<view class="title">
-    {{info}}
+<view id="store-list">
+    <view class="commodity-top" catchtouchmove="move">
+        <view class="sidebar mx-1px-bottom">
+            <view class="sidebar-left">
+                <span class="iconfont icon-fenzu" bindtap="class">
+
+                </span>
+            </view>
+            <view class="sidebar-right">
+                <view class="right-seek iconfont icon-sousuo" bindtap="search">
+
+                </view>
+                <view class="right-cart iconfont icon-gouwuche" bindtap="cart">
+
+                </view>
+            </view>
+        </view>
+        <view class="filter-box">
+            <view class="filter-item mx-1px-right" data-type="updated_at" bindtap="changeOrderBy">
+                <view class="left {{ orderBy === 'updated_at' ? 'active' : ''}}">最新</view>
+                <view class="right {{(orderBy === 'updated_at' && sort === 'asc') ? 'asc' : ''}} {{(orderBy === 'updated_at' && sort === 'desc') ? 'desc' : ''}}"></view>
+            </view>
+            <view class="filter-item mx-1px-right" data-type="sell_price" bindtap="changeOrderBy">
+                <view class="left {{ orderBy === 'sell_price' ? 'active' : ''}}">价格</view>
+                <view class="right {{(orderBy === 'sell_price' && sort === 'asc') ? 'asc' : ''}} {{(orderBy === 'sell_price' && sort === 'desc') ? 'desc' : ''}}"></view>
+            </view>
+            <view class="filter-item mx-1px-right" data-type="sale" bindtap="changeOrderBy">
+                <view class="left {{ orderBy === 'sale' ? 'active' : ''}}">销量</view>
+                <view class="right {{(orderBy === 'sale' && sort === 'asc') ? 'asc' : ''}} {{(orderBy === 'sale' && sort === 'desc') ? 'desc' : ''}}"></view>
+            </view>
+            <view class="filter-item big-filter {{c_id ? '' : 'dis'}}" bindtap="showFilter">
+                筛选 ▼
+            </view>
+        </view>
+    </view>
+    <view class="commodity-bottom" hidden="{{showFilter}}">
+        <view wx:for="{{storeList}}" wx:for-index="idx">
+            <view class="commodity-out" data-id="{{item.id}}" wx:for="{{storeList[idx]}}" bindtap="jump">
+                <view class="commodity-box">
+                    <view class="commodity-img">
+                        <image mode="widthFix" src="{{item.img}}" />
+                    </view>
+                    <view class="commodity-name">
+                        {{item.name}}
+                    </view>
+                    <view class="commodity-money">
+                        <view class="money">
+                            ￥{{item.sell_price}}
+                        </view>
+                        <view class="discount-tags">
+                            <span class="tags-item" wx:for="{{item.discount_tags}}" wx:for-item="tags">{{tags}}</span>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="loadingbox" hidden="{{!show}}">
+            正在加载下一页数据
+        </view>
+    </view>
+</view>
+<view class="right-filter-box" hidden="{{!showFilter}}" animation="{{show.animation}}">
+
+    <view class="box">
+        <view>
+            <view class="title">
+                价格区间
+            </view>
+            <view class="list">
+                <view class="list-block">
+                    <view data-num="200-500" class="{{shadows.price === '200-500' ? 'selected' : ''}}" bindtap="checkPrice">200-500元</view>
+                </view>
+                <view class="list-block">
+                    <view data-num="501-1000" class="{{shadows.price === '501-1000' ? 'selected' : ''}}" bindtap="checkPrice">501-1000元</view>
+                </view>
+                <view class="list-block">
+                    <view data-num="1001-1500" class="{{shadows.price === '1001-1500' ? 'selected' : ''}}" bindtap="checkPrice">1001-1500元</view>
+                </view>
+                <view class="list-block">
+                    <view data-num="1501-2000" class="{{shadows.price === '1501-2000' ? 'selected' : ''}}" bindtap="checkPrice">1501-2000元</view>
+                </view>
+                <view class="list-block">
+                    <view data-num="2000-" class="{{shadows.price === '2000-' ? 'selected' : ''}}" bindtap="checkPrice">2000-元以上</view>
+                </view>
+            </view>
+        </view>
+        <view wx:for="{{filter}}">
+            <view class="title">
+                {{item.key}}
+            </view>
+            <view class="list">
+                <view class="list-block" wx:for="{{item.values}}" wx:for-item="obj">
+                    <view data-id="{{obj.id}}" data-type="{{obj}}" class="{{!!selections[obj.id] ? 'selected' : ''}}" bindtap="check">
+                        {{obj.text}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="button-box">
+            <button type="default" bindtap="cancel">取消</button>
+            <button type="primary" bindtap="confirm">确定</button>
+        </view>
+    </view>
 </view>

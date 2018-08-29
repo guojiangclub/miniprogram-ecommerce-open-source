@@ -1,0 +1,248 @@
+<import src="../../../component/wxParse/wxParse.wxml" xmlns:wx="http://www.w3.org/1999/xhtml"/>
+<import src="../../../component/rater/rater.wxml"></import>
+
+<view id="detail">
+    <view class="top-tap mx-1px-bottom">
+        <view class="item">
+            <view class="name {{activeName == 'shop' ? 'active' : ''}}" data-type="shop" bindtap="jumpScroll">
+                商品
+            </view>
+        </view>
+        <view class="item">
+            <view class="name {{activeName == 'comment' ? 'active' : ''}}" data-type="comment" bindtap="jumpScroll">
+                评价
+            </view>
+        </view>
+        <view class="item">
+            <view class="name {{activeName == 'details' ? 'active' : ''}}" data-type="details" bindtap="jumpScroll">
+                详情
+            </view>
+        </view>
+    </view>
+    <view class="top-box js__top">
+        <view class="top-image">
+            <swiper indicator-dots="true" autoplay="flase" circular="true">
+                <swiper-item wx:for="{{detailData.data.photos}}" wx:key="{{index}}">
+                    <image src="{{item.url}}"  data-url="{{item.url}}" class="slide-image" bindtap="bigImg"/>
+                </swiper-item>
+            </swiper>
+        </view>
+        <view class="basic-information">
+            <view class="goods-name">
+                {{detailData.data.name}}
+            </view>
+            <view class="goods-price">
+                <div class="price">
+                    ￥{{price}}
+                </div>
+                <div>
+                    官网售价
+                </div>
+            </view>
+            <view class="market-price-box">
+                <view class="market-price">
+                    吊牌价 ￥ {{detailData.data.market_price}}
+                </view>
+                <view class="volume">
+                    月销: {{detailData.data.sale || 0}}
+                </view>
+            </view>
+            <view class="tags-box" wx:if="{{detailData.data.tags && detailData.data.tags.length}}">
+               <span wx:for="{{detailData.data.tags}}" wx:key="{{index}}">
+                {{item}}
+            </span>
+            </view>
+        </view>
+    </view>
+
+    <!--商品评论-->
+    <view class="wrap-item js__comment">
+        <div class="title mx-1px-bottom">
+            <view class="text">
+                商品评论（{{detailData.data.comments}}）
+            </view>
+            <div class="icon">
+
+            </div>
+        </div>
+        <view class="content" wx:if="{{detailData.data.oneComment && detailData.data.oneComment.length}}">
+            <view class="comment_list" wx:for="{{detailData.data.oneComment}}" wx:key="{{index}}">
+                <view class="comment_user">
+                    <view class="img-box">
+                        <image src="{{item.user.avatar}}"></image>
+                        <view class="user_name">{{item.user.nick_name}}</view>
+                    </view>
+                    <view class="rater">
+                        <template is="rater" data="{{ ...$vlc.rater.store }}"/>
+                    </view>
+                </view>
+                <view class="comment_time">
+                    <view class="time">
+                        {{item.updated_at}}
+                    </view>
+                    <view class="model">
+                        {{item.item_meta.specs_text}}
+                    </view>
+                </view>
+                <view class="comment_content">
+                    {{item.contents}}
+                </view>
+                <view class="comment-img">
+                    <image src="{{item}}" mode="widthFix" alt="" wx:for="{{item.pic_list}}" wx:key="{{index}}" />
+                </view>
+
+                <view class="all-comment mx-1px-top">
+                    <view class="text">
+                        查看全部评论
+                    </view>
+                </view>
+
+            </view>
+        </view>
+
+    </view>
+
+    <!--商品参数-->
+    <view class="wrap-item"  wx:if="{{attributesList.top.length}}">
+        <div class="title mx-1px-bottom" data-type="parameter" bindtap="change">
+            <view class="text">
+                商品参数
+            </view>
+            <div class="icon {{expands.parameter ? 'arrow-up' : 'arrow-down'}}">
+
+            </div>
+        </div>
+        <view class="content" wx:if="{{expands.parameter}}">
+            <view class="argument-box">
+                <view class="argument-top">
+                       <span wx:for="{{attributesList.top}}" wx:for-item="top" wx:key="{{index}}">
+                           {{top.name}} : {{top.attribute_value}}
+                       </span>
+                </view>
+                <view class="argument-bottom" wx:if="{{attributesList.bottom.length}}">
+                    <view class="argument-item" wx:for="{{attributesList.bottom}}" wx:key="{{index}}" wx:for-item="bottom">
+                        <view class="index-title">{{bottom.name}} ：</view>
+                        <view class="index-box">
+                            <ul>
+                                <li class="{{bottom.attribute_value_id == list.id ? 'red-dot' : ''}}" wx:for="{{bottom.values}}" wx:key="{{index}}" wx:for-item="list">
+                                    {{list.name}}
+                                </li>
+                            </ul>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!--商品详情-->
+    <view class="wrap-item commodity">
+        <div class="title mx-1px-bottom" data-type="commodity" bindtap="change">
+            <view class="text">
+                商品详情
+            </view>
+            <div class="icon {{expands.commodity ? 'arrow-up' : 'arrow-down'}}">
+
+            </div>
+        </div>
+        <view class="content" wx:if="{{expands.commodity}}">
+            <template is="wxParse" data="{{wxParseData:detailI.nodes}}"/>
+        </view>
+    </view>
+
+
+    <!--底部导航-->
+    <view class="tabbar mx-1px-top">
+        <view class="tabbar-item shop  mx-1px-right" data-type="shop" bindtap="jump">
+            <i class="iconfont icon-shangcheng"></i>
+            <text>商城</text>
+        </view>
+         <view class="tabbar-item fav  {{is_Fav ? 'favorite' : ''}}" bindtap="changeStatus">
+             <i class="iconfont icon-favor"></i>
+             <span>{{is_Fav ? '已收藏' : '收藏'}}</span>
+         </view>
+        <view class="tabbar-item cart mx-1px-left-right" data-type="cart" bindtap="jump">
+            <i class="iconfont icon-gouwuche"></i>
+            <text>购物车</text>
+        </view>
+        <view class="tabbar-item show-cart {{cart_status.status ? 'active' : 'disabled'}}"  bindtap="showSelect">
+            {{cart_status.message}}
+        </view>
+    </view>
+
+    <!--遮罩层-->
+    <view class="maks {{!show_select ? 'cur' : ''}}" bindtap="closeSelect">
+
+    </view>
+
+    <!--选择SKU-->
+    <view class="sku-popup" hidden="{{show_select}}" animation="{{show.animation}}">
+        <view class="select-goods-container">
+            <view class="select-goods-cloese" bindtap="closeSelect"></view>
+
+            <view class="select-goods-header">
+                <view class="img-box">
+                    <image wx:if="{{select_product && select_product.img}}" src="{{select_product.img}}"></image>
+                    <image wx:else src="{{commodity.img}}"></image>
+                </view>
+                <view class="price-box">
+                    <view class="price">
+                        ￥{{price}}
+                    </view>
+                    <view class="count" wx:if="{{detailData.data.shop_show_store == 1}}">
+                        库存{{store_count}}
+                    </view>
+                </view>
+            </view>
+            <view class="select-goods-spec">
+                <!--SKU-->
+                <view class="spec-line" wx:for="{{specs}}" wx:for-item="spec" wx:key="{{index}}">
+                    <view class="spec-title">{{spec.label}}</view>
+                    <view class="spec-value">
+                        <view  class="spec-block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" wx:key="{{index}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
+                            <span class="spec-text"  wx:if="{{(item.alias || item.value) && item.spec_img !== undefined}}">
+                                {{item.alias || item.value}}
+                            </span>
+                            <span class="spec-text" wx:if="{{!item.spec_img && !item.color}}">{{item.alias || item.value}}</span>
+                        </view>
+                    </view>
+                </view>
+
+                <!--数量-->
+                <view class="spec-line">
+                    <view class="spec-title">数量</view>
+                    <view class="num-value">
+                        <span bindtap="changeCount" data-index="0">-</span>
+                        <span class="none-border">
+                            <input bindinput="modifyCount" value="{{select_count}}"  type="number" confirm-type="done"/>
+                        </span>
+                        <span bindtap="changeCount" data-index="1">+</span>
+                    </view>
+                </view>
+
+                <button class="button {{ canBuy ? 'disabled' : '' }}" type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+            </view>
+        </view>
+    </view>
+
+    <!--加入购物车弹出-->
+    <view class="cart-box" catchtouchmove="move" hidden="{{!show_cart}}">
+        <view class="cart-mask">
+
+        </view>
+        <view class="cart-dialog">
+            <view class="title mx-1px-bottom">
+                商品成功加入购物车
+            </view>
+            <view class="buttons">
+                <view class="button" bindtap="goCart">
+                    进入购物车
+                </view>
+                <view class="button agin" bindtap="changeCart">
+                    继续购物
+                </view>
+            </view>
+
+        </view>
+    </view>
+</view>

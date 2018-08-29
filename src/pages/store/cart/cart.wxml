@@ -1,0 +1,55 @@
+<view id="store-cart">
+    <view class="goods-box">
+        <checkbox-group bindchange="changeCheck">
+            <view class="goods-item mx-1px-bottom" wx:for="{{list}}">
+                <view class="input">
+                    <label class="checkbox">
+                        <checkbox value="{{index}}" color="#fff" checked="{{item.checked}}"  />{{item.value}}
+                    </label>
+                </view>
+                <view class="img-box" data-id="{{item.com_id}}" catchtap="jump">
+                    <image src="{{item.img}}" />
+                </view>
+                <view class="item-info" >
+                    <view class="name" data-id="{{item.com_id}}" catchtap="jump">
+                        {{item.name}}
+                    </view>
+                    <view class="money-box" data-id="{{item.com_id}}" catchtap="jump">
+                        <view class="model">
+                            {{item.color}} <span wx:if="{{item.color && item.size}}">,</span> {{item.size}}
+                        </view>
+                        <view class="money">
+                            ￥{{item.total}}
+                        </view>
+                    </view>
+                    <view class="mun-box">
+                        <view class="change-num">
+                            <ul>
+                                <li data-index="{{index}}" data-change="0" bindtap="changeCount">-</li>
+                                <li><input type="number" value="{{item.qty}}"  data-index="{{index}}" bindchange="modifyCount"/></li>
+                                <li data-index="{{index}}" data-change="1" bindtap="changeCount">+</li>
+                            </ul>
+                        </view>
+                        <view class="remove" bindtap="removeFromCart" data-index="{{index}}">
+                            移除
+
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+        </checkbox-group>
+    </view>
+    <view class="buy-box">
+        <label class="checkbox">
+            <checkbox value="all" color="#fff" checked="{{allCheck}}" bindtap="selectAll"/>
+            <text>全选</text>
+        </label>
+        <view class="money-box">
+            商品总计：<text>￥{{select_products.total}}</text>
+        </view>
+        <button class="num-box" bindtap="order" loading="{{loading}}">
+            结算<text>{{'('+ select_products.count + ')' || 0}}</text>
+        </button>
+    </view>
+</view>

@@ -1,0 +1,144 @@
+@import "../../../assets/css/global";
+
+#store-cart{
+
+  .goods-box{
+    padding-bottom: 50px;
+    .goods-item{
+      display: flex;
+      padding: 10px;
+      background: #FFFFFF;
+      font-size: 12px;
+      align-items: center;
+
+      .input{
+
+      }
+
+
+
+      .img-box{
+        image{
+          display: block;
+          width: 80px;
+          height: 80px;
+          border: 1px solid #e5e5e5;
+        }
+      }
+      .item-info{
+        margin-left: 10px;
+        line-height: 20px;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .name{
+          padding-bottom: 5px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+        }
+        .money-box{
+          display: flex;
+          color: #838383;
+          .model{
+            flex: 1;
+          }
+          .money{
+
+          }
+        }
+        .mun-box{
+          display: flex;
+          align-items: center;
+
+          .change-num{
+            flex: 1;
+            padding-top: 4px;
+
+            ul{
+              display: flex;
+
+              li{
+                display: block;
+                list-style: none;
+                width: 30px;
+                height: 30px;
+                border: 1px solid #e8e8e8;
+                text-align: center;
+                line-height: 30px;
+
+                &:nth-child(2) {
+                  border-left: none;
+                  border-right: none;
+                }
+                input{
+                  display: block;
+                  border: none;
+                  height: 100%;
+                  width: 100%;
+                  text-align: center;
+                  outline: none;
+                }
+              }
+            }
+          }
+          .remove{
+            color: #0899ff;
+          }
+        }
+      }
+    }
+  }
+  .buy-box{
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+    background: #FFFFFF;
+    z-index: 10;
+    .checkbox{
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+      checkbox{
+        display: flex;
+      }
+    }
+    .money-box{
+      flex: 1;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .num-box{
+      height: 100%;
+      width: 110px;
+      text-align: center;
+      color: #FFFFFF;
+      border-radius: 0;
+      background: @globalColor;
+
+    }
+  }
+
+  //重置按钮样式
+  checkbox .wx-checkbox-input{
+    border-radius: 100%;
+    background-color: #fff;
+    border: 1px solid #c1caca;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 -15px 10px -12px rgba(0,0,0,.05);
+    height: 14px;
+    width: 14px;
+  }
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+    background-color: @globalColor;
+    border: 1px solid @globalColor;
+  }
+}

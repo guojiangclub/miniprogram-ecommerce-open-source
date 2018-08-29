@@ -1,0 +1,59 @@
+.vlc-rater {
+    display: block;
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    vertical-align: middle;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.vlc-rater:after {
+    display: table;
+    content: " ";
+    clear: both;
+}
+
+.vlc-rater .vlc-rater-box {
+    display: block;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    color: #ccc;
+    transition: color .3s ease;
+}
+
+.vlc-rater .vlc-rater-box:last-child {
+    padding-right: 2px!important;
+    margin-right: 0px!important;
+}
+
+.vlc-rater .vlc-rater-box.is-disabled {
+    color: #ccc !important;
+    cursor: not-allowed;
+}
+
+.vlc-rater-box {
+    position: relative;
+}
+
+.vlc-rater-inner {
+    position: relative;
+    display: block;
+}
+
+.vlc-rater-outer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    overflow: hidden;
+}
+
+.vlc-rater-text {
+    display: inline-block;
+    float: none;
+    margin-left: 10px;
+    vertical-align: middle;
+    font-size: 12px;
+}

@@ -29,6 +29,7 @@ Page({
     },
     // 利用code登录
     autoLogin(code) {
+        console.log(code);
         sandBox.post({
             api: 'api/oauth/MiniProgramLogin',
             data: {
@@ -43,6 +44,7 @@ Page({
                         open_id: res.data.open_id
                     });
                     cookieStorage.set('open_id', res.data.open_id);
+                    wx.hideLoading();
                 }
                 // 如果接口返回token就直接登录，如果没有则弹出授权
                 if (res.access_token) {
@@ -75,8 +77,21 @@ Page({
                         })
                     }
                 }
+                if (!res.status) {
+                    wx.hideLoading();
+                    wx.showModal({
+                        content:res.message || '请求失败，请重试',
+                        showCancel: false,
+                        success: res=>{
+                            if (res.confirm || (!res.cancel && !res.confirm)) {
+                                this.wxLogin();
+                            }
+                        }
+                    })
+                }
 
             } else {
+                wx.hideLoading();
                 wx.showModal({
                     content:'请求失败，请重试',
                     showCancel: false,

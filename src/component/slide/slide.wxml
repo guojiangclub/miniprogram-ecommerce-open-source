@@ -1,0 +1,19 @@
+<import  src="../rater/rater.wxml"/>
+<template name="slide">
+    <view class="vlc-slide" wx:if="{{ visible }}">
+        <view class="vlc-slide-header">
+            <view class="vlc-slide-header-child" style="height:{{headerHeight}}px;line-height: {{headerHeight}}px;" data-index="{{index}}"  bindtap="{{handlerChangeIndex}}" wx:for="{{list}}" wx:key="index">
+                <a style="border-bottom-color: {{index == currentIndex ? '#000' : 'transparent'}}">{{item.text}}</a>
+            </view>
+        </view>
+        <view class="vlc-slide-container">
+            <swiper style="height: 100%;" current="{{currentIndex}}" duration="300" bindchange="{{handlerSwiperChange}}">
+                <swiper-item wx:for="{{list}}"  wx:key="$index" >
+                    <scroll-view style="height: 100%;" scroll-y>
+                        <template wx:if="data.rater" is="rater" data="{{...data.rater}}"></template>
+                    </scroll-view>
+                </swiper-item>
+            </swiper>
+        </view>
+    </view>
+</template>

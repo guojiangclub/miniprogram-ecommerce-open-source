@@ -1,0 +1,51 @@
+.vlc-slide {
+    display: block;
+    border-top-color: #eee;
+    border-bottom-color: #eee;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    background: #ffffff;
+    overflow: hidden;
+    position: relative;
+}
+
+.vlc-slide .vlc-slide-header {
+    overflow: hidden;
+    position: relative;
+    height:50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.vlc-slide .vlc-slide-header .vlc-slide-header-child {
+    box-sizing: content-box;
+    text-align: center;
+    flex:1;
+    font-size: 12px;
+    height:100%;
+}
+
+.vlc-slide .vlc-slide-header .vlc-slide-header-child a {
+
+    box-sizing: border-box;
+    color: #000;
+    text-decoration: none;
+    padding:10px;
+    border:2px solid transparent;
+}
+
+.vlc-slide .vlc-slide-header .vlc-slide-header-child a.active {
+    border-bottom:2px solid #036eb8;
+}
+
+
+.vlc-slide-container{
+
+    height:400px;
+    font-size: 12px;
+}
+
