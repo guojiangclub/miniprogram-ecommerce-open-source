@@ -1,7 +1,7 @@
 <view id="store-cart">
     <view class="goods-box">
         <checkbox-group bindchange="changeCheck">
-            <view class="goods-item mx-1px-bottom" wx:for="{{list}}">
+            <view class="goods-item mx-1px-bottom" wx:for="{{list}}" wx:key="index">
                 <view class="input">
                     <label class="checkbox">
                         <checkbox value="{{index}}" color="#fff" checked="{{item.checked}}"  />{{item.value}}
@@ -40,7 +40,7 @@
 
         </checkbox-group>
     </view>
-    <view class="buy-box">
+    <view class="buy-box" wx:if="{{list.length}}">
         <label class="checkbox">
             <checkbox value="all" color="#fff" checked="{{allCheck}}" bindtap="selectAll"/>
             <text>全选</text>

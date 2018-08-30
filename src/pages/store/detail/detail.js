@@ -139,7 +139,10 @@ Page({
     },
     // 请求商品详情页面数据
     getStoreDetail() {
-        console.log(this.data.id);
+        wx.showLoading({
+            title: "加载中",
+            mask: true
+        })
         var token = cookieStorage.get('user_token') || '';
         sandBox.get({
             api: 'api/store/detail/' + this.data.id,
@@ -188,12 +191,14 @@ Page({
                      this.queryFavoriteStatus(this.data.id, 'goods');
                      this.getFree(this.data.id);*/
                 } else {
+                    wx.hideLoading()
                     wx.showModal({
                         content: res.message || '请求失败',
                         showCancel: false
                     })
                 }
             } else {
+                wx.hideLoading()
                 wx.showModal({
                     content: '请求失败',
                     showCancel: false
@@ -283,17 +288,20 @@ Page({
                         showCancel: false
                     })
                 }
+                wx.hideLoading()
             } else {
                 wx.showModal({
                     content: '请求失败',
                     showCancel: false
                 })
+                wx.hideLoading()
             }
         }).catch(() => {
             wx.showModal({
                 content: '请求失败',
                 showCancel: false
             })
+            wx.hideLoading()
         })
     },
 
@@ -553,6 +561,7 @@ Page({
         this.specStore(this.data.result, spec.index)
     },
 
+    // 收藏
     changeFavorite(id, type) {
         var token = cookieStorage.get('user_token');
 
@@ -591,6 +600,61 @@ Page({
             })
         })
     },
+
+    // 数量加减
+    changeCount(e){
+
+        var select_count = parseInt(this.data.select_count)
+
+        var index = e.target.dataset.index
+        var val = select_count + (parseInt(index) ? 1 : -1)
+
+        if (val > 0 && val <= parseInt(this.data.store_count)) {
+            this.setData({
+                select_count: val
+            })
+
+        } else if (val <= 0) {
+            wx.showToast({
+                title: '小于最小库存',
+                icon: 'none'
+            })
+        } else if (val > parseInt(this.data.store_count)) {
+            wx.showToast({
+                title: '超出最大库存',
+                icon: 'none'
+            })
+        }
+    },
+
+    // 输入数量
+    modifyCount(e){
+
+        var val = parseInt(e.detail.value);
+        if (!val) {
+            val = 1;
+        } else if (!/^[1-9]\d*$/.test(val)) {
+            val = val.replace(/[^\d].*$/, '');
+            val = parseInt(val) || 1;
+        }
+
+        if (val < 0) {
+            val = 1;
+        } else if (val > this.data.store_count) {
+            wx.showToast({
+                title: '超过最大库存',
+                icon: 'none'
+            })
+            val = parseInt(this.data.store_count);
+        }
+
+        this.setData({
+            select_count: val
+        })
+
+    },
+
+
     // 提交商品
     confirm() {
         if (this.data.loading) return;
