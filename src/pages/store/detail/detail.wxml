@@ -18,6 +18,10 @@
                 详情
             </view>
         </view>
+
+        <view class="share" bindtap="changeShare">
+            <i class="iconfont icon--fenxiang"></i>
+        </view>
     </view>
     <view class="top-box js__top">
         <view class="top-image">
@@ -56,7 +60,7 @@
     </view>
 
     <!--商品评论-->
-    <view class="wrap-item js__comment">
+    <view class="wrap-item js__comment" wx:if="{{detailData.data.oneComment && detailData.data.oneComment.length}}">
         <div class="title mx-1px-bottom">
             <view class="text">
                 商品评论（{{detailData.data.comments}}）
@@ -183,13 +187,13 @@
             <view class="select-goods-header">
                 <view class="img-box">
                     <image wx:if="{{select_product && select_product.img}}" src="{{select_product.img}}"></image>
-                    <image wx:else src="{{commodity.img}}"></image>
+                    <image wx:else src="{{detailData.data.img}}"></image>
                 </view>
                 <view class="price-box">
                     <view class="price">
                         ￥{{price}}
                     </view>
-                    <view class="count" wx:if="{{detailData.data.shop_show_store == 1}}">
+                    <view class="count">
                         库存{{store_count}}
                     </view>
                 </view>
@@ -198,12 +202,12 @@
                 <!--SKU-->
                 <view class="spec-line" wx:for="{{specs}}" wx:for-item="spec" wx:key="{{index}}">
                     <view class="spec-title">{{spec.label}}</view>
-                    <view class="spec-value">
+                    <view class="spec-value ">
                         <view  class="spec-block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" wx:key="{{index}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
-                            <span class="spec-text"  wx:if="{{(item.alias || item.value) && item.spec_img !== undefined}}">
+                            <span class="spec-text">
                                 {{item.alias || item.value}}
                             </span>
-                            <span class="spec-text" wx:if="{{!item.spec_img && !item.color}}">{{item.alias || item.value}}</span>
+                            <!--<span class="spec-text b" wx:if="{{!item.spec_img && !item.color}}">{{item.alias || item.value}}</span>-->
                         </view>
                     </view>
                 </view>
@@ -243,6 +247,24 @@
                 </view>
             </view>
 
+        </view>
+    </view>
+
+
+    <!--弹出分享部分-->
+    <view class="maks {{show_share ? 'cur' : ''}}">
+
+    </view>
+
+    <view class="share-box {{show_share ? 'cur' : ''}}">
+        <button class="shaer-item" open-type="share">
+            分享给好友
+        </button>
+        <view class="shaer-item mx-1px-top" bindtap="getShearImg">
+            分享到朋友圈
+        </view>
+        <view class="shaer-item clear" bindtap="changeShare">
+            取消
         </view>
     </view>
 </view>

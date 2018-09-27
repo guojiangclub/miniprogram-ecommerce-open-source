@@ -1,0 +1,89 @@
+@import "../../../assets/css/global";
+
+#address-add{
+  .address-info{
+    background: #FFFFFF;
+
+    .info-item{
+      height: 40px;
+      line-height: 40px;
+      padding-left: 15px;
+      display: flex;
+      align-items: center;
+      color: #000000;
+      font-size: 16px;
+
+      label{
+        width: 80px;
+        display: block;
+      }
+
+      .form-control{
+        flex: 1;
+        padding: 0 30px 0 10px;
+
+        input{
+          width: 100%;
+          font-size: 16px;
+          box-sizing: border-box;
+          outline: 0;
+          border: none;
+          height: 24px;
+          line-height: 24px;
+        }
+
+        &.select{
+          background-image:url("https://uto.ibrand.cc/m/static/img/ic_forward.png");
+          background-repeat:no-repeat;
+          background-position:100%;
+          background-size:20px;
+
+          picker{
+            height: 100%;
+
+            .picker{
+              height: 40px;
+            }
+          }
+        }
+      }
+      .checkbox{
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  .button-box{
+    margin-top: 30px;
+
+    .submit{
+      background: @globalColor;
+    }
+    button{
+      margin: 0 20px 15px 20px;
+    }
+  }
+
+  .add-wx {
+    font-size: 12px;
+    margin-top: 30px;
+    padding: 10px 15px;
+    color: #1AAD19;
+
+  }
+
+  //重置按钮样式
+  checkbox .wx-checkbox-input{
+    border-radius: 100%;
+    background-color: #fff;
+    border: 1px solid #c1caca;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 -15px 10px -12px rgba(0,0,0,.05);
+    height: 14px;
+    width: 14px;
+  }
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+    background-color: @globalColor;
+    border: 1px solid @globalColor;
+  }
+}

@@ -54,7 +54,7 @@ export const sandBox = {
 
                 wx.removeStorageSync('user_token');
                 wx.showModal({
-                    title:'请重新登录',
+                    content:'请重新登录',
                     duration:1500,
                     showCancel: false,
                     success:(res)=>{

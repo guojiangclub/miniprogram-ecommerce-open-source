@@ -1,0 +1,177 @@
+@import '../../../assets/css/global';
+#order-index {
+
+  .order-search{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 20;
+    height: 54px;
+    background: #fff;
+    color: #9B9B9B;
+    .search-box{
+      background: #f1f1f1;
+      margin: 10px 7px;
+
+      i{
+        padding: 0 8px;
+        font-size: 13px;
+        color: #9B9B9B;
+
+      }
+      p{
+        font-size:12px;
+        line-height: 25px;
+
+      }
+    }
+  }
+  .navbar {
+    position: fixed;
+    top: 54px;
+    width: 100%;
+    display: flex;
+    z-index: 20;
+    height: 50px;
+    line-height: 50px;
+    background: #FFFFFF;
+    font-size: 14px;
+    color: #353535;
+
+    .navbar-item {
+      flex: 1;
+      width: 0%;
+      text-align: center;
+
+      &.activity {
+        color: @globalColor;
+      }
+    }
+    .navbar-slider {
+      position: absolute;
+      content: " ";
+      left: 0;
+      bottom: 0;
+      width: 4em;
+      height: 3px;
+      background-color: @globalColor;
+      -webkit-transition: -webkit-transform .3s;
+      transition: -webkit-transform .3s;
+      transition: transform .3s;
+      transition: transform .3s, -webkit-transform .3s
+    }
+    .tab-switch{
+      padding-right: 16px;
+      i{
+        color: #2CAB2B;
+        font-size: 14px;
+      }
+    }
+  }
+  .tab-panel{
+    padding-top: 104px;
+  }
+  .order-box {
+    .order-item__none{
+      text-align: center;
+      color: #959595;
+      padding-top: 10px;
+    }
+    .order-item {
+      margin-bottom: 10px;
+      background: #FFFFFF;
+      font-size: 15px;
+
+      .item-top {
+        .indent {
+          line-height: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 10px;
+
+          .order-num {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            flex: 1;
+            padding-right: 10px;
+
+            span {
+              font-weight: bold;
+            }
+          }
+          .order-type {
+
+            color: @globalColor;
+          }
+        }
+      }
+      .item-middle {
+        .middle-item {
+          display: flex;
+          padding: 10px;
+          color: #959595;
+
+          image {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #e5e5e5;
+          }
+          .text {
+            flex: 1;
+            padding-left: 10px;
+            overflow: hidden;
+
+            .names {
+              color: #000000;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+          }
+          .money-box {
+            text-align: right;
+          }
+          .order-types {
+            display: inline-block;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            padding: 0 5px;
+            background: @globalColor;
+            color: #fff;
+            font-size: 12px;
+          }
+        }
+      }
+      .closeTime{
+        padding: 10px;
+        font-size: 12px;
+        color: @globalColor;
+
+        .iconfont{
+          margin-right: 5px;
+        }
+      }
+      .item-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+
+        .button-box {
+          font-size: 13px;
+          color: @globalColor;
+          padding: 5px 10px;
+          border: 1px solid @globalColor;
+          border-radius: 3px;
+        }
+      }
+    }
+    .loadingbox{
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+  }
+}

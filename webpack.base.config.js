@@ -87,8 +87,9 @@ module.exports = {
             }
         ],{
                 ignore: [
-                    'es6/',
+                    'es6/*.js',
                     '*.less',
+                    '*.css'
                     // 'es6/*.js',
                     /*'pages/!**!/!*.less',
                     'pages/!**!/!**!/!*.less',*/

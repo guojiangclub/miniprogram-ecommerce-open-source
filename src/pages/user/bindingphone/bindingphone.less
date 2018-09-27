@@ -1,0 +1,79 @@
+#bindingphone{
+
+  .tips{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 35px;
+    background-color: #e64340;
+    height: 35px;
+    color: #FFFFFF;
+  }
+
+  .phone__warning{
+    padding: 35px 15px 70px 15px;
+    .phone__num{
+      width: 100%;
+      background: rgba(155,155,155,.2);
+      font-size: 14px;
+      padding: 15px;
+      border-radius: 3px;
+      input{
+        width: 100%;
+        color: #000;
+      }
+    }
+    .phone__code{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+
+      .input{
+        border-radius: 3px;
+        background: rgba(155,155,155,.2);
+        font-size: 14px;
+        padding: 15px;
+        color: #000;
+        flex: 1;
+      }
+      .code__get{
+        border-radius: 3px;
+        color: #ffffff;
+        background: #EA4448;
+
+        padding:15px 10px;
+        margin-left:17px;
+        font-size:14px;
+        /*&.code-send{
+          background: rgba(44,171,43,.5);
+        }*/
+      }
+    }
+  }
+  .phone__box{
+    padding: 0 15px;
+
+    .phone__btn{
+      width: 100%;
+      padding: 12px 0;
+      font-size: 17px;
+      text-align: center;
+      border-radius: 4px;
+      &.phone-binding{
+        color: #ffffff;
+        background: #EA4448;
+        margin-bottom:15px;
+        &.phone-confirm{
+          background: #EA4448;
+        }
+      }
+      &.phone-cancel{
+        color: #4A4A4A;
+        background: #ffffff;
+        border: 1px solid #DCDCDC;
+      }
+    }
+  }
+}

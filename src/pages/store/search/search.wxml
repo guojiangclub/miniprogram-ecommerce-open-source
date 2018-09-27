@@ -1,0 +1,46 @@
+<view id="store-search">
+    <view class="search-box">
+        <view class="input-box">
+            <input type="text" value="{{text}}" bindinput="search" confirm-type="search" bindconfirm="searchKeywords" />
+
+            <icon type="search" size="20" class="search" />
+            <icon type="clear" size="20" class="clear" hidden="{{clear}}" bindtap="clear" />
+        </view>
+        <view class="text" bindtap="searchKeywords">
+            搜索
+        </view>
+    </view>
+    <view class="history-box" wx:if="{{searches.length && show}}">
+        <view class="keywords mx-1px-bottom" wx:for="{{searches}}" wx:key="*this">
+            <view class="name" data-index="{{index}}" bindtap="searchHistory">{{item}}</view>
+            <view class="clear" data-index="{{index}}" bindtap="removeSearchHistory">
+                <icon type="clear" size="20" />
+            </view>
+        </view>
+        <view class="clear-all" bindtap="clearSearchHistory">
+            清空历史记录
+        </view>
+    </view>
+    <view class="goods-list" wx:if="{{!show}}">
+        <view wx:for="{{storeList}}" wx:for-index="idx">
+            <view class="commodity-out" data-id="{{item.id}}" wx:for="{{storeList[idx]}}" wx:key="*this" bindtap="jump">
+                <view class="commodity-box">
+                    <view class="commodity-img">
+                        <image mode="widthFix" src="{{item.img}}" />
+                    </view>
+                    <view class="commodity-name">
+                        {{item.name}}
+                    </view>
+                    <view class="commodity-money">
+                        {{item.sell_price}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <view class="no-data" wx:if="{{!storeList[0].length && init}}">
+        啥都没找到
+    </view>
+</view>

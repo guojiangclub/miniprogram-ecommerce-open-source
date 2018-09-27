@@ -1,0 +1,203 @@
+<view id="coupon-index">
+    <view class="navbar mx-1px-top">
+        <block wx:for="{{tabList}}" wx:key="{{index}}">
+            <view id="{{index}}" class="navbar-item {{activeIndex == index ? 'activity' : ''}}" bindtap="tabClick">
+                <view class="navbar-title">{{item.title}}</view>
+            </view>
+        </block>
+        <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+    <view class="tab-panel">
+        <view class="tab-content" hidden="{{activeIndex != 0}}">
+            <view class="no-list" wx:if="{{!dataList[0][0].length && tabList[0].init}}">
+                <i class="iconfont icon-youhuiquan"></i>
+                <view>报告主人，您暂无<sapn>优惠券~</sapn></view>
+            </view>
+            <view wx:for="{{dataList[0]}}" wx:for-index="idx" wx:for-item="items" wx:key="{{idx}}">
+                <view class="coupon" data-id="{{item.id}}" bindtap="jumpDetail" wx:for="{{dataList[0][idx]}}" wx:key="{{index}}">
+                    <view class="coupon-left">
+                        <view class="text-wrap">
+                            <view class="text-box">
+                                <view class="text">
+                                    <text class="money" wx:if="{{item.discount.action_type.type == 'cash'}}">￥</text>
+                                    <sapn>{{ item.discount.action_type.value }}</sapn>
+
+                                    <text class="money" wx:if="{{item.discount.action_type.type == 'discount'}}">折</text>
+                                </view>
+                                <text class="label text">{{ item.discount.label }}</text>
+                            </view>
+
+                        </view>
+                        <view class="dot-wrap">
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                        </view>
+                    </view>
+                    <view class="coupon-right">
+                        <view class="top">
+                                <span class="type">
+                                    <span>商城</span>
+                                </span>
+                            <text class="info">{{item.discount.title}}</text>
+                        </view>
+                        <view class="bottom">
+                            <view class="bottom-use">
+                                <view class="tiem-box">
+                                    <text>{{item.discount.use_start_time}}至{{item.discount.use_end_time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 1}}">
+            <view class="no-list" wx:if="{{!dataList[1][0].length && tabList[1].init}}">
+                <i class="iconfont icon-youhuiquan"></i>
+                <view>报告主人，您暂无<sapn>优惠券~</sapn></view>
+            </view>
+            <view wx:for="{{dataList[1]}}" wx:for-index="idx" wx:for-item="items" wx:key="{{idx}}">
+                <view class="coupon" wx:for="{{dataList[1][idx]}}" wx:key="{{index}}">
+                    <view class="coupon-left">
+                        <view class="text-wrap">
+                            <view class="text-box">
+                                <view class="text">
+                                    <text class="money" wx:if="{{item.discount.action_type.type == 'cash'}}">￥</text>
+                                    <sapn>{{ item.discount.action_type.value }}</sapn>
+
+                                    <text class="money" wx:if="{{item.discount.action_type.type == 'discount'}}">折</text>
+                                </view>
+                                <text class="label text">{{ item.discount.label }}</text>
+                            </view>
+
+                        </view>
+                        <view class="dot-wrap">
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                        </view>
+                    </view>
+                    <view class="coupon-right">
+                        <view class="top">
+                                <span class="type">
+                                    <span>商城</span>
+                                </span>
+                            <text class="info">{{item.discount.title}}</text>
+                        </view>
+                        <view class="bottom">
+                            <view class="bottom-use">
+                                <view class="tiem-box">
+                                    <text>{{item.discount.use_start_time}}至{{item.discount.use_end_time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="cover">
+                        <view class="big-circle">
+                            <view class="small-circle">
+                                <view>已使用</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 2}}">
+            <view class="no-list" wx:if="{{!dataList[2][0].length && tabList[2].init}}">
+                <i class="iconfont icon-youhuiquan"></i>
+                <view>报告主人，您暂无<sapn>优惠券~</sapn></view>
+            </view>
+            <view wx:for="{{dataList[1]}}" wx:for-index="idx" wx:for-item="items" wx:key="{{idx}}">
+                <view class="coupon"  wx:for="{{dataList[1][idx]}}" wx:key="{{index}}">
+                    <view class="coupon-left">
+                        <view class="text-wrap">
+                            <view class="text-box">
+                                <view class="text">
+                                    <text class="money" wx:if="{{item.discount.action_type.type == 'cash'}}">￥</text>
+                                    <sapn>{{ item.discount.action_type.value }}</sapn>
+
+                                    <text class="money" wx:if="{{item.discount.action_type.type == 'discount'}}">折</text>
+                                </view>
+                                <text class="label text">{{ item.discount.label }}</text>
+                            </view>
+
+                        </view>
+                        <view class="dot-wrap">
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                            <view class="dot-item">
+
+                            </view>
+                        </view>
+                    </view>
+                    <view class="coupon-right">
+                        <view class="top">
+                                <span class="type">
+                                    <span>商城</span>
+                                </span>
+                            <text class="info">{{item.discount.title}}</text>
+                        </view>
+                        <view class="bottom">
+                            <view class="bottom-use">
+                                <view class="tiem-box">
+                                    <text>{{item.discount.use_start_time}}至{{item.discount.use_end_time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="cover">
+                        <view class="big-circle">
+                            <view class="small-circle">
+                                <view>已过期</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

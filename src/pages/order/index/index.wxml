@@ -1,0 +1,308 @@
+
+<view id="order-index">
+    <view class="order-search">
+        <view class="search-box" bindtap="jumpSearch">
+            <i class="iconfont icon-sousuo"></i>
+            <p>商品名称，商品编号，订单编号</p>
+        </view>
+    </view>
+    <view class="navbar mx-1px-bottom">
+        <block wx:for="{{tabList}}" wx:key="*this">
+            <view id="{{index}}" class="navbar-item {{activeIndex == index ? 'activity' : ''}}" bindtap="tabClick">
+                <view class="navbar-title">{{item.title}}</view>
+            </view>
+        </block>
+        <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+    <view class="tab-panel">
+        <view class="tab-content" hidden="{{activeIndex != 0}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{!dataList[activeIndex][0].length && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="{{dataList[activeIndex]}}" wx:key="*this" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[activeIndex][idx]}}" wx:key="*this" wx:for-item="order" bindtap="jump">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    <span>{{order.from}}</span> | 订单编号：{{order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:key="*this" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total / 100}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                {{order.count}}件, 共计 ￥{{order.total / 100}}
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 1}}" data-no="{{order.order_no}}" catchtap="pay">
+                                立即付款
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 3}}" data-no="{{order.order_no}}" catchtap="submit">
+                                确认收货
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 6}}" data-no="{{order.order_no}}" catchtap="delete">
+                                删除订单
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 1}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{!dataList[activeIndex][0].length && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="{{dataList[activeIndex]}}" wx:key="*this" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[activeIndex][idx]}}" wx:key="*this" wx:for-item="order" bindtap="jump">
+                    <view class="item-top">
+                        <view class="indent mx-1px-bottom">
+                            <view class="order-num">
+                                <span>{{order.from}}</span> | 订单编号：{{order.order_no}}
+                            </view>
+                            <view class="order-type">
+                                {{typeList[order.status]}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="item-middle">
+                        <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:key="*this" wx:for-item="good">
+                            <image src="{{good.item_meta.image}}" />
+                            <view class="text">
+                                <view class="names">
+                                    {{good.item_name}}
+                                </view>
+                                <view class="model">
+                                    {{good.item_meta.specs_text}}
+                                </view>
+                            </view>
+                            <view class="money-box">
+                                <view>
+                                    {{good.quantity}}件
+                                </view>
+                                <view>
+                                    ￥{{good.total / 100}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="item-bottom">
+                        <view class="all-money">
+                            {{order.count}}件, 共计 ￥{{order.total / 100}}
+                        </view>
+                        <view class="button-box" wx:if="{{order.status === 1}}" data-no="{{order.order_no}}" catchtap="pay">
+                            立即付款
+                        </view>
+                        <view class="button-box" wx:if="{{order.status === 3}}" data-no="{{order.order_no}}" catchtap="submit">
+                            确认收货
+                        </view>
+                        <view class="button-box" wx:if="{{order.status === 6}}" data-no="{{order.order_no}}" catchtap="delete">
+                            删除订单
+                        </view>
+                    </view>
+                </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[1].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 2}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{!dataList[activeIndex][0].length && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="{{dataList[activeIndex]}}" wx:key="*this" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[activeIndex][idx]}}" wx:key="*this" wx:for-item="order" bindtap="jump">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    <span>{{order.from}}</span> | 订单编号：{{order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:key="*this" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total / 100}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                {{order.count}}件, 共计 ￥{{order.total / 100}}
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 1}}" data-no="{{order.order_no}}" catchtap="pay">
+                                立即付款
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 3}}" data-no="{{order.order_no}}" catchtap="submit">
+                                确认收货
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 6}}" data-no="{{order.order_no}}" catchtap="delete">
+                                删除订单
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[2].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 3}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{!dataList[activeIndex][0].length && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="{{dataList[activeIndex]}}" wx:key="*this" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[activeIndex][idx]}}" wx:key="*this" wx:for-item="order" bindtap="jump">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    <span>{{order.from}}</span> | 订单编号：{{order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:key="*this" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total / 100}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                {{order.count}}件, 共计 ￥{{order.total / 100}}
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 1}}" data-no="{{order.order_no}}" catchtap="pay">
+                                立即付款
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 3}}" data-no="{{order.order_no}}" catchtap="submit">
+                                确认收货
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 6}}" data-no="{{order.order_no}}" catchtap="delete">
+                                删除订单
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[3].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 4}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{!dataList[activeIndex][0].length && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="{{dataList[activeIndex]}}" wx:key="*this" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[activeIndex][idx]}}" wx:key="*this" wx:for-item="order" bindtap="jump">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    <span>{{order.from}}</span> | 订单编号：{{order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:key="*this" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total / 100}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                {{order.count}}件, 共计 ￥{{order.total / 100}}
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 4}}" data-no="{{order.order_no}}" catchtap="commentOrder">
+                                商品评价
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[3].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

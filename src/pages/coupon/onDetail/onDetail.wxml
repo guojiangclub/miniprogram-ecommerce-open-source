@@ -1,0 +1,60 @@
+<view id="on-detail" wx:if="{{init}}">
+    <view class="coupon">
+        <view class="coupon-left">
+            <view class="text-wrap">
+                <view class="text-box">
+                    <view class="text">
+                        <text class="money" wx:if="{{detail.discount.action_type.type == 'cash'}}">￥</text>
+                        <sapn>{{ detail.discount.action_type.value }}</sapn>
+
+                        <text class="money" wx:if="{{detail.discount.action_type.type == 'discount'}}">折</text>
+                    </view>
+                    <text class="label text">{{ detail.discount.label }}</text>
+                </view>
+            </view>
+            <view class="dot-wrap">
+                <view class="dot-item">
+
+                </view>
+                <view class="dot-item">
+
+                </view>
+                <view class="dot-item">
+
+                </view>
+                <view class="dot-item">
+
+                </view>
+                <view class="dot-item">
+
+                </view>
+                <view class="dot-item">
+
+                </view>
+            </view>
+        </view>
+        <view class="coupon-right">
+            <view class="top">
+                <span class="type">
+                    <span>商城</span>
+                </span>
+                <text class="info">{{detail.discount.title}}</text>
+            </view>
+            <view class="bottom">
+                <view class="bottom-use">
+                    <view class="tiem-box">
+                        <text>{{detail.discount.use_start_time}}至{{detail.discount.use_end_time}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="detail-item user-info" wx:if="{{detail.intro}}">
+        <view class="title">
+            使用说明
+        </view>
+        <view class="info mx-1px-top">
+           {{detail.discount.intro}}
+        </view>
+    </view>
+</view>

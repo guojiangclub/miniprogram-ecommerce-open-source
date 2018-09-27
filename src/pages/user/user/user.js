@@ -38,6 +38,61 @@ Page({
             url: '/pages/user/register/register'
         })
     },
+    bindgetuserinfo(e) {
+        console.log(e);
+        // 说明用户同意授权
+        if (e.detail.userInfo) {
+            this.updateUserInfo(e.detail.userInfo)
+        }
+    },
+    // 更新用户信息
+    updateUserInfo(e){
+        wx.showLoading({
+            title: '更新中',
+            mask: true
+        })
+        sandBox.post({
+            api: 'api/users/update/info',
+            header:{
+                Authorization:cookieStorage.get('user_token')
+            },
+
+            data:{
+                nick_name:e.nickName,
+                sex:e.gender == 1 ? '男' : '女',
+                avatar:e.avatarUrl,
+            },
+        }).then(res =>{
+            console.log(res);
+            if(res.statusCode==200){
+                res = res.data;
+                if (res.status) {
+                    wx.showToast({
+                        title:'修改成功',
+                        duration: 1500,
+                        success:()=>{
+                            setTimeout(()=>{
+                                this.gitUserInfo();
+                            },1500);
+                        }
+                    })
+                } else {
+                    wx.showModal({
+                        content:res.message ||  "更新失败",
+                        showCancel: false
+                    });
+                }
+                wx.hideLoading();
+            }
+            else{
+                wx.showModal({
+                    content:"更新失败",
+                    showCancel: false
+                });
+                wx.hideLoading();
+            }
+        })
+    },
     // 获取用户信息
     gitUserInfo() {
         sandBox.get({

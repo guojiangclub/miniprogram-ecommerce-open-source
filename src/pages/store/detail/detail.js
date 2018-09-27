@@ -1,6 +1,8 @@
 var Wxparse = require('../../../component/wxParse/wxParse');
 import Rater from '../../../component/rater/rater';
 var app = getApp();
+
+var newspecs = [];
 import {
     config, getUrl, weapp,
     cookieStorage,
@@ -38,6 +40,7 @@ Page({
         show_cart: false, // 加入购物车弹出
         select_product: {}, //当前选中商品
         is_Fav: false, // 是否收藏商品
+        show_share: false, // 是否弹出分享
         animationSelect: {},  // 动画
         specs: [], // SKU信息
         result: {}, // SKU数据
@@ -47,7 +50,6 @@ Page({
 
 
         showToTop: false,
-        store_count: 0,
         store_num: 0,
         select_count: 1,
         is_login: true,
@@ -57,12 +59,17 @@ Page({
         loading: false,
     },
     onLoad(e) {
+        var id = '';
         if (e.id) {
-            this.setData({
-                id: e.id
-            })
-            this.getStoreDetail()
-
+            id = e.id;
+        }
+        if (e.scene) {
+            var scene = decodeURIComponent(e.scene);
+            var sceneArr = scene.split(',');
+            id = sceneArr[0];
+        }
+        if (id) {
+            this.getStoreDetail(id)
         } else {
             wx.switchTab({
                 url: '/pages/index/index/index'
@@ -72,6 +79,7 @@ Page({
         var is_login = cookieStorage.get('user_token');
 
         this.setData({
+            id: id,
             is_login: is_login
         })
     },
@@ -100,11 +108,19 @@ Page({
     },
     // 分享
     onShareAppMessage() {
+        this.setData({
+            show_share: false
+        })
         return {
-            title: '￥ ' + this.data.detailData.data.sell_price + ' | ' + +this.data.detailData.data.name,
+            title: '￥ ' + this.data.detailData.data.sell_price + ' | ' + this.data.detailData.data.name,
             path: '/pages/store/detail/detail?id=' + this.data.id,
             imageUrl: this.data.detailData.data.img
         }
+    },
+    changeShare() {
+        this.setData({
+            show_share: !this.data.show_share
+        })
     },
     // 点击滚动到指定位置
     jumpScroll(e) {
@@ -138,14 +154,14 @@ Page({
 
     },
     // 请求商品详情页面数据
-    getStoreDetail() {
+    getStoreDetail(id) {
         wx.showLoading({
             title: "加载中",
             mask: true
         })
         var token = cookieStorage.get('user_token') || '';
         sandBox.get({
-            api: 'api/store/detail/' + this.data.id,
+            api: 'api/store/detail/' + id,
             header: {
                 Authorization: token
             },
@@ -161,9 +177,9 @@ Page({
                     })
 
                     this.getDomInfo('.js__top', 'shop');
-                    this.getDomInfo('.js__comment', 'comment');
 
                     if (res.data.oneComment && res.data.oneComment.length) {
+                        this.getDomInfo('.js__comment', 'comment');
                         Rater.init('store', {
                             value: res.data.oneComment[0].point,
                             disabled: true,
@@ -184,12 +200,7 @@ Page({
                     this.changeText();
                     this.disallow_cart();
                     this.queryCommodityStore(this.data.id)
-
-                    /*this.changeText();
-                     this.disallow_cart();
-                     this.queryCommodityStore(this.data.id)
-                     this.queryFavoriteStatus(this.data.id, 'goods');
-                     this.getFree(this.data.id);*/
+                    this.queryFavoriteStatus(this.data.id, 'goods');
                 } else {
                     wx.hideLoading()
                     wx.showModal({
@@ -245,6 +256,8 @@ Page({
                                 specs.push(value);
                             });
 
+                        newspecs = specs;
+
                         this.setData({
                             specs: specs
                         })
@@ -264,13 +277,13 @@ Page({
 
                                 value.ids.forEach(id => {
                                     data[id] = data[id] || {count: 0, specs: {}};
-                                    data[id].count += Number(value.store);
+                                    data[id].count += parseInt(value.store);
 
                                     value.ids.forEach(i => {
                                         if (i === id) return;
 
                                         data[id].specs[i] = {
-                                            count: Number(value.store)
+                                            count: parseInt(value.store)
                                         };
                                     })
                                 });
@@ -307,12 +320,8 @@ Page({
 
     // 整理sku数据
     specStore(result, key) {
-        var query = this.data.query;
         var data = result.data;
-        var specs = this.data.specs;
-
-        var data = result.data;
-        var specs = this.data.specs;
+        var specs = newspecs;
         if (key === undefined) {
 
             specs.forEach(spec => {
@@ -322,48 +331,16 @@ Page({
                 }
             });
 
-
             this.setData({
-                specs: specs,
+                // specs: specs,
                 skuTable: result.table
             })
-
-            specs = this.data.specs
             var canBuy = this.disallow_cart()
-
-
             this.setData({
                 canBuy: canBuy
             })
 
             specs.forEach(spec => {
-
-                let name = 'spec[' + spec.id + ']';
-                if (query[name]) {
-                    let id = query[name];
-
-
-                    for (let v of spec.values) {
-
-                        if (v.id == id && !v.disabled && data[v.id] && data[v.id].count) {
-                            v.active = true;
-                            spec.select = v.id;
-                            this.setData({
-                                specs: specs
-                            })
-                            specs = this.data.specs
-                            var canBuy = this.disallow_cart()
-
-
-                            this.setData({
-                                canBuy: canBuy
-                            })
-                            this.specStore(result, v.index)
-
-                            return;
-                        }
-                    }
-                }
 
                 if (!spec.select) {
                     for (let v of spec.values) {
@@ -374,27 +351,19 @@ Page({
                             this.setData({
                                 specs: specs
                             })
-                            specs = this.data.specs
                             var canBuy = this.disallow_cart()
-
-
                             this.setData({
                                 canBuy: canBuy
                             })
-
-                            // this.$emit('specStore', result, v.index);
                             this.specStore(result, v.index)
-
                             return;
                         }
                     }
                     return
                 }
-
                 this.setData({
                     specs: specs
                 })
-
             });
 
 
@@ -428,7 +397,7 @@ Page({
             }
         } else {
             this.setData({
-                store_count: this.data.detailData.data.store
+                store_count: this.data.detailData.data.store_nums
             })
             for (let i = 0; i < specs.length; i++) {
 
@@ -450,9 +419,6 @@ Page({
                 this.setData({
                     specs: specs
                 })
-
-                // console.log(specs)
-
             }
         }
         if (parseInt(this.data.select_count) > this.data.store_count) {
@@ -498,7 +464,7 @@ Page({
                 if (v.id === spec.select) {
                     switch (spec.label_key) {
                         case 'color':
-                            select_product.img = v.img;
+                            select_product.img = v.spec_img;
                             select_product.color = v.alias || v.value;
                             select_product.bac = v.color
                             break;
@@ -549,9 +515,10 @@ Page({
         specs[spec.index].select = spec.active ? spec.id : '';
 
 
-        this.setData({
+        newspecs = specs
+       /* this.setData({
             specs: specs
-        })
+        })*/
 
 
         var canBuy = this.disallow_cart()
@@ -561,12 +528,45 @@ Page({
         this.specStore(this.data.result, spec.index)
     },
 
+    // 查询是否收藏改商品
+    queryFavoriteStatus(id, type) {
+        var token = cookieStorage.get('user_token');
+        if (!token) return;
+
+        sandBox.get({
+            api: 'api/favorite/isfav',
+            header: {
+                Authorization: token
+            },
+            data: {
+                favoriteable_id: id,
+                favoriteable_type: type
+            },
+        }).then(res => {
+            res = res.data;
+
+            if (res.status) {
+                this.setData({
+                    is_Fav: !!res.data.is_Fav
+                })
+            } else {
+                wx.showToast({
+                    icon: 'nonte',
+                    title: res.message
+                });
+            }
+        }).catch(rej => {
+
+        })
+    },
+
+
     // 收藏
     changeFavorite(id, type) {
         var token = cookieStorage.get('user_token');
 
         sandBox.post({
-            api: 'api/favorite/store',
+            api: 'api/favorite',
             header: {
                 Authorization: token
             },
@@ -781,7 +781,7 @@ Page({
             this.closeSelect();
             this.changeCart();
         } else {
-            wx.showMload({
+            wx.showModal({
                 content: message || '添加到购物车失败，请重试',
                 showCancel: false
             })
@@ -891,6 +891,14 @@ Page({
             })
         }
 
+    },
+    getShearImg() {
+        this.setData({
+            show_share: false
+        })
+        wx.navigateTo({
+            url: '/pages/store/shearImg/shearImg?id=' + this.data.id
+        })
     },
     // 处理按钮状态
     changeText() {

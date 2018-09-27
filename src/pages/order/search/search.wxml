@@ -1,0 +1,74 @@
+
+<view id="order-search">
+    <view class="search-box">
+        <view class="input-box">
+            <input type="text" value="{{text}}" bindinput="search" confirm-type="search" bindconfirm="searchKeywords" />
+
+            <icon type="search" size="20" class="search" />
+            <icon type="clear" size="20" class="clear" hidden="{{clear}}" bindtap="clear" />
+        </view>
+        <view class="text" bindtap="searchKeywords">
+            搜索
+        </view>
+    </view>
+    <view class="tab-panel">
+        <view class="tab-content">
+            <view class="order-box">
+                <view wx:for="dataList" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[idx]}}" wx:for-item="order" bindtap="jump">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    <span>{{order.from}}</span> | 订单编号：{{order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total_yuan}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                {{order.count}}件, 共计 ￥{{order.total_yuan}}
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 1}}" data-no="{{order.order_no}}" catchtap="pay">
+                                立即付款
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 3}}" data-no="{{order.order_no}}" catchtap="submit">
+                                确认收货
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 6}}" data-no="{{order.order_no}}" catchtap="delete">
+                                删除订单
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

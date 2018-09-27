@@ -1,0 +1,47 @@
+<import src="../../../component/rater/rater.wxml"></import>
+
+<view id="order-comment">
+    <view class="order-items">
+        <view class="order-item" wx:for="{{orderData.items}}">
+            <view class="order-info mx-1px-bottom">
+                <view class="image">
+                    <image src="{{item.item_meta.image}}" />
+                </view>
+                <view class="texts">
+                    <view class="name">{{item.item_name}}</view>
+                    <view class="spec">{{item.item_meta.specs_text}}</view>
+                    <view class="content">
+                        <view class="item_start">
+                            <template is="rater" data="{{ ...$vlc.rater[index] }}"/>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            
+            <view class="comment-content mx-1px-bottom">
+                <view class="content">
+                    <textarea bindinput="changeEvaluate" data-index="{{index}}" value="{{item.comment}}" placeholder="请输入您对该商品的想法"></textarea>
+                    <view class="number">还可以输入{{500 - length}}字</view>
+                </view>
+            </view>
+
+            <view class="uploading-box" >
+                <view class="img-item uploading-item" wx:for="{{item.upload_images}}" wx:for-index="idx" wx:for-item="itemVal">
+                    <view class="img">
+                        <image mode="widthFix" src="{{itemVal}}" />
+                    </view>
+                    <span class="delete" data-index="{{index}}" data-idx="{{idx}}" data-images="{{item.upload_images}}" bindtap="deleteImg">
+                        x
+                    </span>
+                </view>
+                <view class="uploading uploading-item" bindtap="upload" wx:if="{{item.upload_images.length<5}}" data-index="{{index}}">
+                    <view class="uploading-input">
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="submit" disabled="{{disabled}}" bindtap="submit">提交评价</view>
+</view>
+

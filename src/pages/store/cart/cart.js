@@ -19,7 +19,7 @@ Page({
         channel:'normal',
         loading:false
     },
-    onLoad() {
+    onShow() {
         var token = cookieStorage.get('user_token');
         var locals = cookieStorage.get('cart');
         this.setData({
@@ -31,7 +31,6 @@ Page({
         } else {
             this.queryCartList();
         }
-
     },
     jump(e) {
         var id = e.currentTarget.dataset.id;
@@ -382,5 +381,81 @@ Page({
             list:list
         })
         this.select_product();
+    },
+    // 提交订单
+    order() {
+        var data = this.data.select_products;
+        if (!data.count) {
+            return
+        };
+        this.setData({
+            loading:true
+        })
+        var oauth = this.data.token;
+
+        if (!oauth) {
+            var url = getUrl();
+            wx.navigateTo({
+                url:'/pages/user/register/register?url=' + url
+            })
+            return;
+
+        }
+
+        var locals = cookieStorage.get('cart');
+        if (locals && locals.length) {
+            // 提交本地购物车
+            this.appendToCart(locals);
+            return;
+        }
+
+        this.checkoutOrder();
+    },
+    // 提交订单
+    checkoutOrder() {
+        var ids = this.data.select_products.__ids;
+        var type = this.data.channel;
+        var oauth = this.data.token;
+        var cart_ids = ids.filter(id => id);
+
+
+        sandBox.post({
+            api:'api/shopping/order/checkout',
+            data:{ cart_ids, type },
+            header: {Authorization: oauth},
+            method:'POST',
+        }).then(res => {
+            if (res.statusCode == 200) {
+                res = res.data;
+                if (res.status) {
+                    cookieStorage.set('local_order',res.data);
+                    wx.navigateTo({
+                        url:'/pages/store/order/order',
+                    })
+                } else {
+                    wx.showModal({
+                        content: message || '结算失败,请重试！',
+                        showCancel: false
+                    })
+                }
+            } else {
+                wx.showModal({
+                    content: '结算失败,请重试！',
+                    showCancel: false
+                })
+            }
+
+            this.setData({
+                loading: false
+            })
+        }).catch(() => {
+            wx.showModal({
+                content: message || '结算失败,请重试！',
+                showCancel: false
+            })
+            this.setData({
+                loading: false
+            })
+        })
     }
 })

@@ -1,0 +1,10 @@
+<view id="classification">
+    <view class="menu-wrap" wx:if="{{info && info.length}}">
+        <view class="item-box">
+            <view class="item mx-1px-left-top" data-src="{{item.link}}" wx:for="{{info}}" wx:key="{{index}}" bindtap="jumpLink">
+                <image src="{{item.image}}"></image>
+                <view>{{item.name}}</view>
+            </view>
+        </view>
+    </view>
+</view>

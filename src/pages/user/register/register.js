@@ -47,10 +47,10 @@ Page({
                     wx.hideLoading();
                 }
                 // 如果接口返回token就直接登录，如果没有则弹出授权
-                if (res.access_token) {
+                if (res.data && res.data.access_token) {
                     wx.hideLoading();
-                    var access_token = res.token_type + ' ' + res.access_token;
-                    var expires_in = res.expires_in || 315360000;
+                    var access_token = res.data.token_type + ' ' + res.data.access_token;
+                    var expires_in = res.data.expires_in || 315360000;
                     cookieStorage.set("user_token", access_token, expires_in);
                     // 判断来源
                     if (this.data.url) {
@@ -103,6 +103,7 @@ Page({
                 })
             }
         }).catch(rej => {
+            wx.hideLoading();
             wx.showModal({
                 content:'请求失败，请重试',
                 showCancel: false,
@@ -122,6 +123,9 @@ Page({
         wx.login({
             success: res => {
                 if (res.code) {
+                    this.setData({
+                        code: res.code
+                    })
                     this.autoLogin(res.code);
                 } else {
                     wx.showToast({
@@ -139,7 +143,7 @@ Page({
             })
         } else {
             wx.navigateTo({
-                url: '/pages/user/loginType/loginType'
+                url: '/pages/user/login/login'
             })
         }
 
@@ -163,6 +167,7 @@ Page({
                     }
                 }
             });
+            // this.phone(e)
             return
         } else {
             this.jumpLogin();
@@ -182,9 +187,9 @@ Page({
         }).then(res => {
             if (res.statusCode == 200) {
                 res = res.data;
-                if (res.access_token) {
-                    var access_token = res.token_type + ' ' + res.access_token;
-                    var expires_in = res.expires_in || 315360000;
+                if (res.data.access_token) {
+                    var access_token = res.data.token_type + ' ' + res.data.access_token;
+                    var expires_in = res.data.expires_in || 315360000;
                     cookieStorage.set("user_token", access_token, expires_in);
                     if (this.data.url) {
                         var path = [
@@ -205,7 +210,7 @@ Page({
                         }
                     } else {
                         wx.switchTab({
-                            url: '/pages/user/personal/personal'
+                            url: '/pages/user/user/user'
                         })
                     }
                 } else {

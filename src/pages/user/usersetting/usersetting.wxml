@@ -1,0 +1,38 @@
+<view id="user-setting">
+    <view class="headImg" bindtap="changeImage">
+        <image src="{{detail.avatar}}" alt="" />
+    </view>
+    <view class="user_setting">
+        <view class="code">
+            <view class="detail">昵称</view>
+            <input type="text" placeholder="填写您的昵称" bindinput="changeName" value="{{detail.nick_name}}"/>
+        </view>
+        <view class="code">
+            <view class="detail">性别</view>
+            <picker value="{{selectedIndex}}" range="{{list}}" bindchange="change">
+                <input type="text" placeholder="选择你的性别" disabled  value="{{list[selectedIndex]}}"/>
+                <view class="iconfont icon-jiantou under"></view>
+            </picker>
+        </view>
+        <view class="code">
+            <view class="detail">出生日期</view>
+            <picker mode="date"  end="{{end}}" bindchange="changeDate">
+                <input type="text" placeholder="请输入出生日期" disabled value="{{birthdaydate}}"/>
+                <view class="iconfont icon-jiantou under"></view>
+            </picker>
+        </view>
+        <view class="code">
+            <view class="detail">手机号码</view>
+            <input type="text" placeholder="请输入手机号码" value="{{mobileNum}}" disabled/>
+            <span bindtap="changeMobile">更换号码</span>
+        </view>
+        <view class="code">
+            <view class="detail">邮箱</view>
+            <input type="text" placeholder="请输入邮箱" value="{{emailSet}}" bindinput="changeEmail"/>
+        </view>
+    </view>
+
+    <view class="submit" bindtap="updateUserInfo">
+        <button type="primary">确定</button>
+    </view>
+</view>

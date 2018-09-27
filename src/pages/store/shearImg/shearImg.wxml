@@ -1,0 +1,8 @@
+<view id="shareImg">
+    <view class="img-box">
+        <image mode="widthFix" src="{{url}}" alt="" />
+    </view>
+    <view class="btn-box" wx:if="{{url}}">
+        <view class="btn" bindtap="downImg">保存分享到朋友圈</view>
+    </view>
+</view>

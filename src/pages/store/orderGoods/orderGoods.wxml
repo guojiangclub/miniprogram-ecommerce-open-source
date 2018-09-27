@@ -1,0 +1,33 @@
+<view class="order-item">
+    <view class="title">
+        商品清单
+    </view>
+    <view class="goods info mx-1px-bottom" wx:for="{{block.order.items}}">
+        <view class="goods-item">
+            <view class="item-left">
+                <image  src="{{item.item_meta.image}}"></image>
+            </view>
+            <view class="item-right">
+                <view class="goods-name item">
+                    <view class="name">
+                        {{item.item_name}}
+                    </view>
+                    <view>
+                        {{item.quantity}}件
+                    </view>
+                </view>
+                <view class="goods-money item">
+                    <view>
+                        {{item.item_meta.specs_text}}
+                    </view>
+                    <view>
+                        ￥{{(item.total / 100)}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="total">
+        {{block.order.count}}件商品，合计￥{{(block.order.total/100)}}
+    </view>
+</view>

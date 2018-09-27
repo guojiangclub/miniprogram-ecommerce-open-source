@@ -1,0 +1,61 @@
+
+<view id="store-payment">
+    <view class="order-item" wx:if="{{order.status === 1}}">
+        <view class="title mx-1px-bottom">
+            商品清单
+        </view>
+        <view class="goods info"  wx:for="{{order.items}}" wx:key="{{index}}">
+            <view class="goods-item">
+                <view class="item-left">
+                    <image  src="{{item.item_meta.image}}" />
+                </view>
+                <view class="item-right">
+                    <view class="goods-name item">
+                        <view class="name">
+                           {{item.item_name}}
+                        </view>
+                        <view>
+                            {{item.quantity}}件
+                        </view>
+                    </view>
+                    <view class="goods-money item">
+                        <view>
+                            {{item.item_meta.specs_text}}
+                        </view>
+                        <view>
+                            ￥{{item.total / 100}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                支付方式
+            </view>
+            <view class="type info">
+                <radio-group class="radio-group">
+                    <label class="radio">
+                        <radio checked="true" />
+                        <text>微信支付</text>
+                    </label>
+                </radio-group>
+            </view>
+        </view>
+
+        <view class="order-info">
+            <view>
+                <view class="item">
+                    <view class="left">
+                        微信支付
+                    </view>
+                    <view class="num">
+                        ￥{{order.total / 100}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <button type="primary" bindtap="pay" loading="{{loading}}">立即支付</button>
+    </view>
+</view>

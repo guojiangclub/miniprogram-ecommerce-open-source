@@ -1,0 +1,283 @@
+<view id="store-order">
+    <view class="border-box">
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                收货信息
+            </view>
+            <view class="address info" bindtap="selectAddress">
+                <view class="user" wx:if="{{form.address == ''}}">
+                    <i class="iconfont icon-juxing"></i>
+                    <view class="name-box">
+                        <text class="add">添加收货地址</text>
+                    </view>
+                </view>
+                <view wx:else>
+                    <view class="user">
+                        <i class="iconfont icon-yonghu1"></i>
+                        <view class="name-box">
+                            <text class="name">{{form.address.accept_name}}</text>
+                            <text class="telephone">{{form.address.mobile}}</text>
+                        </view>
+                    </view>
+                    <view class="address">
+                        <i class="iconfont icon-weizhi"></i>
+                        <text>{{form.address.address_name}} {{form.address.address}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                商品清单
+            </view>
+            <view class="goods info mx-1px-bottom" wx:for="{{block.order.items}}" wx:key="{{index}}" wx:if="{{block.order.items.length == 1}}">
+                <view class="goods-item">
+                    <view class="item-left">
+                        <image  src="{{item.item_meta.image}}"></image>
+                    </view>
+                    <view class="item-right">
+                        <view class="goods-name item">
+                            <view class="name">
+                                {{item.item_name}}
+                            </view>
+                            <view>
+                                {{item.quantity}}件
+                            </view>
+                        </view>
+                        <view class="goods-money item">
+                            <view>
+                                {{item.item_meta.specs_text}}
+                            </view>
+                            <view>
+                                ￥{{(item.total / 100)}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="info mx-1px-bottom all-goods" wx:if="{{block.order.items.length > 1}}" bindtap="jumpGoods">
+                <view class="good-box">
+                    <view class="good-img" wx:for="{{block.order.items}}" wx:key="{{index}}" wx:for-index="index" wx:if="{{index < 4}}">
+                        <image src="{{item.item_meta.image}}" alt="" />
+                    </view>
+                </view>
+                <div class="num">
+                    共{{block.order.count}}件
+                </div>
+            </view>
+
+            <view class="total">
+                {{block.order.count}}件商品，合计￥{{(block.order.total/100)}}
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title__point info" bindtap="showDiscounts">
+                <text>促销活动</text>
+                <view wx:if="{{form.discount.id}}" class="coupon-label">
+                    {{form.discount.label}}  -￥{{form.discount.adjustmentTotal / 100}}
+                </view>
+                <view class="discounts-item" wx:else>
+                    <text wx:if="{{block.discounts || block.discounts.length !== 0}}">{{block.discounts.length || 0}}个可用活动</text>
+                </view>
+            </view>
+
+        </view>
+
+        <view class="order-item">
+
+            <view class="coupon info" bindtap="select">
+                <view>优惠券</view>
+                <view class="coupon-item">
+
+                    <view wx:if="{{block.coupon.id}}" class="coupon-label">
+                        {{block.coupon.discount.label}}  -￥{{-paymentMoneys.discounts.coupon / 100}}
+                    </view>
+                    <view class="coupon-num" wx:else>
+                        {{block.coupons.length || 0}}优惠券张可用
+                    </view>
+                </view>
+
+            </view>
+        </view>
+        <view class="order-item" wx:if="{{block.invoice_status == 1}}">
+            <view class="invoice info" bindtap="addInvoice">
+                <view>
+                    发票信息
+                </view>
+                <view class="invoice__item">
+                    <view wx:if="{{form.invoice.id}}" >
+                        {{form.invoice.title}}
+                    </view>
+                    <view wx:else>
+                        不开发票
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                备注
+            </view>
+            <view class="remarks info">
+                <view>
+                    <input bindinput="inputNote" type="text" placeholder="选填：填写您的附加信息" />
+                </view>
+            </view>
+        </view>
+        <view class="order-info">
+            <view class="info-item">
+                <view class="item-left">
+                    商品件数
+                </view>
+                <view class="item-right">
+                    {{block.order.count}}件
+                </view>
+            </view>
+            <view class="info-item">
+                <view class="item-left">
+                    金额合计
+                </view>
+                <view class="item-right">
+                    ￥ {{block.order.total / 100}}
+                </view>
+            </view>
+            <view class="info-item">
+                <view class="item-left">
+                    优惠抵扣 ：
+                </view>
+                <view class="item-right">
+                    ￥{{paymentMoneys.discounts.total / 100}}
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="sbumit-order mx-1px-top">
+        <view class="back">
+            {{block.order.count}}件商品, 合计 ￥{{(paymentMoneys.total + block.order.payable_freight) / 100}}
+        </view>
+        <button class="sbumit" bindtap="submitOrder" loading="{{loading}}">
+            提交订单
+        </button>
+    </view>
+</view>
+
+<view class="coupon-maks {{show ? 'cur' : ''}}">
+    <view class="coupon-box">
+        <radio-group bindchange="change" >
+            <view class="coupon-item" wx:for="{{block.coupons}}" wx:key="{{index}}">
+                <radio id="index-{{index}}" value="{{index}}" checked="{{item.checked}}"/>
+                <label for="index-{{index}}">
+                    <view class="coupon">
+                        <view class="coupon-left">
+                            <view class="text-wrap">
+                                <view class="text-box">
+                                    <view class="text">
+                                        <text class="money" wx:if="{{item.discount.action_type.type == 'cash'}}">￥</text>
+                                        <sapn>{{ item.discount.action_type.value }}</sapn>
+
+                                        <text class="money" wx:if="{{item.discount.action_type.type == 'discount'}}">折</text>
+                                    </view>
+                                    <text class="label text">{{ item.discount.label }}</text>
+                                </view>
+
+                            </view>
+                            <view class="dot-wrap">
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                            </view>
+                        </view>
+                        <view class="coupon-right">
+                            <view class="top">
+                                <span class="type">
+                                    <span wx:if="{{item.discount.channel == 'ec'}}">商城</span>
+                                    <span wx:else>门店</span>
+                                </span>
+                                <text class="info">{{item.discount.title}}</text>
+                            </view>
+                            <view class="bottom">
+                                <view class="bottom-use">
+                                    <view class="tiem-box">
+                                        <text>{{item.discount.use_start_time}}至{{item.discount.use_end_time}}</text>
+                                    </view>
+                                </view>
+                            </view>
+
+                            <view class="select {{ index == check ? 'activity' : ''}}">
+
+                            </view>
+                        </view>
+                    </view>
+
+                </label>
+            </view>
+
+        </radio-group>
+    </view>
+    <view class="button-box">
+        <button class="sure" type="primary" bindtap="sure">确定</button>
+        <button type="default" bindtap="cancel">取消</button>
+    </view>
+</view>
+
+<!--选择促销部分-->
+<view class="maks {{show_discounts ? 'cur' : ''}}" bindtap="showDiscounts">
+
+</view>
+
+<view class="select-coupon-discounts {{show_discounts ? 'cur' : ''}}">
+    <view class="select-discounts">
+        <view class="select-discounts-top">
+            <view class="title">
+                促销活动
+                <view class="close" bindtap="showDiscounts">
+                    X
+                </view>
+            </view>
+        </view>
+
+        <view class="select-discounts-bottom">
+            <view class="activity info">
+                <view wx:if="{{!block.discounts || block.discounts.length == 0}}">
+                    您暂无可用优惠
+                </view>
+                <block wx:else>
+                    <radio-group bindchange="changeDiscounts">
+                        <view class="input-box mx-1px-bottom" wx:for="{{block.discounts}}" wx:key="{{index}}">
+                            <view>
+                                <label class="radio">
+                                    <text>{{item.label}}</text>
+                                    <radio color="red" disabled="{{form.isDisabled}}" value="{{index}}" checked="{{formStates.discountsCheckIndex == index}}"/>
+                                </label>
+                            </view>
+                        </view>
+                        <view class="input-box mx-1px-bottom">
+                            <view>
+                                <label class="radio" >
+                                    <text>不使用优惠</text>
+                                    <radio value="-1" checked="{{formStates.discountsCheckIndex == -1}}"/>
+                                </label>
+                            </view>
+                        </view>
+                    </radio-group>
+                </block>
+            </view>
+        </view>
+    </view>
+</view>

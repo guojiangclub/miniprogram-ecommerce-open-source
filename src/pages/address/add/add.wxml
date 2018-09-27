@@ -1,0 +1,49 @@
+<view id="address-add">
+    <view class="address-info">
+        <view class="info-item mx-1px-bottom">
+            <label for="name">姓名:</label>
+            <view class="form-control">
+                <input type="text" id="name" data-type="accept_name" value="{{detail.accept_name}}" bindinput="input" />
+            </view>
+        </view>
+        <view class="info-item mx-1px-bottom">
+            <label for="phone">联系电话:</label>
+            <view class="form-control">
+                <input type="number" id="phone" data-type="mobile" value="{{detail.mobile}}" bindinput="input" />
+            </view>
+        </view>
+        <view class="info-item mx-1px-bottom">
+            <label>所在地:</label>
+            <view class="form-control select">
+                <picker mode="region" bindchange="bindRegionChange" value="{{detail.address_name}}">
+                    <view class="picker">
+                        {{detail.address_name[0]}} {{detail.address_name[1]}} {{detail.address_name[2]}}
+                    </view>
+                </picker>
+            </view>
+        </view>
+        <view class="info-item mx-1px-bottom">
+            <label for="address">详细地址:</label>
+            <view class="form-control">
+                <input type="text" id="address" data-type="address" value="{{detail.address}}" bindinput="input" />
+            </view>
+        </view>
+        <view class="info-item mx-1px-bottom">
+            <label class="checkbox" bindtap="check">
+                <checkbox color="#fff" checked="{{detail.is_default}}"/>
+                <text>设为默认地址</text>
+            </label>
+        </view>
+    </view>
+    <view class="button-box">
+        <button type="primary" class="submit" bindtap="submit" loading="{{loading}}">保存</button>
+        <button type="warn" class="delete" wx:if="{{id}}" bindtap="delete" loading="{{deleteLoading}}">删除</button>
+    </view>
+
+
+   <!-- <view class="add-wx" bindtap="addWx">
+        一键导入微信地址
+    </view>-->
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

@@ -1,11 +1,30 @@
 {
   "pages": [
     "pages/index/index/index",
+    "pages/index/classification/classification",
+    "pages/store/search/search",
+    "pages/store/list/list",
     "pages/store/detail/detail",
+    "pages/store/shearImg/shearImg",
     "pages/store/cart/cart",
+    "pages/store/order/order",
+    "pages/store/orderGoods/orderGoods",
+    "pages/store/payment/payment",
+    "pages/store/success/success",
     "pages/user/register/register",
     "pages/user/login/login",
-    "pages/user/user/user"
+    "pages/user/user/user",
+    "pages/user/usersetting/usersetting",
+    "pages/user/bindingphone/bindingphone",
+    "pages/address/add/add",
+    "pages/address/list/list",
+    "pages/order/detail/detail",
+    "pages/order/index/index",
+    "pages/order/search/search",
+    "pages/order/evaluate/evaluate",
+    "pages/favorite/index/index",
+    "pages/coupon/index/index",
+    "pages/coupon/onDetail/onDetail"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -22,9 +41,15 @@
     "list": [
       {
         "pagePath": "pages/index/index/index",
-        "text": "购物",
+        "text": "首页",
         "iconPath": "assets/image/shop.png",
         "selectedIconPath": "assets/image/shop-r.png"
+      },
+      {
+        "pagePath": "pages/index/classification/classification",
+        "text": "分类",
+        "iconPath": "assets/image/class.png",
+        "selectedIconPath": "assets/image/class-r.png"
       },
       {
         "pagePath": "pages/user/user/user",

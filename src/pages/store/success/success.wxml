@@ -1,0 +1,49 @@
+<view id="store-success">
+    <view class="pay-status pay-error mx-1px-bottom" wx:if="{{!isOK}}">
+        支付失败
+    </view>
+    <view wx:if="{{isOK}}">
+        <view class="pay-status pay-ok mx-1px-bottom">
+            支付成功
+        </view>
+        <view class="order-info">
+            <view class="order-money mx-1px-bottom">
+                <view class="left">
+                    付款金额
+                </view>
+                <view class="right">
+                    ￥{{info.order.total / 100 || ''}}
+                </view>
+            </view>
+            <view class="info-list">
+                <view class="order-item">
+                    <view class="item-left">
+                        订单编号
+                    </view>
+                    <view class="item-right">
+                        {{info.order.order_no}}
+                    </view>
+                </view>
+                <view class="order-item">
+                    <view class="item-left">
+                        订单时间
+                    </view>
+                    <view class="item-right">
+                        {{info.order.submit_time}}
+                    </view>
+                </view>
+                <view class="order-item">
+                    <view class="item-left">
+                        订单状态
+                    </view>
+                    <view class="item-right">
+                        支付成功
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="button-box">
+        <button type="primary" type="primary" bindtap="jump">查看订单详情</button>
+    </view>
+</view>

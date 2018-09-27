@@ -167,8 +167,8 @@ Page({
         }).then(res =>{
             if (res.statusCode == 200) {
                 res = res.data;
-                if (res.access_token) {
-                    var result=res;
+                if (res.status) {
+                    var result=res.data;
                     if(result.access_token){
                         result.access_token =result.token_type + ' ' + result.access_token;
                         var expires_in = result.expires_in || 315360000;
@@ -204,6 +204,37 @@ Page({
                         showCancel: false
                     });
                 }
+
+               /* var result=res;
+                if(result.access_token){
+                    result.access_token =result.token_type + ' ' + result.access_token;
+                    var expires_in = result.expires_in || 315360000;
+                    cookieStorage.set("user_token",result.access_token,expires_in);
+                    // 判断来源
+                    if (this.data.url) {
+                        // 判断需要跳回的页面是否为tabbar页面
+                        var path = [
+                            'pages/index/index/index',
+                            'pages/index/classification/classification',
+                            'pages/store/tabCart/tabCart',
+                            'pages/user/user/user'
+                        ];
+                        var pathIndex = path.indexOf(this.data.url);
+                        if (pathIndex == -1) {
+                            wx.redirectTo({
+                                url:"/"+this.data.url
+                            })
+                        } else {
+                            wx.switchTab({
+                                url:"/"+this.data.url
+                            })
+                        }
+                    } else {
+                        wx.switchTab({
+                            url: '/pages/user/user/user'
+                        })
+                    }
+                }*/
             } else {
                 wx.showModal({
                     content:  "请求失败",

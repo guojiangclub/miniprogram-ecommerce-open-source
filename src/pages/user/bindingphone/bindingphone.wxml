@@ -1,0 +1,26 @@
+<view id="bindingphone">
+    <view class="tips" hidden="{{!message}}">{{message}}</view>
+    <view class="phone__warning">
+        <view class="phone__num">
+            <input type="text" placeholder="手机号码"  bindinput="changeCode"/>
+        </view>
+        <view class="phone__code">
+            <view class="input">
+                <input type="text" placeholder="验证码" bindinput="changeIdentifyCode" />
+            </view>
+            <view class="code__get code-send" bindtap="getCode">
+                {{code.codeText}}
+            </view>
+        </view>
+    </view>
+
+    <view class="phone__box">
+        <view class="phone__btn phone-confirm phone-binding" bindtap="submit">
+            确定绑定
+        </view>
+        <view class="phone__btn phone-cancel" bindtap="back">
+            取消
+        </view>
+    </view>
+
+</view>

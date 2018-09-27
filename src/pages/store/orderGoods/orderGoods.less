@@ -1,0 +1,178 @@
+.order-item{
+  .title{
+    height: 35px;
+    line-height: 35px;
+    color: #888;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+
+  .info{
+    font-size: 14px;
+    background: #FFFFFF;
+    padding: 10px 25px 10px 20px;
+    background-image: url("https://uto.ibrand.cc/m/static/img/ic_forward.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: 20px;
+  }
+  .address{
+    i{
+      display: block;
+      color: #9b9b9b;
+      margin-right: 8px;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      .name-box {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        .name{
+          flex: 1;
+        }
+        span{
+          font-size: 14px;
+          display: block;
+          font-weight: bold;
+        }
+      }
+    }
+    .address {
+      display: flex;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 12px;
+      color:#9b9b9b;
+    }
+
+    .name{
+      font-size: 16px;
+    }
+  }
+  .goods{
+    background-image: none;
+    color: #8a8a8a;
+    .goods-item {
+      display: flex;
+      .item-left {
+        overflow: hidden;
+        image{
+          width: 50px;
+          height: 50px;
+          border: 1px solid #e5e5e5;
+          display: block;
+        }
+
+      }
+      .item-right{
+        flex: 1;
+        padding-left: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .item{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+
+          .name{
+            color: #000000;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 90%;
+          }
+        }
+      }
+    }
+  }
+  .all-goods{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .good-box{
+      display: flex;
+      align-items: center;
+      flex: 1;
+      overflow: hidden;
+      .good-img{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+        image{
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+        }
+      }
+    }
+    .num{
+      color:#9b9b9b;
+      font-size: 13px;
+    }
+
+  }
+  .total{
+    font-size: 14px;
+    text-align: right;
+    padding: 10px 20px;
+    background: #FFFFFF;
+  }
+  .coupon{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .coupon-label{
+      color: #ED0000;
+    }
+    .coupon-num{
+      color: #FFFFFF;
+      background: #ea4448;
+      border-radius: 4px;
+      padding: 3px 7px;
+      margin-right: 10px;
+    }
+  }
+  .point{
+    padding: 10px 0;
+    background-image: none;
+    .input-box{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 10px 20px;
+
+      .use-all{
+        color: #1aad19;
+      }
+    }
+    .offset{
+      margin-top: 10px;
+      text-align: right;
+      color: #f72b0c;
+      padding: 0 20px;
+    }
+  }
+  .activity{
+    background-image: none;
+    padding: 0;
+
+    .input-box{
+      padding: 10px 20px;
+      .radio{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text{
+          flex: 1;
+        }
+      }
+    }
+  }
+}

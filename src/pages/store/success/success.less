@@ -1,0 +1,57 @@
+@import "../../../assets/css/global";
+#store-success {
+  .pay-status{
+    height: 95px;
+    background: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 95px;
+    text-align: center;
+
+    &.pay-error{
+      color: #ff0000;
+    }
+    &.pay-ok{
+      color: #FF7F15;
+    }
+  }
+
+  .order-info{
+    font-size: 14px;
+    color: #888888;
+    background: #FFFFFF;
+    .order-money{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+
+      .left{
+        color: #888888;
+        font-size: 15px;
+      }
+      .right{
+        font-size: 24px;
+        color: #000000;
+      }
+    }
+    .info-list{
+      padding: 10px 20px;
+      line-height: 30px;
+      .order-item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .button-box{
+    margin-top: 30px;
+
+    button{
+      margin: 0 20px 15px 20px;
+      background: @globalColor;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+<view id="store-list">
+    <view class="commodity-top" catchtouchmove="move">
+        <view class="sidebar mx-1px-bottom">
+            <view class="sidebar-left">
+                <span class="iconfont icon-fenzu" bindtap="jumpClass">
+
+                </span>
+            </view>
+            <view class="sidebar-right">
+                <view class="right-seek iconfont icon-sousuo" bindtap="search">
+
+                </view>
+                <view class="right-cart iconfont icon-gouwuche" bindtap="cart">
+
+                </view>
+            </view>
+        </view>
+        <view class="filter-box">
+            <view class="filter-item mx-1px-right" data-type="updated_at" bindtap="changeOrderBy">
+                <view class="left {{ orderBy === 'updated_at' ? 'active' : ''}}">最新</view>
+                <view class="right {{(orderBy === 'updated_at' && sort === 'asc') ? 'asc' : ''}} {{(orderBy === 'updated_at' && sort === 'desc') ? 'desc' : ''}}"></view>
+            </view>
+            <view class="filter-item mx-1px-right" data-type="sell_price" bindtap="changeOrderBy">
+                <view class="left {{ orderBy === 'sell_price' ? 'active' : ''}}">价格</view>
+                <view class="right {{(orderBy === 'sell_price' && sort === 'asc') ? 'asc' : ''}} {{(orderBy === 'sell_price' && sort === 'desc') ? 'desc' : ''}}"></view>
+            </view>
+            <view class="filter-item mx-1px-right" data-type="sale_count" bindtap="changeOrderBy">
+                <view class="left {{ orderBy === 'sale_count' ? 'active' : ''}}">销量</view>
+                <view class="right {{(orderBy === 'sale_count' && sort === 'asc') ? 'asc' : ''}} {{(orderBy === 'sale_count' && sort === 'desc') ? 'desc' : ''}}"></view>
+            </view>
+            <view class="filter-item big-filter {{c_id ? '' : 'dis'}}" bindtap="showFilter">
+                筛选 ▼
+            </view>
+        </view>
+    </view>
+    <view class="commodity-bottom" hidden="{{showFilter}}">
+        <view wx:for="{{storeList}}" wx:for-index="idx" wx:key="{{idx}}">
+            <view class="commodity-out" data-id="{{item.id}}" wx:for="{{storeList[idx]}}" wx:key="{{index}}" bindtap="jump">
+                <view class="commodity-box">
+                    <view class="commodity-img">
+                        <image mode="widthFix" src="{{item.img}}" />
+                    </view>
+                    <view class="commodity-name">
+                        {{item.name}}
+                    </view>
+                    <view class="commodity-money">
+                        <view class="money">
+                            ￥{{item.sell_price}}
+                        </view>
+                        <view class="discount-tags">
+                            <span class="tags-item" wx:for="{{item.discount_tags}}" wx:key="*this" wx:for-item="tags">{{tags}}</span>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="no-data" wx:if="{{!storeList[0].length && init}}">
+        暂无数据
+    </view>
+</view>
+<view class="right-filter-box" hidden="{{!showFilter}}" animation="{{show.animation}}">
+
+    <view class="box">
+        <view>
+            <view class="title">
+                价格区间
+            </view>
+            <view class="list">
+                <view class="list-block" wx:for="{{priceList}}" wx:key="{{index}}">
+                    <view data-num="{{item}}" class="{{shadows.price === item ? 'selected' : ''}}" bindtap="checkPrice">{{item}}元</view>
+                </view>
+
+            </view>
+        </view>
+        <view wx:for="{{filter}}" wx:key="*this">
+            <view class="title">
+                {{item.key}}
+            </view>
+            <view class="list">
+                <view class="list-block" wx:for="{{item.values}}" wx:for-item="obj" wx:key="*this">
+                    <view data-id="{{obj.id}}" data-type="{{obj}}" class="{{!!selections[obj.id] ? 'selected' : ''}}" bindtap="check">
+                        {{obj.text}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="button-box">
+            <button type="default" bindtap="cancel">取消</button>
+            <button type="primary" bindtap="confirm">确定</button>
+        </view>
+    </view>
+</view>

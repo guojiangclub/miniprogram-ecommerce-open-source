@@ -1,0 +1,28 @@
+<view id="address-list">
+    <view class="list-box">
+        <view class="list-item mx-1px-bottom" data-info="{{item}}" wx:for="{{list}}" wx:key="index" bindtap="setInfo">
+            <view class="user">
+                <view class="name">
+                    <text>{{item.accept_name}}</text>
+                    <text class="phone">{{item.mobile}}</text>
+                </view>
+                <view class="default" wx:if="{{item.is_default}}">
+                    默认
+                </view>
+            </view>
+            <view class="address">{{item.address_name}} {{item.address}}</view>
+        </view>
+        <view class="list-item add-address" bindtap="add">
+            <view class="icon iconfont icon-juxing">
+
+            </view>
+            <view>
+                新增收货地址
+            </view>
+        </view>
+
+        <view class="add-wx" bindtap="addWx">
+            一键导入微信地址
+        </view>
+    </view>
+</view>

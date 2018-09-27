@@ -1,0 +1,192 @@
+@import "../../../assets/css/global";
+#on-detail{
+  /*padding: 0 12px;
+  text-align: center;
+
+  .top{
+    font-size: 16px;
+    margin-top: 40px;
+  }
+  .code{
+    text-align: center;
+    margin-top: 20px;
+  }
+  .tips{
+    margin-top: 20px;
+    text-align: left;
+  }*/
+
+  .coupon {
+    display: flex;
+    padding: 10px 15px;
+    &.shasow {
+      box-shadow: 0px 7px 10px 0px rgba(6, 0, 0, 0.2);
+    }
+
+    .coupon-left {
+      width: 110px;
+      height: 80px;
+      color: #ffffff;
+      background-size: cover;
+      background: @globalColor;
+      position: relative;
+      &.discount {
+        background: @globallColorY;
+      }
+      .text-wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 12px;
+        .text-box {
+          text-align: center;
+          width: 100%;
+          .text{
+            display: block;
+            padding: 0 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 20px;
+            font-weight: 600;
+            &.label{
+              font-size: 12px;
+              font-weight: 100;
+            }
+            .money{
+              font-size: 14px;
+              font-weight: 100;
+            }
+          }
+
+          .money-num {
+            font-size: 25px;
+            font-weight: bold;
+          }
+        }
+      }
+      .dot-wrap {
+        position: absolute;
+        top: -12px;
+        .dot-item {
+          width: 5px;
+          height: 5px;
+          background: #F3F3F3;
+          border-radius: 50%;
+          margin: 11px 0 9px -2px;
+
+          &:last-child {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+    .coupon-right {
+      flex: 1;
+      background: #fff;
+      padding: 0px 15px;
+      font-size: 12px;
+      overflow: hidden;
+
+      .top {
+        font-size: 12px;
+        display: -webkit-box;
+        color: @globalColor;
+        height: 40px;
+        line-height: 20px;
+        padding-top: 8px;
+        box-sizing: border-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        .type {
+          color: @globalColor;
+          border: 1px solid @globalColor;
+          padding: 2px 5px;
+          border-radius: 3px;
+          line-height: 20px;
+          margin-right: 5px;
+        }
+      }
+
+      .bottom {
+        .bottom-use {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 12px;
+          margin: 7px 0;
+          .tiem-box {
+            color: #9E9E9F;
+            flex: 1;
+            font-size: 9px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 5px;
+          }
+          .btn {
+            text-align: center;
+            border-radius: 3px;
+            padding: 3px 12px;
+          }
+          .use {
+            color: #fff;
+            border: 1px solid @globalColor;
+            background: @globalColor;
+          }
+          .already {
+            color: @globalColor;
+            background: #fff;
+            border: 1px solid @globalColor;
+
+          }
+        }
+      }
+    }
+  }
+  .detail-item{
+    background: #FFFFFF;
+    &.user-info{
+      margin-top: 10px;
+    }
+    .title{
+      font-size: 14px;
+      padding: 10px 15px;
+    }
+    .shop-info{
+      font-size: 12px;
+      padding: 10px 15px;
+      line-height: 25px;
+      i{
+        font-size: 12px;
+        color: @globalColor;
+        margin-right: 5px;
+      }
+
+    }
+
+    .info{
+      font-size: 12px;
+      padding: 10px 15px;
+    }
+  }
+  .button-box{
+    position: fixed;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    background: @globalColor;
+    color: #FFFFFF;
+    border-radius: 3px;
+    .btn{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,242 @@
+<view id="order-detail">
+    <view class="border-box">
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                <view class="name">
+                    订单状态
+                </view>
+                <view class="type">
+                    {{typeList[order.status]}}
+                </view>
+            </view>
+            <view class="goods-item">
+                <view class="item-middle">
+                    <view class="middle-item mx-1px-bottom" data-id="{{item.item_meta.detail_id}}" wx:for="{{order.items}}" bindtap="jumpDetail">
+                        <image src="{{item.item_meta.image}}" />
+                        <view class="text">
+                            <view class="names">
+                               {{item.item_name}}
+                            </view>
+                            <view class="model">
+                                {{item.item_meta.specs_text}}
+                            </view>
+                        </view>
+                        <view class="money-box">
+                            <view>
+                                {{item.quantity}}件
+                            </view>
+                            <view>
+                                ￥{{item.units_total / 100}}
+                            </view>
+                            <view wx:if="{{(item.total != 0 && order.can_refund) || (item.total != 0 && item.is_refunded)}}">
+                                <view class="retreat" data-id="{{item.id}}" data-no="{{order.order_no}}" wx:if="{{order.can_refund && !item.is_refunded}}" catchtap="applyRetreat" >申请售后</view>
+                                <view class="retreat" data-no="{{btn.refund_no}}" wx:for="{{item.refund_btn}}" wx:for-item="btn" catchtap="jumpRetreat">{{btn.refund_status_text}}</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="item-bottom">
+                    <view class="all-money">
+                        {{order.count}}件, 共计 ￥{{order.items_total / 100}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item" wx:if="{{order.group_item_count > 1}}">
+            <view class="title mx-1px-bottom">
+                <view class="name">
+                    订单状态
+                </view>
+                <view class="type">
+                    {{typeList[order.status]}}
+                </view>
+            </view>
+            <view class="goods-item">
+                <view class="item-middle" wx:for="{{order.group_order_item}}">
+                    <view class="express-info mx-1px-bottom" wx:if="{{item.shipping}}">
+                        <view class="left">
+                            <view>
+                                {{item.shipping_title}}
+                            </view>
+                        </view>
+                        <view class="right">
+                            <view>
+                                物流公司 : {{item.shipping.name}}
+                            </view>
+                            <view>
+                                物流编号 : {{item.shipping.tracking}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="express-info mx-1px-bottom" wx:else>
+                        等待商家发货
+                    </view>
+                    <view class="middle-item middle-item__active mx-1px-bottom" data-id="{{good.item_meta.detail_id}}" wx:for="{{item.item}}" wx:for-item="good" bindtap="jumpDetail">
+                        <image src="{{good.item_meta.image}}" />
+                        <view class="text">
+                            <view class="names">
+                                {{good.item_name}}
+                            </view>
+                            <view class="model">
+                                {{good.item_meta.specs_text}}
+                            </view>
+                        </view>
+                        <view class="money-box">
+                            <view>
+                                {{good.quantity}}件
+                            </view>
+                            <view>
+                                ￥{{good.units_total / 100}}
+                            </view>
+                            <view wx:if="{{(good.total != 0 && order.can_refund) || (good.total != 0 && good.is_refunded)}}">
+                                <view class="retreat" data-id="{{good.id}}" data-no="{{order.order_no}}" wx:if="{{order.can_refund && !good.is_refunded}}" catchtap="applyRetreat" >申请售后</view>
+                                <view class="retreat" data-no="{{btn.refund_no}}" wx:for="{{good.refund_btn}}" wx:for-item="btn" catchtap="jumpRetreat">{{btn.refund_status_text}}</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="item-bottom item-bottom__active">
+                    <div class="all">商品合计：</div>
+                    <view class="all-money">
+                        {{order.count}}件, 共计 ￥{{order.items_total / 100}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                订单信息
+            </view>
+            <view class="order-info">
+                <view class="info-item">
+                    <view class="name">
+                        订单编号 :
+                    </view>
+                    <view class="text">{{order.order_no}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        订单来源 :
+                    </view>
+                    <view class="text">{{order.from}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        支付方式 :
+                    </view>
+                    <view class="text">{{order.payment_text}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        下单时间 :
+                    </view>
+                    <view class="text">{{order.submit_time}}</view>
+                </view>
+                <view class="info-item" wx:if="{{order.status==6}}">
+                    <view class="name">
+                        取消原因 :
+                    </view>
+                    <view class="text">{{order.cancel_reason}}</view>
+                </view>
+                <view class="info-item" wx:if="{{order.status==6}}">
+                    <view class="name">
+                        取消时间 :
+                    </view>
+                    <view class="text">{{order.updated_at}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                收货信息
+            </view>
+            <view class="order-info">
+                <view class="info-item">
+                    <view class="name">
+                        地址 :
+                    </view>
+                    <view class="text">{{order.address_name}} {{order.address}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        姓名 :
+                    </view>
+                    <view class="text">{{order.accept_name}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        电话 :
+                    </view>
+                    <view class="text">{{order.mobile}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                发票信息
+            </view>
+            <view class="order-info">
+                {{order.invoices[0]?order.invoices[0].content:"暂无发票信息"}}
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                备注
+            </view>
+            <view class="order-info">
+                {{order.note || order.message || '暂无备注'}}
+            </view>
+        </view>
+        <view class="order-detail-info">
+            <view class="item">
+                <view class="name">
+                    商品件数：
+                </view>
+                <view class="num">
+                    {{order.count}}件
+                </view>
+            </view>
+            <view class="item">
+                <view class="name">
+                    商品金额：
+                </view>
+                <view class="num">
+                    ￥{{order.items_total / 100}}
+                </view>
+            </view>
+            <view class="item">
+                <view class="name">
+                    优惠抵扣：
+                </view>
+                <view class="num">
+                    {{order.adjustments_total / 100}}
+                </view>
+            </view>
+            <view class="item">
+                <view class="name big">
+                    实付金额：
+                </view>
+                <view class="num big-money">
+                    ￥{{order.total / 100}}
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="button-type">
+        <view class="type-submit" wx:if="{{order.status==1}}">
+            <view class="cancel" bindtap="cancel">
+                取消订单
+            </view>
+            <view class="submit" data-no="{{order.order_no}}" bindtap="pay">
+                立即付款
+            </view>
+        </view>
+        <view class="sbumit-cancel" wx:if="{{order.status==3}}" bindtap="receive">
+            确认收货
+        </view>
+
+        <view class="sbumit-cancel" wx:if="{{order.status==2}}" bindtap="delivery">
+            立即发货
+        </view>
+    </view>
+</view>

@@ -1,0 +1,36 @@
+<view id="favorite-index">
+    <checkbox-group bindchange="select">
+    <view class="num-box">
+        <view class="goods">您收藏了 <text class="num">{{total}}</text> 个商品</view>
+        <view class="operation" bindtap="edit">{{edit ? '完成' : '编辑'}}</view>
+    </view>
+    <view class="goods-list">
+            <view wx:for="{{dataList}}" wx:for-index="idx" wx:key="*this">
+                <view class="goods-item mx-1px-bottom" wx:if="{{!item.remove}}" wx:for="{{dataList[idx]}}" wx:key="*this">
+                    <view class="img-box">
+                        <checkbox hidden="{{!edit}}" color="#fff" checked="{{item.isCheck}}" data-ischecked="{{item.isCheck}}" data-findex="{{idx}}" data-index="{{index}}" data-value="{{item.favoriteable_id}}" value="{{item.id}}" />
+                        <image src="{{item.favoriteable.img}}" data-id="{{item.favoriteable_id}}" bindtap="jump" />
+                    </view>
+                    <view class="text" data-id="{{item.favoriteable.id}}" bindtap="jump">
+                        <view class="names">{{item.favoriteable.name}}</view>
+                        <view class="money">¥{{item.favoriteable.sell_price}}</view>
+                    </view>
+                </view>
+            </view>
+        <view class="loadingbox" hidden="{{!show}}">
+            正在加载下一页数据
+        </view>
+    </view>
+    </checkbox-group>
+    <view class="cancel mx-1px-top" wx:if="{{edit}}">
+        <view class="checkbox">
+            <label>
+                <checkbox bindtap="click" color="#fff" checked="{{allCheck}}" /> 全选
+            </label>
+        </view>
+        <view class="cancel-button" bindtap="cancel">
+            取消收藏
+        </view>
+
+    </view>
+</view>
