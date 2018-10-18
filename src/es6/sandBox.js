@@ -99,24 +99,5 @@ export const sandBox = {
                 }
             })
         })
-    },
-    uploadFile({api,filePath,header,name}){
-        return new Promise((resolve,reject) =>{
-            wx.uploadFile({
-                url:`${config.GLOBAL.baseUrl}${api}`,
-                header,
-                filePath,
-                name,
-                success:res => {
-                    resolve(res)
-                },
-                fail:rej => {
-                    reject(rej)
-                }
-            })
-        })
-    },
-    APIs: {
-
     }
 };

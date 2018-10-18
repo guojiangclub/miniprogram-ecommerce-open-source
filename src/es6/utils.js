@@ -186,12 +186,6 @@ function pageLogin(url,callback){
     }
 }
 
-
-//判断生日有礼
-
-
-
-
 module.exports = {
 	getUrl: getCurrentPageUrlWithArgs,
 	pageLogin:pageLogin,

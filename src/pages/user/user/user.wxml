@@ -9,7 +9,7 @@
             </view>
         </view>
 
-        <button wx:if="{{token && !detail.avatar }}" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo" class="button">
+        <button wx:if="{{token && !detail.avatar && !detail.nick_name }}" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo" class="button">
 
         </button>
 
