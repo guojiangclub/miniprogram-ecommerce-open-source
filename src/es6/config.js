@@ -3,6 +3,7 @@ export default  {
     BRAND: {
         name: 'IBRAND',
         logo: 'https://wx.qlogo.cn/mmhead/Q3auHgzwzM6OM5hb6yiap47BtficrcdCy0qviaOvpeYALPVBIdRzsgLxQ/0',
+
         // https://demo-open-admin.ibrand.cc/
     },
     GLOBAL: {
