@@ -135,18 +135,18 @@ Page({
         if (success) {
             var that = this;
             wx.requestPayment({
-                "timeStamp": charge.timeStamp,
-                "nonceStr": charge.nonceStr,
-                "package": charge.package,
-                "signType": charge.signType,
-                "paySign": charge.paySign,
+                "timeStamp": charge.credential.wechat.timeStamp,
+                "nonceStr": charge.credential.wechat.nonceStr,
+                "package": charge.credential.wechat.package,
+                "signType": charge.credential.wechat.signType,
+                "paySign": charge.credential.wechat.paySign,
                 success: res => {
                     if (res.errMsg == 'requestPayment:ok') {
                         this.setData({
                             loading: false
                         });
                         wx.redirectTo({
-                            url: `/pages/store/success/success?order_no=${that.data.order_no}&amount=${that.data.amount}&channel=${that.data.channel}`
+                            url: `/pages/store/success/success?order_no=${that.data.order_no}&amount=${that.data.amount}&charge_id=${charge.charge_id}`
                         })
 
                     } else {

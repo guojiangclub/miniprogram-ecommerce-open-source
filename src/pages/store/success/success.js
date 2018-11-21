@@ -3,12 +3,14 @@ Page({
 	data: {
 		info: {},
 		order_no: '',
-		isOK: true
+		isOK: true,
+        charge_id: ''
 	},
 	onLoad(e) {
 		this.setData({
 			order_no: e.order_no,
-			amount:e.amount
+			amount:e.amount,
+            charge_id: e.charge_id
 		});
 		pageLogin(getUrl(), () => {
 			this.queryOrderType(e.order_no);
@@ -29,7 +31,8 @@ Page({
 			},
 			data: {
 				order_no: no,
-				amount: this.data.amount
+				amount: this.data.amount,
+                charge_id: this.data.charge_id
 			},
 
 		}).then(res =>{
