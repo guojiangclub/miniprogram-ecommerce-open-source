@@ -15,6 +15,7 @@
 git clone git@github.com:ibrandcc/miniprogram-ecommerce-open-source.git   // 克隆当前项目
 npm install   // 安装项目所需依赖
 npm install --global gulp  // 如果电脑上没有安装gulp，需要全局安装下，有安装可忽略
+gulp  // 用来编译less为wxss
 npm run dev  // 编译，会在当前项目生成dist目录，使用微信开发者工具打开目录就可以看到效果。注意：开发项目还是打开项目目录即可。
 npm run build // 编译当前项目
 
