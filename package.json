@@ -17,6 +17,8 @@
     "copy-webpack-plugin": "^4.0.1",
     "glob": "^7.1.2",
     "gulp-minify-css": "^1.2.4",
+    "natives": "^1.1.6",
+    "nativescript": "^5.1.0",
     "npm": "^5.4.2",
     "pingpp-js": "^2.1.13",
     "regenerator": "^0.10.0",
