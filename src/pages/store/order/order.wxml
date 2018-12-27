@@ -74,7 +74,7 @@
             <view class="title__point info" bindtap="showDiscounts">
                 <text>促销活动</text>
                 <view wx:if="{{form.discount.id}}" class="coupon-label">
-                    {{form.discount.label}}  -￥{{form.discount.adjustmentTotal / 100}}
+                    {{form.discount.label}}  -￥{{-form.discount.adjustmentTotal / 100}}
                 </view>
                 <view class="discounts-item" wx:else>
                     <text wx:if="{{block.discounts || block.discounts.length !== 0}}">{{block.discounts.length || 0}}个可用活动</text>

@@ -12,7 +12,6 @@ import {
 Page({
     data: {
         loading:false,
-        show: false,
         block: {
             order: {
                 items: []
