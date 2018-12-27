@@ -17,7 +17,12 @@ Page({
         select_products:{},
         allCheck:true,
         channel:'normal',
-        loading:false
+        loading:false,
+        coupons: [],              // 可领取的优惠券信息
+        discounts: [],             // 可享受的优惠折扣信息
+        show_coupons: false,        // 领取优惠券
+        show_discounts: false,       // 查看促销活动
+        goodsList: [],     // 购物车里存在的商品id
     },
     onShow() {
         var token = cookieStorage.get('user_token');
@@ -38,7 +43,107 @@ Page({
             url: '/pages/store/detail/detail?id=' + id
         })
     },
+    goLogin() {
+        var url = getUrl();
+        wx.navigateTo({
+            url: '/pages/user/register/register?url=' + url
+        })
+    },
+    changeCoupons() {
+        this.setData({
+            show_coupons: !this.data.show_coupons
+        })
+    },
+    changeDiscounts() {
+        this.setData({
+            show_discounts: !this.data.show_discounts
+        })
+    },
 
+    // 购物车领券
+    cardDiscount(ids) {
+        sandBox.post({
+            api: 'api/shoppingCart/discount',
+            data: {
+                ids: ids
+            }
+        }).then(res => {
+            if (res.statusCode == 200) {
+                res = res.data;
+                if (res.status && res.data) {
+                    res.data.coupons.forEach(v => v.receive = false);
+                    this.setData({
+                        coupons: res.data.coupons,
+                        discounts: res.data.discounts
+                    })
+                }
+            }
+        })
+    },
+
+    // 领取优惠券
+    getCoupon(e) {
+        var is_login = cookieStorage.get('user_token');
+        var discount_id = e.currentTarget.dataset.id;
+        var index = e.currentTarget.dataset.index;
+        if (is_login) {
+            this.goodsConvertCoupon(discount_id, index);
+        } else {
+            var url = getUrl();
+            wx.showModal({
+                tiele: '',
+                content: '请先登录',
+                success: res => {
+                    if (res.confirm) {
+                        wx.navigateTo({
+                            url: '/pages/user/register/register?url=' + url
+                        })
+                    }
+                }
+            })
+        }
+    },
+    // 领取优惠券接口
+    goodsConvertCoupon(discount_id, index) {
+        var token = cookieStorage.get('user_token');
+        wx.showLoading({
+            title: '正在领取',
+            mask: true
+        })
+        sandBox.post({
+            api: 'api/coupon/take',
+            header: {
+                Authorization: token
+            },
+            data: {
+                discount_id: discount_id
+            }
+        }).then(res => {
+            if (res.statusCode == 200) {
+                res = res.data;
+                if (res.status) {
+                    var coupons = `coupons[${index}]`
+                    this.setData({
+                        [`${coupons}.receive`]: true
+                    });
+                    wx.showToast({
+                        title: '领取成功',
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.message,
+                        image: '../../../assets/image/error.png'
+                    })
+                }
+            } else {
+                wx.showToast({
+                    title: '领取失败',
+                    image: '../../../assets/image/error.png'
+                })
+            }
+            wx.hideLoading();
+        })
+    },
 
     // 提交本地购物车
     appendToCart(data) {
@@ -104,6 +209,20 @@ Page({
                             res.data[key].checked = true;
                             return res.data[key]
                         }).concat(data);
+
+                        // 购物车领券
+                        if (data.length) {
+                            var list = [];
+                            data.forEach(v => {
+                                if (this.data.goodsList.indexOf(v.com_id) == -1) {
+                                    list.push(v.com_id)
+                                };
+                            });
+                            this.setData({
+                                goodsList: list
+                            });
+                            this.cardDiscount(list);
+                        }
                     }
                     this.setData({
                         list: data

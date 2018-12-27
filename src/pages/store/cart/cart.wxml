@@ -1,4 +1,34 @@
 <view id="store-cart">
+    <view class="discount-box">
+        <!--登录状态-->
+        <view class="is-login" wx:if="{{(token && discounts.length) || (is_login && coupons.length)}}">
+            <view class="promotion-box">
+                <view class="promotion" bindtap="changeDiscounts" wx:if="{{discounts.length}}">
+                    <view class="title">
+                        {{discounts[0].tags}}
+                    </view>
+                    <view>
+                        {{discounts[0].label}} >
+                    </view>
+                </view>
+            </view>
+            <view class="coupon mx-1px-left" bindtap="changeCoupons" wx:if="{{coupons.length}}">
+                优惠券
+            </view>
+        </view>
+        <!--未登录状态-->
+        <div class="no-login" wx:if="{{!token}}" bindtap="goLogin">
+            <div class="left">
+                <i class="iconfont icon-warning"></i>
+                <div>
+                    <span>登录</span>后查看是否享受优惠
+                </div>
+            </div>
+            <div class="right">
+                登录 >
+            </div>
+        </div>
+    </view>
     <view class="goods-box">
         <checkbox-group bindchange="changeCheck">
             <view class="goods-item mx-1px-bottom" wx:for="{{list}}" wx:key="index">
@@ -51,5 +81,117 @@
         <button class="num-box" bindtap="order" loading="{{loading}}">
             结算<text>{{'('+ select_products.count + ')' || 0}}</text>
         </button>
+    </view>
+
+    <!--查看选择优惠券部分-->
+    <view class="maks {{show_coupons ? 'cur' : ''}}" bindtap="changeCoupons">
+    </view>
+
+    <view class="popup-box {{show_coupons ? 'cur' : ''}}">
+        <view class="popup">
+            <view class="popup-top">
+                <view class="title">
+                    优惠券
+                    <view class="close" bindtap="changeCoupons">
+                        X
+                    </view>
+                </view>
+            </view>
+            <view class="popup-bottom coupon">
+                <view class="title">
+                    可领优惠券
+                </view>
+                <view class="coupon-box">
+                    <view class="coupon-item" wx:for="{{coupons}}" wx:key="{{index}}">
+                        <view class="coupon">
+                            <view class="coupon-left">
+                                <view class="text-wrap">
+                                    <view class="text-box" >
+                                        <view class="text">
+                                            <span class="money" wx:if="{{item.action_type.type == 'cash'}}">￥</span>
+                                            <span class="num">{{ item.action_type.value }}</span>
+
+                                            <span class="money" wx:if="{{item.action_type.type == 'discount'}}">折</span>
+                                        </view>
+                                        <span class="label text">{{ item.label }}</span>
+                                    </view>
+
+                                </view>
+                                <view class="dot-wrap">
+                                    <view class="dot-item">
+
+                                    </view>
+                                    <view class="dot-item">
+
+                                    </view>
+                                    <view class="dot-item">
+
+                                    </view>
+                                    <view class="dot-item">
+
+                                    </view>
+                                    <view class="dot-item">
+
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="coupon-right">
+                                <view class="top">
+                                    <span class="info">{{item.title}}</span>
+                                </view>
+                                <view class="bottom">
+                                    <view class="bottom-use">
+                                        <view class="tiem-box">
+                                            <text>{{item.use_start_time}}至{{item.use_end_time}}</text>
+                                        </view>
+                                        <view class="btn use" data-id="{{item.id}}" data-index="{{index}}" wx:if="{{!coupons[index].receive}}" bindtap="getCoupon">
+                                            点击领取
+
+                                        </view>
+                                        <view class="btn already" wx:else>
+                                            已领取
+
+                                        </view>
+
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!--查看促销部分-->
+    <view class="maks {{show_discounts ? 'cur' : ''}}" bindtap="changeDiscounts">
+
+    </view>
+
+    <view class="popup-box {{show_discounts ? 'cur' : ''}}">
+        <view class="popup">
+            <view class="popup-top">
+                <view class="title">
+                    促销
+                    <view class="close" bindtap="changeDiscounts">
+                        X
+                    </view>
+                </view>
+            </view>
+
+            <view class="popup-bottom discounts">
+                <view class="discounts-box">
+                    <view class="disconts-item mx-1px-bottom" wx:for="{{discounts}}" wx:key="{{index}}">
+                        <view class="discounts-tags-title">
+                            {{item.tags}}
+                        </view>
+                        <view class="tags-item">
+                            {{item.label}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+        </view>
     </view>
 </view>

@@ -47,6 +47,10 @@ Page({
         query: {}, //
         skuTable: {}, //
         store_count: '', // 商品数量
+        coupons: [],              // 可领取的优惠券信息
+        discounts: [],             // 可享受的优惠折扣信息
+        show_coupons: false,        // 领取优惠券
+        show_discounts: false,       // 查看促销活动
 
 
         showToTop: false,
@@ -54,9 +58,6 @@ Page({
         select_count: 1,
         is_login: true,
         canBuy: false,
-        query: {},
-        animationSelect: {},
-        loading: false,
     },
     onLoad(e) {
         var id = '';
@@ -122,6 +123,81 @@ Page({
             show_share: !this.data.show_share
         })
     },
+    changeCoupons() {
+        this.setData({
+            show_coupons: !this.data.show_coupons
+        })
+    },
+    changeDiscounts() {
+        this.setData({
+            show_discounts: !this.data.show_discounts
+        })
+    },
+
+    // 领取优惠券
+    getCoupon(e) {
+        var is_login = cookieStorage.get('user_token');
+        var discount_id = e.currentTarget.dataset.id;
+        var index = e.currentTarget.dataset.index;
+        if (is_login) {
+            this.goodsConvertCoupon(discount_id, index);
+        } else {
+            var url = getUrl();
+            wx.showModal({
+                tiele: '',
+                content: '请先登录',
+                success: res => {
+                    if (res.confirm) {
+                        wx.navigateTo({
+                            url: '/pages/user/register/register?url=' + url
+                        })
+                    }
+                }
+            })
+        }
+    },
+    // 领取优惠券接口
+    goodsConvertCoupon(discount_id, index) {
+        var token = cookieStorage.get('user_token');
+        wx.showLoading({
+            title: '正在领取',
+            mask: true
+        })
+        sandBox.post({
+            api: 'api/coupon/take',
+            header: {
+                Authorization: token
+            },
+            data: {
+                discount_id: discount_id
+            }
+        }).then(res => {
+            if (res.statusCode == 200) {
+                res = res.data;
+                if (res.status) {
+                    var coupons = `coupons[${index}]`
+                    this.setData({
+                        [`${coupons}.receive`]: true
+                    });
+                    wx.showToast({
+                        title: '领取成功',
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.message,
+                        image: '../../../assets/image/error.png'
+                    })
+                }
+            } else {
+                wx.showToast({
+                    title: '领取失败',
+                    image: '../../../assets/image/error.png'
+                })
+            }
+            wx.hideLoading();
+        })
+    },
+
     // 点击滚动到指定位置
     jumpScroll(e) {
 
@@ -185,6 +261,13 @@ Page({
                             disabled: true,
                             activeColor: '#EA4448',
                             fontSize: 14
+                        })
+                    }
+                    if (res.meta.discounts) {
+                        res.meta.discounts.coupons.forEach(v => v.receive = false);
+                        this.setData({
+                            coupons: res.meta.discounts.coupons,
+                            discounts: res.meta.discounts.discounts
                         })
                     }
                     Wxparse.wxParse('detailI', 'html', res.data.content, this, 0);
