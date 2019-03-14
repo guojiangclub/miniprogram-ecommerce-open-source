@@ -348,7 +348,7 @@ Page({
     // 数量更新
     change(item, data, index) {
         if (item.local) {
-            var locals = cookieStorage('cart') || [];
+            var locals = cookieStorage.get('cart') || [];
             locals[item.index].qty = data.qty;
             locals[item.index].total = data.total;
             cookieStorage.set('cart',locals);
