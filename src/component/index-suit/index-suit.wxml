@@ -1,0 +1,22 @@
+<view class="module-box" wx:if="{{suitData && suitData.length}}">
+    <view class="module-title mx-1px-bottom" data-src="/pages/store/mealList/mealList" bindtap="_jumpImg">
+        <text>推荐套餐</text>
+        <text>更多></text>
+    </view>
+    <view wx:for="{{suitData}}" wx:for-item="items" wx:for-index="idx" wx:key="{{idx}}">
+        <view class="module-content">
+            <view class="meal_list">
+                <view class="store_list" wx:for="{{items.associate.items}}" wx:key="{{index}}">
+                    <view bindtap="_jumpToDetail" data-id="{{item.goods.id}}">
+                        <image class="slide-image" src="{{item.goods.img}}"></image>
+                        <view class="description">{{item.goods.name}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="meal-price" data-suitid="{{items.associate_id}}" bindtap="_jumpMeal">
+            搭配套餐价=<text>￥{{items.associate.total}}</text>/<text>￥{{items.associate.origin_total}}</text>
+        </view>
+
+    </view>
+</view>

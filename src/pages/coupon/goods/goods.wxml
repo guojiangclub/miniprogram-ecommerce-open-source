@@ -1,0 +1,22 @@
+<view id="coupon-goods">
+    <view class="commodity-bottom">
+        <view class="commodity-out" wx:for="{{storeList}}" data-id="{{item.goods_id}}" bindtap="jump">
+            <view class="commodity-box">
+                <view class="commodity-img">
+                    <image mode="widthFix" src="{{item.img}}"/>
+                </view>
+                <view class="commodity-name">
+                    {{item.name}}
+                </view>
+                <view class="commodity-money">
+                    <view class="money">
+                        ￥{{item.sell_price}}
+                    </view>
+                    <view class="discount-tags">
+                        <span class="tags-item" wx:for="{{item.discount_tags}}" wx:for-item="tags">{{tags}}</span>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,63 @@
+<view id="vipManage">
+    <view class="navbar mx-1px-bottom">
+        <block>
+
+            <view class="navbar-item {{index == activeIndex ? 'activity' : ''}}" wx:for="{{tabList}}" wx:key="{{index}}" bindtap="tabClick" data-index="{{index}}">
+                <view class="navbar-title">{{item.title}}</view>
+            </view>
+            <!--<view id="{{index}}" hidden="{{activeIndex == index}}" class="navbar-item">
+                <view class="navbar-title">{{item.title}}</view>
+            </view>-->
+        </block>
+        <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+    <view class="vipManagepage">
+       <block wx:if="{{activeIndex == 0 && tabList[0].init}}">
+           <block wx:if="{{dataList[0][0].length}}">
+               <view wx:for="{{dataList[0]}}" wx:for-index="idx" wx:for-item="items" wx:key="{{index}}">
+                   <view class="vipManage-item" wx:for="{{items}}" wx:key="{{index}}">
+                       <image src="{{item.user.avatar}}"></image>
+                       <view class="item-right">
+                           <view class="username">
+                               <span class="nickname">{{item.user.nick_name}}</span>
+                               <!-- <span class="grade">V{{item.grade}}</span>-->
+                           </view>
+                           <view class="vipdate">
+                               <span class="vipnum">会员号：{{item.user_id}}</span>
+                               <span>加入日期：{{item.user.created_at}}</span>
+                           </view>
+                       </view>
+                   </view>
+               </view>
+           </block>
+           <view class="isList" wx:else>
+               暂无会员
+           </view>
+       </block>
+        <block wx:if="{{activeIndex == 1 && tabList[1].init}}">
+            <block wx:if="{{dataList[1][0].length}}">
+                <view wx:for="{{dataList[1]}}" wx:for-index="idx" wx:for-item="items" wx:key="{{index}}">
+                    <view class="vipManage-item" wx:for="{{items}}" wx:key="{{index}}">
+                        <image src="{{item.user.avatar}}"></image>
+                        <view class="item-right">
+                            <view class="username">
+                                <span class="nickname">{{item.user.nick_name}}</span>
+                                <!-- <span class="grade">V{{item.grade}}</span>-->
+                            </view>
+                            <view class="vipdate">
+                                <span class="vipnum">会员号：{{item.user_id}}</span>
+                                <span>加入日期：{{item.user.created_at}}</span>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="isList">
+                    暂无会员
+                </view>
+            </block>
+        </block>
+    </view>
+
+</view>

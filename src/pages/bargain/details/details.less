@@ -1,0 +1,243 @@
+.details_contanier{
+    width: 100%;
+    position: relative;
+    .details_head{
+        width:100%px;
+        padding: 15px;
+        height:179px;
+        background:#FB5054;
+        border-radius: 0px 0px 50px 50px;
+        display: flex;
+        flex-direction: row;
+        .rule{
+            width:74px;
+            height:24px;
+            color: #ffffff;
+            background:rgba(17, 17, 17, 0.1);
+            border-radius:100px 0px 0px 100px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 15px;
+            right: 0;
+            font-size:11px;
+        }
+        .head_photo{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:55px;
+            height:55px;
+            border-radius: 50%;
+            background:rgba(237,242,252,1);
+            image{
+                width: 100%;
+                height: 100%;
+                border-radius: 59%;
+                }
+        }
+        .head_message{
+            display: flex;
+            flex-direction: column;
+            margin-left: 6px;
+            .name{
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                height:17px;
+                font-size:12px;
+                font-weight:400;
+                color:#FFFFFF;
+                line-height:17px; 
+                margin-top:7px;
+            }
+            .notice{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height:17px;
+                font-size:12px;
+                font-weight:400;
+                color:#FFFFFF;
+                line-height:17px;
+                margin-top: 4px;
+                
+            }
+        }
+    }
+    .details_body{
+        margin-top: -95px;
+        position: relative;
+        width:92%;
+        margin-left: 4%;
+        height:330px;
+        background:rgba(255,255,255,1);
+        border-radius:6px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        .goods_message{
+            display: flex;
+            flex-direction:row;
+            .goods_left{
+                width:90px;
+                height:90px;
+                image{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .goods_right{
+                display: flex;
+                flex-direction: column;
+                margin-left: 15px;
+                .goods_name{
+                    width:210px;
+                    font-size:13px;
+                    font-weight:400;
+                    color:rgba(17,17,17,1);
+                    line-height:20px;
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+                .past_price{
+                    margin: 6px 0;
+                    text-decoration: line-through;
+                    height:17px;
+                    font-size:12px;
+                    font-weight:400;
+                    color:rgba(102,102,102,1);
+                    line-height:17px;
+                }
+                .new_price{
+                    height:20px;
+                    font-size:12px;
+                    font-family:PingFangSC;
+                    font-weight:600;
+                    color:rgba(251,80,84,1);
+                    line-height:17px;
+                }
+            }
+        }
+        .text{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90px;
+            height:20px;
+            color: #FFFFFF;
+            font-size:12px;
+            background:rgba(251,80,84,1);
+            border-radius:2px;
+            .d3{
+                position: absolute;
+                top: 19px;
+                float: left;
+                width: 0; 
+                height: 0;
+                border-width: 5px;
+                border-style: solid;
+                border-color:#FB5054  transparent transparent transparent;
+               }
+        }
+        .bar{
+            margin-top: 25px;
+            width:92%;
+            margin-left: 4%;
+            height:4px;
+            background:rgba(238,238,238,1);
+            border-radius:4px;
+            .bar_length{
+                background: #FB5054;
+            }
+        }
+        .tips{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:18px;
+            font-size:12px;
+            font-weight:400;
+            color:rgba(102,102,102,1);
+            line-height:16px;
+            margin: 16px auto;
+        }
+        .btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:92%;
+            margin-left: 4%;
+            padding: 10px 0px;
+            color: #FFFFFF;
+            background:rgba(251,80,84,1);
+            box-shadow:0px 2px 4px 0px rgba(0,0,0,0.1);
+            border-radius:22px;
+        }
+        .count_down{
+            width: 60%;
+            height: 20px;
+            margin:auto;
+        }
+        .person_number{
+            border-top: #CCCCCC 1px dotted;
+            padding: 15px;
+            width:100%;
+            height:120px;
+            background:rgba(255,255,255,1);
+            border-radius:6px;
+            .person_tips{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height:16px;
+                font-size:11px;
+                font-family:PingFangSC;
+                font-weight:400;
+                color:rgba(170,170,170,1);
+                line-height:16px;
+            }
+    }
+    }
+    .img{
+        width: 92%;
+        margin: auto;
+        image{
+            width: 100%;
+        }
+    }
+    .box_body{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        height:660px;
+        background: rgba(17, 17, 17, 0.5);
+        top: 0px;
+        .rule_box{
+            margin: auto;
+            position: absolute;
+            width:92%;
+            font-size:13px;
+            padding: 15px;
+            background:rgba(255,255,255,1);
+            border-radius:6px;
+            top: 84px;
+            z-index: 999;
+        }
+        .icon-close{
+            color: #FFFFFF;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 80px;
+            border: #ffffff 1px solid;
+            box-sizing: border-box;
+            width: 27px;
+            height: 27px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "拼团详情",
+  "usingComponents": {
+    "seckill": "../../../component/seckill/seckill",
+    "group": "../../../component/group/group"
+  }
+}

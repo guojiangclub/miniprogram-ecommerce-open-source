@@ -1,0 +1,106 @@
+.count-down-box{
+  .mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: rgba(0,0,0,.4);
+  }
+
+  .box{
+    position: fixed;
+    z-index: 500;
+    width: 85%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius:4px;
+    overflow: hidden;
+    text-align: center;
+    /*padding: 20px 30px;*/
+    box-sizing: border-box;
+
+    .title{
+      font-size: 20px;
+      /*margin-bottom: 20px;*/
+      padding: 20px 30px;
+      background: #FFFFFF;
+    }
+    .img-box{
+      position: relative;
+      padding: 0 30px 20px 30px;
+      background: #FFFFFF;
+      margin-top: -1px;
+
+      image{
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .num{
+        position: absolute;
+        top: 38%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 110px;
+        color:#1a1a1a;
+
+        &.num-9 {
+          color:#1b0000;
+        }
+        &.num-8 {
+          color:#2f0000;
+        }
+        &.num-7 {
+          color:#440000;
+        }
+        &.num-6 {
+          color:#650000;
+        }
+        &.num-5 {
+          color:#7b0000;
+        }
+        &.num-4 {
+          color:#8f0000;
+        }
+        &.num-3 {
+          color:#ac0000;
+        }
+        &.num-2 {
+          color:#d30000;
+        }
+        &.num-1 {
+          color:#fa0000;
+        }
+      }
+
+      .mountain{
+        position: absolute;
+        right: 34px;
+        bottom: 42%;
+        width: 35%;
+      }
+      /*background: url("/static/img/time-bg.png") no-repeat;*/
+    }
+    .clone{
+      color: #fff;
+      margin-top: 10px;
+      padding: 15px;
+      display: inline-block;
+      font-size: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .ount-down-box{
+    .box {
+      .img-box {
+        .num{
+          top: 32%;
+        }
+      }
+    }
+  }
+}

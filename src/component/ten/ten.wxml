@@ -1,0 +1,23 @@
+<view class="count-down-box" wx:if="{{show}}">
+    <view class="mask">
+
+    </view>
+    <view class="box">
+        <view class="title">
+            <view>抢购的人数较多</view>
+            <view>服务器拥挤</view>
+        </view>
+        <view class="img-box">
+            <image mode="widthFix" src="https://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F/time-bg.png" alt="" />
+            <view class="num {{'num' + '-' + num}}">
+                {{num}}
+            </view>
+            <view class="mountain">
+                <image mode="widthFix" src="https://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F/time-bg-mountain.png" alt="" />
+            </view>
+        </view>
+        <view class="clone" bindtap="close">
+            X
+        </view>
+    </view>
+</view>

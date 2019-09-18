@@ -1,0 +1,57 @@
+<view id="distributionCenter">
+    <view class="distributionCenterpage">
+        <view class="distributionCenter-top" style="background: {{config.mainConfig}}">
+            <view class="current-title">当前可提现</view>
+            <view class="current-money">
+                <span class="cur-num"><span class="current">￥</span>{{list.balance}}</span>
+                <span class="cur-topic" bindtap="withdraw">提现</span>
+            </view>
+        </view>
+        <view class="distributionCenter-profit">
+            <view class="addUp">
+                <view class="earnings">累计收益</view>
+                <view class="earnings-num">￥{{list.earnings_commission}}</view>
+            </view>
+            <view class="outStanding">
+                <view class="earnings">未到账收益</view>
+                <view class="earnings-num">￥{{list.unearnings_commission}}</view>
+            </view>
+        </view>
+        <view class="distributionCenter-handle">
+            <view data-url="/pages/distribution/cash/cash" bindtap="jumpItem">
+                <span class="iconfont icon-woyaotixian"></span>
+                <span>我要提现</span>
+            </view>
+            <view data-url="/pages/distribution/order/order" bindtap="jumpItem">
+                <span  class="iconfont icon-fenxiaodingdan"></span>
+                <span>分销订单</span>
+            </view>
+           <!-- <view data-url="/pages/wallet/bank/bank" bindtap="jumpItem">
+                <span  class="iconfont icon-shoukuanzhanghu"></span>
+                <span>收款账户</span>
+            </view>-->
+            <view bindtap="jumpsensus">
+                <span  class="iconfont icon-fenxiaotongji"></span>
+                <span>分销统计</span>
+            </view>
+            <view bindtap="jumpspread">
+                <span  class="iconfont icon-woyaotuiguang"></span>
+                <span>我要推广</span>
+            </view>
+            <view bindtap="jumpvip">
+                <span  class="iconfont icon-huiyuanguanli"></span>
+                <span>会员管理</span>
+            </view>
+            <view data-url="/pages/distribution/coupon/coupon" bindtap="jumpItem">
+                <span  class="iconfont icon-youhuiquan3"></span>
+                <span>优惠券</span>
+            </view>
+            <view bindtap="jumpPusher">
+                <span  class="iconfont icon-tuikeguanli"></span>
+                <span>推客管理</span>
+            </view>
+        </view>
+
+    </view>
+
+</view>

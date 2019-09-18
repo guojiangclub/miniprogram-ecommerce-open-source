@@ -1,0 +1,39 @@
+#pointstore-record{
+  .contents{
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    .no-list{
+      text-align: center;
+      margin: 20px 0;
+    }
+    .record-box{
+      .item{
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: #FFFFFF;
+
+        .left{
+          flex: 1;
+          overflow: hidden;
+          padding-right: 20px;
+          .name{
+            font-size: 16px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding-bottom: 10px;
+          }
+          .time{
+            color:#9b9b9b;
+            font-size: 10px;
+          }
+        }
+        .right{
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

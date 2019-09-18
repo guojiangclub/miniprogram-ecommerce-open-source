@@ -1,69 +1,202 @@
-<import src="../../../component/wxParse/wxParse.wxml" xmlns:wx="http://www.w3.org/1999/xhtml"/>
 <import src="../../../component/rater/rater.wxml"></import>
 
-<view id="detail">
-    <view class="top-tap mx-1px-bottom">
-        <view class="item">
-            <view class="name {{activeName == 'shop' ? 'active' : ''}}" data-type="shop" bindtap="jumpScroll">
-                商品
-            </view>
+<view class="top-tap mx-1px-bottom" hidden="{{detailData.data.shop_hidden_more_info}}">
+    <view class="item">
+        <view class="name active" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" wx:if="{{activeName == 'shop'}}" data-type="shop" bindtap="jumpScroll">
+            商品
         </view>
-        <view class="item">
-            <view class="name {{activeName == 'comment' ? 'active' : ''}}" data-type="comment" bindtap="jumpScroll">
-                评价
-            </view>
-        </view>
-        <view class="item">
-            <view class="name {{activeName == 'details' ? 'active' : ''}}" data-type="details" bindtap="jumpScroll">
-                详情
-            </view>
-        </view>
-
-        <view class="share" bindtap="changeShare">
-            <i class="iconfont icon--fenxiang"></i>
+        <view class="name" wx:else data-type="shop" bindtap="jumpScroll">
+            商品
         </view>
     </view>
-    <view class="top-box js__top">
+    <view class="item">
+        <view class="name active" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" wx:if="{{activeName == 'comment'}}" data-type="comment" bindtap="jumpScroll">
+            评价
+        </view>
+        <view class="name" wx:else  data-type="comment" bindtap="jumpScroll">
+            评价
+        </view>
+    </view>
+    <view class="item">
+        <view class="name active" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" wx:if="{{activeName == 'details'}}" data-type="details" bindtap="jumpScroll">
+            详情
+        </view>
+        <view class="name" wx:else data-type="details" bindtap="jumpScroll">
+            详情
+        </view>
+    </view>
+    <!--<view class="item ">
+        <view class="name active" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" wx:if="{{activeName == 'recommend'}}" data-type="recommend" bindtap="jumpScroll">
+            推荐
+        </view>
+        <view class="name" wx:else data-type="recommend" bindtap="jumpScroll">
+            推荐
+        </view>
+    </view>-->
+
+    <view class="share" bindtap="changeShare">
+        <i class="iconfont icon--fenxiang"></i>
+    </view>
+</view>
+
+<view class="content {{detailData.data.shop_hidden_more_info == 1 ? 'no-top' : ''}}">
+    <view class="js__top">
         <view class="top-image">
             <swiper indicator-dots="true" autoplay="flase" circular="true">
                 <swiper-item wx:for="{{detailData.data.photos}}" wx:key="{{index}}">
                     <image src="{{item.url}}"  data-url="{{item.url}}" class="slide-image" bindtap="bigImg"/>
                 </swiper-item>
             </swiper>
+            <view class="small-txt" wx:if="{{detailData.data.is_first_order_free}}">
+                收货全额返
+            </view>
+            <view class="call" wx:if="{{freeInfo}}">
+                <span wx:if="{{(!is_login && freeInfo.status != 2) || (freeInfo.status == 1 && freeInfo.task.status != 1)}}" bindtap="call">集Call免费领</span>
+                <span wx:if="{{freeInfo.status == 2 && freeInfo.task.status != 1}}" class="over">集Call已领完</span>
+                <span wx:if="{{freeInfo.task.status == 1}}" bindtap="call" class="success">集Call已完成</span>
+            </view>
+            <!--秒杀-->
+            <view class="marketing-box" style="background: {{config.mainColor}}" wx:if="{{detailData.meta.seckill}}">
+                <seckill end="{{detailData.meta.seckill.ends_at}}" starts="{{detailData.meta.seckill.starts_at}}" server="{{detailData.meta.seckill.server_time}}" bind:starts="isStarts" bind:end="isEnd"></seckill>
+            </view>
+            <!--拼团-->
+            <!--todo-->
+            <view class="marketing-box" style="background: {{config.mainColor}}" wx:if="{{detailData.meta.multiGroupon}}">
+                <seckill wx:if="{{commodity.multi_groupon_init_status == 1 || commodity.multi_groupon_init_status == 2}}" end="{{commodity.multi_groupon_ends_at}}" starts="{{commodity.multi_groupon_starts_at}}" server="{{detailData.data.server_time}}" typename="拼团" bind:starts="isStarts" bind:end="isEnd"></seckill>
+                <view wx:if="{{commodity.multi_groupon_init_status == 0}}" class="over">
+                    此次拼团失败，可以参加其他人的拼团购买
+                </view>
+            </view>
         </view>
         <view class="basic-information">
-            <view class="goods-name">
-                {{detailData.data.name}}
-            </view>
-            <view class="goods-price">
-                <div class="price">
-                    ￥{{price}}
-                </div>
-                <div>
-                    官网售价
-                </div>
-            </view>
-            <view class="market-price-box">
-                <view class="market-price">
-                    吊牌价 ￥ {{detailData.data.market_price}}
+            <!--<view class="seckill-box mx-1px-bottom {{detailData.meta.seckill.init_status == 1 ? 'active' : ''}}" wx:if="{{detailData.meta.seckill}}">
+                <view class="seckill-time-box">
+                    <view class="seckill seckill-item" wx:if="{{active}}">
+                        <i class="iconfont icon-shijian"></i>
+                        <view class="text">距离秒杀结束还剩余</view>
+                        <view class="tiem"><span> <p wx:if="{{endTime.hour < 10}}">0</p>{{endTime.hour}}</span> : <span><p wx:if="{{endTime.minute < 10}}">0</p>{{endTime.minute}}</span> : <span><p wx:if="{{endTime.second < 10}}">0</p>{{endTime.second}}</span></view>
+                    </view>
+                    <view class="seckill-item" wx:else>
+                        <view wx:if="{{type == 0}}">
+                            <view class="no-starts">
+                                未开始
+                            </view>
+                            <view class="time-text">
+                                {{message}}
+                            </view>
+                        </view>
+                        <view wx:if="{{type == 1}}">
+                            <i class="iconfont icon-shijian"></i>
+                            <view class="text">距离秒杀开始还剩余</view>
+                            <view class="tiem"><span> <p wx:if="{{startsTime.hour < 10}}">0</p>{{startsTime.hour}}</span> : <span> <p wx:if="{{startsTime.minute < 10}}">0</p>{{startsTime.minute}}</span> : <span> <p wx:if="{{startsTime.second < 10}}">0</p>{{startsTime.second}}</span></view>
+                        </view>
+                    </view>
                 </view>
-                <view class="volume">
-                    月销: {{detailData.data.sale || 0}}
+                <view class="money-box">
+                    <span class="old">￥{{detailData.data.market_price}}</span>
+                    <span class="new">￥{{price}}</span>
                 </view>
+            </view>-->
+
+            <view class="basic-top">
+                <view class="price-box">
+                    {{detailData.data.name}}
+                </view>
+               <!-- <view class="recommend" bindtap="changeShare">
+                    我要推荐 >
+                </view>-->
             </view>
-            <view class="tags-box" wx:if="{{detailData.data.tags && detailData.data.tags.length}}">
-               <span wx:for="{{detailData.data.tags}}" wx:key="{{index}}">
-                {{item}}
-            </span>
+<!--            商品描述-->
+            <view class="basic-center">{{detailData.data.extend_description}}</view>
+            <view class="basic-vip-box">
+                <view class="group-num" wx:if="{{detailData.meta.multiGroupon}}">
+                    {{detailData.meta.multiGroupon.number}} 人团
+                </view>
+                <view class="basic">
+                    <view class="basic-bottom">
+                        <view class="price-box">
+                            <block wx:if="{{detailData.data.negotiable == 1}}">
+                                <view style="font-size: 20px">
+                                    价格面议
+                                </view>
+                            </block>
+                            <block wx:else>
+                                <text class="price" wx:if="{{!cart_status.group}}">￥{{price}}</text>
+                                <text class="price" wx:else>{{detailData.meta.multiGroupon.price}}</text>
+                                <!--<text wx:if="{{!detailData.meta.multiGroupon}}">{{detailData.data.price_txt_sell}}</text>
+                                <span class="group-num" wx:else>{{detailData.meta.multiGroupon.number}}人拼团价</span>-->
+                            </block>
+                        </view>
+                        <!--<view class="recommend" wx:if="{{detailData.data.can_share}}" bindtap="changeShare">
+                            我要推荐 >
+                        </view>-->
+                    </view>
+                    <view class="market-price">
+                        <view class="price">
+                            <view hidden="{{detailData.data.shop_hidden_more_info}}">
+                                <block wx:if="{{detailData.data.negotiable != 1}}">
+                                    ￥ {{detailData.data.market_price}}
+                                </block>
+                            </view>
+                        </view>
+                        <view>
+                            <block wx:if="{{detailData.data.shop_show_sell_nums}}">
+                                月销: {{detailData.data.sale}}
+                            </block>
+                        </view>
+                    </view>
+                </view>
             </view>
 
+
+            <!--限购信息-->
+            <view class="purchaseInfo mx-1px-top" wx:if="{{detailData.data.user_limit}}">
+                <view class="title">
+                    限购
+                </view>
+                <view>
+                    本商品每人限购{{detailData.data.user_limit}}件
+                </view>
+
+            </view>
+            <!--拼团信息-->
+            <!--<view class="groups-info mx-1px-top" wx:if="{{detailData.meta.groupon}}">
+                <view>
+                    运费：免运费
+                </view>
+                <view>
+                    剩余人数：{{detailData.meta.groupon.number - detailData.meta.groupon.sale_number}}
+                </view>
+                <view>
+                    已参加人数：{{detailData.meta.groupon.sale_number}}
+                </view>
+            </view>-->
+
+            <!--快捷sku-->
+           <!-- <view class="select-sku-box mx-1px-top" bindtap="showSelect">
+                <view class="title">选择</view>
+                <view class="sku-info">
+                    {{select_product.color}}
+                    <block wx:if="{{select_product.color}}">
+                        ,
+                    </block>
+                    {{select_product.size}}
+                </view>
+                <view class="iconfont icon&#45;&#45;xiangyoujiantou">
+
+                </view>
+            </view>
+            <view class="new-addbox mx-1px-top">
+                <image mode="widthFix" src="https://cdn.ibrand.cc/%E7%BC%96%E7%BB%84%207@2x.png"></image>
+            </view>-->
+
             <!--优惠券信息-->
-            <view class="coupons-tags mx-1px-top" wx:if="{{coupons.length}}" bindtap="changeCoupons">
+            <view class="coupons-tags mx-1px-top" wx:if="{{coupons.length}}" bindtap="showCoupons">
                 <view class="tags-title">
                     领券
                 </view>
                 <view class="coupon-box">
-                    <view class="tags-item" wx:for="{{coupons}}" wx:key="{{index}}" wx:if="{{index <= 2 }}">
+                    <view class="tags-item" style="background: {{config.mainColor}}" wx:for="{{coupons}}" wx:key="{{index}}" wx:if="{{index <= 2 }}">
                         {{item.label}}
 
                         <view class="dot-wrap">
@@ -84,13 +217,13 @@
                 </view>
             </view>
             <!--折扣信息-->
-            <view class="discounts-tags mx-1px-top" wx:if="{{discounts.length}}" bindtap="changeDiscounts">
+            <view class="discounts-tags mx-1px-top" wx:if="{{discounts.length}}" bindtap="showDiscounts">
                 <view class="tags-title">
                     促销
                 </view>
                 <view class="discounts-box">
                     <view class="disconts-item" wx:for="{{discounts}}" wx:key="{{index}}">
-                        <view class="discounts-tags-title">
+                        <view class="discounts-tags-title" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}">
                             {{item.tags}}
                         </view>
                         <view class="tags-item">
@@ -100,326 +233,766 @@
 
                 </view>
             </view>
+
+            <!--<view class="old-box mx-1px-top">-->
+            <!--价格 ￥{{detailData.data.market_price}}-->
+            <!--</view>-->
         </view>
-    </view>
+<!--        新提出来的模块-->
+        <view class="new-module">
+            <!--快捷sku-->
+            <view class="select-sku-box mx-1px-top" bindtap="showSelect">
+                <view class="title">选择</view>
+                <view class="sku-info">
+                    {{select_product.color}}
+                    <block wx:if="{{select_product.color}}">
+                        ,
+                    </block>
+                    {{select_product.size}}
+                    <view class="iconfont icon--xiangyoujiantou">
 
-    <!--商品评论-->
-    <view class="wrap-item js__comment" wx:if="{{detailData.data.oneComment && detailData.data.oneComment.length}}">
-        <div class="title mx-1px-bottom">
-            <view class="text">
-                商品评论（{{detailData.data.comments}}）
+                    </view>
+                </view>
             </view>
-            <div class="icon">
-
-            </div>
-        </div>
-        <view class="content" wx:if="{{detailData.data.oneComment && detailData.data.oneComment.length}}">
-            <view class="comment_list" wx:for="{{detailData.data.oneComment}}" wx:key="{{index}}">
-                <view class="comment_user">
-                    <view class="img-box">
-                        <image src="{{item.user.avatar}}"></image>
-                        <view class="user_name">{{item.user.nick_name}}</view>
-                    </view>
-                    <view class="rater">
-                        <template is="rater" data="{{ ...$vlc.rater.store }}"/>
-                    </view>
-                </view>
-                <view class="comment_time">
-                    <view class="time">
-                        {{item.updated_at}}
-                    </view>
-                    <view class="model">
-                        {{item.item_meta.specs_text}}
-                    </view>
-                </view>
-                <view class="comment_content">
-                    {{item.contents}}
-                </view>
-                <view class="comment-img">
-                    <image src="{{item}}" mode="widthFix" alt="" wx:for="{{item.pic_list}}" wx:key="{{index}}" />
-                </view>
-
-                <view class="all-comment mx-1px-top">
-                    <view class="text">
-                        查看全部评论
-                    </view>
-                </view>
-
+            <!--            品牌直供 正品保障-->
+            <view class="new-addbox mx-1px-top">
+                <image mode="widthFix" src="https://cdn.ibrand.cc/%E7%BC%96%E7%BB%84%207@2x.png"></image>
             </view>
         </view>
-
-    </view>
-
-    <!--商品参数-->
-    <view class="wrap-item"  wx:if="{{attributesList.top.length}}">
-        <div class="title mx-1px-bottom" data-type="parameter" bindtap="change">
-            <view class="text">
-                商品参数
+        <!--拼团信息和规则-->
+        <view class="groups-rule" wx:if="{{detailData.meta.multiGroupon}}">
+            <view class="rule-title"  bindtap="sharRules">
+                <view class="info-one">拼团</view>
+                <view class="info-two">{{detailData.meta.multiGroupon.number}} 人团，人数未达到自动退款</view>
+                <view class="info-three">玩法详情 <view class="iconfont icon--xiangyoujiantou"></view></view>
             </view>
-            <div class="icon {{expands.parameter ? 'arrow-up' : 'arrow-down'}}">
-
-            </div>
-        </div>
-        <view class="content" wx:if="{{expands.parameter}}">
-            <view class="argument-box">
-                <view class="argument-top">
-                       <span wx:for="{{attributesList.top}}" wx:for-item="top" wx:key="{{index}}">
-                           {{top.name}} : {{top.attribute_value}}
-                       </span>
+            <view class="rule-avatar" wx:if="{{groupon_userlist.userList.length}}">
+                <view class="avatar-item" wx:for="{{groupon_userlist.userList}}" style="left:{{-3*index + 'px'}};z-index: {{groupon_userlist.userList.length - index}}" >
+                    <image src="{{item.meta.avatar}}" wx:if="{{item.meta.avatar}}"></image>
+                    <view class="iconfont icon-yonghu" wx:else></view>
+                    <span class="colonel" wx:if="{{item.is_leader}}">团长</span>
                 </view>
-                <view class="argument-bottom" wx:if="{{attributesList.bottom.length}}">
-                    <view class="argument-item" wx:for="{{attributesList.bottom}}" wx:key="{{index}}" wx:for-item="bottom">
-                        <view class="index-title">{{bottom.name}} ：</view>
-                        <view class="index-box">
-                            <ul>
-                                <li class="{{bottom.attribute_value_id == list.id ? 'red-dot' : ''}}" wx:for="{{bottom.values}}" wx:key="{{index}}" wx:for-item="list">
-                                    {{list.name}}
-                                </li>
-                            </ul>
+            </view>
+            <view class="rule-text"  wx:if="{{groupon_userlist.userList.length}}">
+                欢迎来到 <view class="usename">{{groupon_userlist.userList[0].meta.nick_name}}</view> 的拼团。
+                <block wx:if="{{commodity.multi_groupon_item_complete_status == 0}}">还需<view class="num">{{groupon_userlist.gap_number}}</view>人即可成团</block>
+                <block wx:if="{{commodity.multi_groupon_item_complete_status == 1}}">已成团</block>
+                <block wx:if="{{commodity.multi_groupon_item_complete_status == 2}}">成团失败</block>
+            </view>
+            <view class="rule-progress">
+                <progress percent='{{emjstatus.percent}}' stroke-width="4" activeColor="#EA4448" backgroundColor="#DBDBDB"></progress>
+                <view class="launch {{emjstatus.lauch ? 'active-emj' :''}}" style="left: 10%">
+                    <view class="iconfont icon-faqipintuan"></view>
+                    <view class="text">发起拼团</view>
+                </view>
+                <view class="invite {{emjstatus.half ? 'active-emj' :''}}" style="left:40%">
+                    <view class="iconfont icon-yaoqinghaoyou"></view>
+                    <view class="text">邀请好友参团</view>
+                </view>
+                <view class="success {{emjstatus.end ? 'active-emj' :''}}" style="left: 80%">
+                    <view class="iconfont icon-pintuanchenggong"></view>
+                    <view class="text">拼团<block wx:if="{{commodity.multi_groupon_item_complete_status != 2}}">成功</block><block wx:if="{{commodity.multi_groupon_item_complete_status == 2}}">失败</block></view>
+                </view>
+            </view>
+            <view class="look-groups mx-1px-top" bindtap="jumpCollage" wx:if="{{detailData.data.multi_groupon_join_status == 1}}">
+                <view>
+                    拼团详情
+                </view>
+                <view class="iconfont icon--xiangyoujiantou">
+
+                </view>
+            </view>
+
+            <view class="virtual-box mx-1px-top" wx:if="{{!detailData.meta.has_multiGroup  && detailData.meta.is_agent}}">
+                <view class="title">
+                    开团
+                </view>
+                <view class="text">
+                    您可虚拟开团该商品
+                </view>
+                <view class="virtual-btn" bindtap="jumpVirtual">
+                    虚拟开团
+                </view>
+            </view>
+        </view>
+
+        <!--他们也在拼-->
+        <view class="they-groups" wx:if = "{{detailData.meta.multiGroupon && groupon_itemList[0].length}}">
+            <view class="they-title">
+                <view class="num">
+                    {{meta.pagination.total}}个拼团正在进行中
+                </view>
+                <view class="they-more" bindtap="seeMore">查看更多拼团 <view class="iconfont icon--xiangyoujiantou"></view></view>
+            </view>
+            <view class="they-detail">
+                <view class="use-info">
+                    <image src="{{groupon_itemList[0][0].leader.meta.avatar}}"></image>
+                    <view class="nick-name">{{groupon_itemList[0][0].leader.meta.nick_name}}</view>
+                </view>
+                <view class="offered-info">
+                    <view class="box">
+                        <view class="info-num">还差<span>{{groupon_itemList[0][0].gap_number}}人</span>成团</view>
+                        <view class="groups-time-box">
+                            <span>剩余: </span>
+                            <group end="{{groupon_itemList[0][0].ends_at}}" starts="{{groupon_itemList[0][0].starts_at}}" server="{{detailData.data.server_time}}" mold="list"></group>
                         </view>
                     </view>
+                    <view class="info-btn" bindtap="multiAddToCart" data-id="{{groupon_itemList[0][0].id}}" data-join="{{groupon_itemList[0][0].has_joined}}" data-no="{{groupon_itemList[0][0].multi_groupon_order_no}}">
+                        <span wx:if="{{groupon_itemList[0][0].has_joined == 1}}">已参团</span>
+                        <span wx:else>去参团</span>
+                    </view>
+                </view>
+            </view>
+            <view class="they-detail" wx:if="{{groupon_itemList[0][1]}}">
+                <view class="use-info">
+                    <image src="{{groupon_itemList[0][1].leader.meta.avatar}}"></image>
+                    <view class="nick-name">{{groupon_itemList[0][1].leader.meta.nick_name}}</view>
+                </view>
+                <view class="offered-info">
+                    <view class="box">
+                        <view class="info-num">还差<span>{{groupon_itemList[0][1].gap_number}}人</span>成团</view>
+                        <view class="groups-time-box">
+                            <span>剩余: </span>
+                            <group end="{{groupon_itemList[0][1].ends_at}}" starts="{{groupon_itemList[0][1].starts_at}}" server="{{detailData.data.server_time}}" mold="list"></group>
+                        </view>
+                    </view>
+                    <view class="info-btn" bindtap="multiAddToCart" data-id="{{groupon_itemList[0][1].id}}" data-join="{{groupon_itemList[0][1].has_joined}}" data-no="{{groupon_itemList[0][1].multi_groupon_order_no}}">
+                        <span wx:if="{{groupon_itemList[0][1].has_joined == 1}}">已参团</span>
+                        <span wx:else>去参团</span>
+                    </view>
                 </view>
             </view>
         </view>
-    </view>
 
-    <!--商品详情-->
-    <view class="wrap-item commodity">
-        <div class="title mx-1px-bottom" data-type="commodity" bindtap="change">
-            <view class="text">
-                商品详情
+        <!--同款信息-->
+        <view class="same" bindtap="showSame" wx:if="{{detailData.data.subsection == 1}}">
+            <view>
+                <span>【商场同款】</span> 线下商场同步销售
             </view>
-            <div class="icon {{expands.commodity ? 'arrow-up' : 'arrow-down'}}">
+            <view>
+                ...
+            </view>
+        </view>
 
-            </div>
-        </div>
-        <view class="content" wx:if="{{expands.commodity}}">
-            <template is="wxParse" data="{{wxParseData:detailI.nodes}}"/>
+
+        <!--我要推荐-->
+        <view class="recommended" wx:if="{{detailData.data.can_share && !detailData.meta.multiGroupon}}" bindtap="changeShare">
+            <view class="title">推荐</view>
+
+            <view class="goodness"><block wx:if="{{detailData.data.show_commission}}">推荐可获得佣金 <span>{{detailData.data.commission}}元</span></block> </view>
+            <view class="btn">我要推荐 ></view>
+        </view>
+        <!--第三方供货说明-->
+        <view class="third-party" bindtap="changeThird" wx:if="{{detailData.data.supplier && detailData.data.supplier.code != 'self'}}">
+            <view class="title">说明 :</view>
+            <view class="detail-list">
+                <view class="item pa-bottom">
+                    <span class="iconfont icon-Group92"></span>
+                    <view class="txt">本商品为第三方供应提供</view>
+                </view>
+                <view class="item">
+                    <span class="iconfont icon-Group92"></span>
+                    <view class="txt">由 {{detailData.data.supplier.company_name}} 发货并提供售后</view>
+                </view>
+            </view>
+            <view class="more-see">
+                <span class="iconfont icon--xiangyoujiantou"></span>
+            </view>
         </view>
     </view>
 
-    <!--底部导航-->
-    <view class="tabbar mx-1px-top">
-        <view class="tabbar-item shop  mx-1px-right" data-type="shop" bindtap="jump">
-            <i class="iconfont icon-shangcheng"></i>
-            <text>商城</text>
+    <view class="detail-item-box">
+
+        <!--商品评论-->
+        <view class="js__comment" bindtap="viewComment" hidden="{{detailData.data.shop_hidden_more_info}}">
+            <view class="title mx-1px-bottom">
+                <view class="title_content">
+                    商品评论（{{detailData.data.comments}}）
+                </view>
+                <view class="praise-of" wx:if="{{detailData.data.comment_rate}}">好评度 {{detailData.data.comment_rate}}% <span class="iconfont icon--xiangyoujiantou"></span></view>
+            </view>
+<!--            标签列表-->
+            <view class="tags-content">
+                <view class="item" wx:for="{{detailData.data.tags}}" wx:key="{{index}}">{{item}}</view>
+            </view>
+            <view class="content" wx:if="{{detailData.data.oneComment && detailData.data.oneComment.length}}">
+                <view class="comment_list" wx:for="{{detailData.data.oneComment}}" wx:key="{{index}}">
+                    <view class="comment_user">
+                        <view class="img-box">
+                            <image src="{{item.user.avatar}}"></image>
+                            <view class="user_name">{{item.user.nick_name}}</view>
+                        </view>
+                        <view class="rater">
+                            <template is="rater" data="{{ ...$vlc.rater.store }}"/>
+                        </view>
+                    </view>
+                    <view class="comment_time">
+                        <view class="time">
+                            {{item.updated_at}}
+                        </view>
+                        <view class="model">
+                            {{item.item_meta.specs_text}}
+                        </view>
+                    </view>
+                    <view class="comment_content">
+                        {{item.contents}}
+                    </view>
+                    <view class="comment-img">
+                        <image src="{{item}}" mode="widthFix" alt="" wx:for="{{item.pic_list}}" wx:key="{{index}}" />
+                    </view>
+
+                    <view class="all-comment mx-1px-top">
+                        <view class="text">
+                            更多热评
+                            <span class="iconfont icon--xiangyoujiantou"></span>
+                        </view>
+                    </view>
+
+                </view>
+            </view>
         </view>
-         <view class="tabbar-item fav  {{is_Fav ? 'favorite' : ''}}" bindtap="changeStatus">
-             <i class="iconfont icon-favor"></i>
-             <span>{{is_Fav ? '已收藏' : '收藏'}}</span>
-         </view>
-        <view class="tabbar-item cart mx-1px-left-right" data-type="cart" bindtap="jump">
+        <!--套餐详情-->
+        <view wx:if="{{detailData.meta.suit.length!=0}}">
+            <view class="title mx-1px-bottom" data-type="meal" bindtap="change">
+                <view class="title-text">
+                    搭配套餐
+                </view>
+                <view class="{{!expands.meal ? 'arrow-up' : 'arrow-down'}}">
+                </view>
+            </view>
+            <view class="content meals" wx:if="{{!expands.meal}}">
+                <view class="commodity_description" wx:for="{{detailData.meta.suit}}" wx:for-item="detail" wx:key="{{index}}">
+                    <view class="meal_list">
+                        <view class="store_list" wx:for="{{detail.items}}" wx:key="{{index}}">
+                            <view bindtap="jumpToDetail" data-id="{{item.goods.id}}">
+                                <image class="slider-image" src="{{item.goods.img}}"></image>
+                                <view class="description">{{item.goods.name}}</view>
+                                <!--<view>1</view>-->
+                                <!--<p class="price"><span style="color: red">￥{{i.package_price}}</span>/<span>￥{{i.origin_price}}</span></p>-->
+                            </view>
+                        </view>
+                    </view>
+
+                    <view class="all_count" data-suitid="{{detail.id}}" bindtap="jumpMeal">
+                        搭配套餐价=<span style="color: red">￥{{detail.total}}</span>/<span style="text-decoration: line-through">￥{{detail.origin_total}}</span>
+                    </view>
+                    <!--{{{commodity.content}}}-->
+                </view>
+            </view>
+        </view>
+        <!--商品详情-->
+        <view>
+            <view class="title mx-1px-bottom" data-type="commodity" bindtap="change">
+                <view class="title-text">
+                    商品详情
+                </view>
+                <view class="{{expands.commodity ? 'arrow-up' : 'arrow-down'}}">
+
+                </view>
+            </view>
+            <view class="content" wx:if="{{expands.commodity}}">
+                <wxparser rich-text="{{detailData.data.content}}" />
+            </view>
+        </view>
+
+        <!--<view class="author" wx:if="{{author}}">
+            <image mode="widthFix" src="https://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F/mier.png"></image>
+            <view>
+                湘ICP备17006292号 
+            </view>
+            <view>
+                ©️ 湖南米尔版权所有
+            </view>
+            &lt;!&ndash;iBrand社交新零售 · 提供技术支持&ndash;&gt;
+        </view>-->
+        <view class="ibrand-author" wx:if="{{author}}" bindtap="jumpAuthor">
+            <i class="iconfont icon-dibu"></i>
+        </view>
+    </view>
+    <view class="tabbar mx-1px-top new-tabbar" wx:if="{{is_show_tabbar}}">
+        <view class="tabbar-item item_0" data-type="shop" bindtap="jump">
+            <i class="iconfont icon--shouye"></i>
+            <text>首页</text>
+        </view>
+        <view data-type="cart" bindtap="jump" class="tabbar-item item_0 cart-item-box">
             <i class="iconfont icon-gouwuche"></i>
             <text>购物车</text>
         </view>
-        <view class="tabbar-item show-cart {{cart_status.status ? 'active' : 'disabled'}}"  bindtap="showSelect">
-            {{cart_status.message}}
+        <view class="tabbar-item item_3 alone" bindtap="aloneAddToCart" wx:if="{{detailData.meta.multiGroupon && detailData.data.multi_groupon_init_status == 1}}" style="background: {{config.secColor}}">
+            原价购买
+            <view class="price">￥{{commodity.sell_price}}</view>
+        </view>
+        
+        <!-- 加入购物车 -->
+        <block wx:if="{{!detailData.meta.seckill && !detailData.meta.multiGroupon && cart_status.status && !is_fives}}">
+            <view class="tabbar-item item_3 btn_1" style="background: {{config.secColor}}"   bindtap="showSelect" wx:if="{{detailData.meta.vip_plan && initInfoData.vip_plan_status == 1 && detailData.meta.vip_plan.level != 0}}">
+                {{cart_status.message}}
+            </view>
+            <block wx:else>
+                    <!-- 普通 -->
+                <view class="tabbar-item item_3  btn_1" wx:if="{{cart_status.status || cart_status.seckill || cart_status.group}}" style="background: {{config.secColor}}"  bindtap="showSelect">
+                    {{cart_status.message}}
+                </view>
+
+                <view class="tabbar-item item_3 btn_1 no-seckill" wx:else  bindtap="showSelect">
+                    {{cart_status.message}}
+                </view>
+            </block>
+        </block>
+
+        <view class="tabbar-item item_3 btn_1 svip-btn right_btn" data-status="true"   bindtap="showSelect" wx:if="{{detailData.meta.vip_plan && initInfoData.vip_plan_status == 1 && detailData.meta.vip_plan.level != 0}}">
+            {{immediately_text.message}}
+        </view>
+        
+        <block wx:else>
+                <!--购买按钮（普通，拼团，秒杀）-->
+            <view class="tabbar-item item_3  btn_2 seckill right_btn {{detailData.meta.multiGroupon ? 'multiGroupon' : ''}} {{cart_status.seckill ? 'seckill-btn-box' : ''}}"  data-status="true" wx:if="{{cart_status.status || cart_status.seckill || cart_status.group}}"  bindtap="showSelect">
+                {{immediately_text.message}}
+            </view>
+
+            <view class="tabbar-item item_3 btn_1 no-seckill right_btn" data-status="true" wx:else  bindtap="showSelect" >
+                {{immediately_text.message}}
+            </view>
+        </block>
+
+        <view class="tabbar-item item_1 server-item" wx:if="{{service_info && service_info.online_service_status == 1}}"  bindtap="changeAttention">
+            <i class="iconfont icon-service"></i>
+            <text>客服</text>
+            <button open-type="contact" wx:if="{{service_info.online_service_type !== 'self'}}" />
         </view>
     </view>
+</view>
+<view class="maks {{!show_select ? 'cur' : ''}}" bindtap="closeSelect">
 
-    <!--遮罩层-->
-    <view class="maks {{!show_select ? 'cur' : ''}}" bindtap="closeSelect">
+</view>
 
-    </view>
+<view class="detail-popup" hidden="{{show_select}}"  animation="{{show.animation}}" >
+    <view class="select_goods_container">
+        <!--关闭按钮-->
+        <view class="select_goods_cloese" bindtap="closeSelect"></view>
+        <view class="select_goods_header" >
 
-    <!--选择SKU-->
-    <view class="sku-popup" hidden="{{show_select}}" animation="{{show.animation}}">
-        <view class="select-goods-container">
-            <view class="select-goods-cloese" bindtap="closeSelect"></view>
+            <view class="img_box" >
 
-            <view class="select-goods-header">
-                <view class="img-box">
-                    <image wx:if="{{select_product && select_product.img}}" src="{{select_product.img}}"></image>
-                    <image wx:else src="{{detailData.data.img}}"></image>
-                </view>
-                <view class="price-box">
-                    <view class="price">
-                        ￥{{price}}
-                    </view>
-                    <view class="count">
-                        库存{{store_count}}
-                    </view>
-                </view>
+                <image wx:if="{{select_product && select_product.img}}" src="{{select_product.img}}" alt="{{select_product.sku}}"></image>
+                <image wx:else src="{{commodity.img}} " alt=""></image>
             </view>
-            <view class="select-goods-spec">
-                <!--SKU-->
-                <view class="spec-line" wx:for="{{specs}}" wx:for-item="spec" wx:key="{{index}}">
-                    <view class="spec-title">{{spec.label}}</view>
-                    <view class="spec-value ">
-                        <view  class="spec-block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" wx:key="{{index}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
-                            <span class="spec-text">
-                                {{item.alias || item.value}}
-                            </span>
-                            <!--<span class="spec-text b" wx:if="{{!item.spec_img && !item.color}}">{{item.alias || item.value}}</span>-->
-                        </view>
-                    </view>
-                </view>
-
-                <!--数量-->
-                <view class="spec-line">
-                    <view class="spec-title">数量</view>
-                    <view class="num-value">
-                        <span bindtap="changeCount" data-index="0">-</span>
-                        <span class="none-border">
-                            <input bindinput="modifyCount" value="{{select_count}}"  type="number" confirm-type="done"/>
-                        </span>
-                        <span bindtap="changeCount" data-index="1">+</span>
-                    </view>
-                </view>
-
-                <button class="button {{ canBuy ? 'disabled' : '' }}" type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
-            </view>
-        </view>
-    </view>
-
-
-    <!--加入购物车弹出-->
-    <view class="cart-box" catchtouchmove="move" hidden="{{!show_cart}}">
-        <view class="cart-mask">
-
-        </view>
-        <view class="cart-dialog">
-            <view class="title mx-1px-bottom">
-                商品成功加入购物车
-            </view>
-            <view class="buttons">
-                <view class="button" bindtap="goCart">
-                    进入购物车
-                </view>
-                <view class="button agin" bindtap="changeCart">
-                    继续购物
-                </view>
+            <!--<view class="img_box" style="background-color: {{select_product.bac}};width: 78px;height: 78px;"  wx:if="{{!select_product.img && !!select_product.color}}"></view>-->
+            <view class="price_item">
+               <span wx:if="{{select_product}}">
+                    <text wx:if="{{!cart_status.group || is_alone}}">￥{{price}}</text>
+                <text wx:if="{{cart_status.group && !is_alone}}">￥{{detailData.meta.multiGroupon.price}}</text>
+               </span>
+                <span style="font-weight:bold;color:#ee2b1d;" wx:else>
+                    {{price_interval}}
+                </span>
+                <!--<text  wx:else>￥{{price}}</text>-->
+                <!--<text  wx:else>{{detailData.meta.groupon.groupon_price}}</text>-->
+                <text wx:if="{{detailData.data.shop_show_store == 1}}">库存{{store_count}}</text>
             </view>
 
         </view>
-    </view>
 
-    <!--弹出分享部分-->
-    <view class="maks {{show_share ? 'cur' : ''}}">
+        <view class="select_spec">
+            <view class="spec_line" wx:for="{{specs}}" wx:for-item="spec" wx:key="{{index}}">
+                <view class="spec_title">{{spec.label}}</view>
+                <view class="spec_value">
+                    <view  class="spec_block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" wx:key="{{index}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
+                                <!--<view class="spec_icon spec_text" wx:if="{{item.spec_img}}">-->
+                                    <!--<image src="{{item.spec_img}}" data-alt="{{item.alias || item.value}}"></image>-->
+                                <!--</view>-->
+                        <!--<text class="spec_icon" style="background-color:{{item.color}}" wx:if="{{!item.spec_img && item.color}}"></text>-->
+                        <view class="spec_text"   wx:if="{{(item.alias || item.value) && item.spec_img !== undefined}}">
+                            {{item.alias || item.value}}
 
-    </view>
+                            <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">
 
-    <view class="share-box {{show_share ? 'cur' : ''}}">
-        <button class="shaer-item" open-type="share">
-            分享给好友
-        </button>
-        <view class="shaer-item mx-1px-top" bindtap="getShearImg">
-            分享到朋友圈
-        </view>
-        <view class="shaer-item clear" bindtap="changeShare">
-            取消
-        </view>
-    </view>
-
-    <!--查看选择优惠券部分-->
-    <view class="maks {{show_coupons ? 'cur' : ''}}" bindtap="changeCoupons">
-    </view>
-
-    <view class="popup-box {{show_coupons ? 'cur' : ''}}">
-        <view class="popup">
-            <view class="popup-top">
-                <view class="title">
-                    优惠券
-                    <view class="close" bindtap="changeCoupons">
-                        X
-                    </view>
-                </view>
-            </view>
-            <view class="popup-bottom coupon">
-                <view class="title">
-                    可领优惠券
-                </view>
-                <view class="coupon-box">
-                    <view class="coupon-item" wx:for="{{coupons}}" wx:key="{{index}}">
-                        <view class="coupon">
-                            <view class="coupon-left">
-                                <view class="text-wrap">
-                                    <view class="text-box" >
-                                        <view class="text">
-                                            <span class="money" wx:if="{{item.action_type.type == 'cash'}}">￥</span>
-                                            <span class="num">{{ item.action_type.value }}</span>
-
-                                            <span class="money" wx:if="{{item.action_type.type == 'discount'}}">折</span>
-                                        </view>
-                                        <span class="label text">{{ item.label }}</span>
-                                    </view>
-
-                                </view>
-                                <view class="dot-wrap">
-                                    <view class="dot-item">
-
-                                    </view>
-                                    <view class="dot-item">
-
-                                    </view>
-                                    <view class="dot-item">
-
-                                    </view>
-                                    <view class="dot-item">
-
-                                    </view>
-                                    <view class="dot-item">
-
-                                    </view>
-                                </view>
                             </view>
-                            <view class="coupon-right">
-                                <view class="top">
-                                    <span class="info">{{item.title}}</span>
-                                </view>
-                                <view class="bottom">
-                                    <view class="bottom-use">
-                                        <view class="tiem-box">
-                                            <text>{{item.use_start_time}}至{{item.use_end_time}}</text>
-                                        </view>
-                                        <view class="btn use" data-id="{{item.id}}" data-index="{{index}}" wx:if="{{!coupons[index].receive}}" bindtap="getCoupon">
-                                            点击领取
+                        </view>
+                        <view class="spec_text"  wx:if="{{!item.spec_img && !item.color}}">
+                            {{item.alias || item.value}}
 
-                                        </view>
-                                        <view class="btn already" wx:else>
-                                            已领取
+                            <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">
 
-                                        </view>
-
-                                    </view>
-                                </view>
                             </view>
                         </view>
                     </view>
+                    <!--<view class="spec_list" wx:if="{{spec.id != 2}}">尺码表</view>-->
+                </view>
+            </view>
+
+            <view class="spec_line">
+                <view class="num_title">数量</view>
+                <view class="num_value">
+                    <text bindtap="changeCount" data-index="0">-</text>
+                    <view class="none_border">
+                        <input bindinput="modifyCount" value="{{select_count}}"  type="number" confirm-type="done"/>
+                    </view>
+                    <text bindtap="changeCount" data-index="1">+</text>
+
+                </view>
+                <view class="purchase" wx:if="{{detailData.data.user_limit}}">
+                    本商品每人限购{{detailData.data.user_limit}}件
+                </view>
+            </view>
+
+            <button class="button"  wx:if="{{!canBuy}}" style="background: {{config.mainColor}}" type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+            <button class="button disabled" wx:else type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+
+            <!--<view  class="button {{ canBuy ? 'disabled' : '' }}" bindtap="confirm">-->
+
+                <!--&lt;!&ndash;<submit-button v-ref:button bindsubmit="confirm" :status="disallow_cart ? 'disabled' : 'normal'">确定</submit-button>&ndash;&gt;-->
+            <!--</view>-->
+        </view>
+    </view>
+
+</view>
+
+<!--弹出客服-->
+
+
+<view class="maks {{show_attention ? 'cur' : ''}}" bindtap="changeAttention">
+
+</view>
+
+<view class="attention-WeChat {{show_attention ? 'cur' : ''}}">
+    <view class="service-box">
+        <view class="code item" bindtap="previewImage">
+            <image mode="widthFix" src="{{service_info.online_service_self.qr_code}}" alt="" />
+            <view class="text">
+                保存二维码用微信识别添加
+            </view>
+        </view>
+
+       <view class="item phone" bindtap="callPhone">
+           <view class="phone-text">
+               <image mode="widthFix" src="{{service_info.online_service_self.qr_code}}" alt="" />
+               <view class="phone-warp">
+                   <i class="iconfont icon-dianhua"></i>
+                   <view class="phone-num">{{service_info.online_service_self.phone}}</view>
+                   <view>点击电话，咨询客服</view>
+               </view>
+           </view>
+           <view>
+               {{service_info.online_service_self.time}}
+           </view>
+       </view>
+    </view>
+</view>
+
+<!--网络繁忙弹窗-->
+<ten show="{{show_ten}}" bind:endTen="HideTen"></ten>
+<!--用户拒绝下载图片授权弹出-->
+<alert is_refused="{{is_refused}}" bind:close="closeAlert"></alert>
+<!--选择优惠券部分-->
+<view class="maks {{show_coupons ? 'cur' : ''}}" bindtap="showCoupons">
+
+</view>
+<view class="select-coupon-box {{show_coupons ? 'cur' : ''}}">
+    <view class="select-coupon">
+        <view class="select-coupon-top">
+            <view class="title">
+                优惠券
+                <view class="close" bindtap="showCoupons">
+                    X
+                </view>
+            </view>
+        </view>
+        <view class="select-coupon-bottom">
+            <view class="title">
+                可领优惠券
+
+            </view>
+            <view class="coupon-box">
+                <view class="coupon-item" wx:for="{{coupons}}" wx:key="{{index}}">
+                    <view class="coupon">
+                        <view class="coupon-left" style="background: {{config.mainColor}}">
+                            <view class="text-wrap">
+                                <view class="text-box" >
+                                    <view class="text">
+                                        <span class="money" wx:if="{{item.action_type.type == 'cash'}}">￥</span>
+                                        <span class="num">{{ item.action_type.value }}</span>
+
+                                        <span class="money" wx:if="{{item.action_type.type == 'discount'}}">折</span>
+                                    </view>
+                                    <span class="label text">{{ item.label }}</span>
+                                </view>
+
+                            </view>
+                            <view class="dot-wrap">
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                                <view class="dot-item">
+
+                                </view>
+                            </view>
+                        </view>
+                        <view class="coupon-right">
+                            <view class="top">
+                                <span>
+                                    <span class="type" wx:if="{{item.channel == 'ec'}}">商店</span>
+                                    <span class="type" wx:if="{{item.channel == 'shop'}}">门店</span>
+                                </span>
+                                <span class="info">{{item.title}}</span>
+                            </view>
+                            <view class="bottom">
+                                <view class="bottom-use">
+                                    <view class="tiem-box">
+                                        <text>{{item.use_start_time}}至{{item.use_end_time}}</text>
+                                    </view>
+                                    <view class="btn use" style="background: {{config.mainColor}}; border-color: {{config.mainColor}}" data-code="{{item.code}}" data-index="{{index}}" wx:if="{{!coupons[index].receive}}" bindtap="getCoupon">
+                                        点击领取
+
+                                    </view>
+                                    <view class="btn already" wx:else>
+                                        已领取
+
+                                    </view>
+
+                                </view>
+                            </view>
+                        </view>
+                    </view>
                 </view>
             </view>
         </view>
     </view>
+</view>
 
-    <!--查看促销部分-->
-    <view class="maks {{show_discounts ? 'cur' : ''}}" bindtap="changeDiscounts">
+
+<!--查看促销部分-->
+
+<view class="maks {{show_discounts ? 'cur' : ''}}" bindtap="showDiscounts">
+
+</view>
+
+<view class="see-discounts-box {{show_discounts ? 'cur' : ''}}">
+    <view class="select-discounts">
+        <view class="select-discounts-top">
+            <view class="title">
+                促销
+                <view class="close" bindtap="showDiscounts">
+                    X
+                </view>
+            </view>
+        </view>
+
+        <view class="select-discounts-bottom">
+            <view class="discounts-box">
+                <view class="disconts-item mx-1px-bottom" wx:for="{{discounts}}" wx:key="{{index}}">
+                    <view class="discounts-tags-title" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}">
+                        {{item.tags}}
+                    </view>
+                    <view class="tags-item">
+                        {{item.label}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+    </view>
+</view>
+<!--弹出第三方供货详情-->
+<view class="maks {{show_third ? 'cur' : ''}}">
+
+</view>
+<view class="third-box {{show_third ? 'cur' : ''}}">
+    <view class="title mx-1px-bottom">
+        <view class="txt">说明</view>
+        <view class="iconfont icon-close" bindtap="changeThird"></view>
+    </view>
+    <view class="content">
+        <view class="item pad-bottom">
+            <span class="iconfont icon-Group92"></span>
+            <view class="txt">本商品为第三方供应提供</view>
+        </view>
+        <view class="item pad-bottom">
+            <span class="iconfont icon-Group92"></span>
+            <view class="txt">由 {{detailData.data.supplier.company_name}} 发货并提供售后</view>
+        </view>
+        <view class="item">
+            <span class="iconfont icon-Group92"></span>
+            <view class="txt">
+                <view class="topic pad-bottom">企业信息</view>
+                <view class="info">企业名称：{{detailData.data.supplier.company_name}} </view>
+                <view class="info">企业执照注册号：{{detailData.data.supplier.company_number}} </view>
+                <view class="info">企业地址：{{detailData.data.supplier.company_address}}</view>
+                <view class="info">企业电话：{{detailData.data.supplier.company_phone}}</view>
+                <view class="info">营业期限：{{detailData.data.supplier.company_limit}} </view>
+                <view class="info mar-bottom">经营范围：{{detailData.data.supplier.company_scope}}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<!--弹出拼团规则部分-->
+<view class="maks {{show_rule ? 'cur' : ''}}">
+
+</view>
+<view class="rule-box {{show_rule ? 'cur' :''}}">
+    <view class="rules-title">
+        <view class="text">拼团规则</view>
+        <view class="iconfont icon-close" bindtap="closeRule"></view>
+    </view>
+    <view class="rules-content">
+        <view class="rules-item">
+            <view class="info-title">【团长】</view>
+            <view class="infomation">是指该团第一位支付的人</view>
+        </view>
+        <view class="rules-item">
+            <view class="info-title">【开团】</view>
+            <view class="infomation">团长购买拼团商品并完成支付，该团即正式开启；无论该团成功与否，每次活动每人仅可发起一个拼团。</view>
+        </view>
+        <view class="rules-item">
+            <view class="info-title">【参团】</view>
+            <view class="infomation"> 从团长分享的商品链接进入购买该商品即可成为该团团员，也可将该团链接分享给更多新团员参加，使该团尽快成功并发货。</view>
+        </view>
+        <view class="rules-item">
+            <view class="info-title">【拼团成功】</view>
+            <view class="infomation">开团后24小时内，该团达到规定的人数，且商品库存充足，则拼团成功。因活动商品紧俏，越快邀请到好友成团购买到活动商品的可能性越大。</view>
+        </view>
+        <view class="rules-item">
+            <view class="info-title">【拼团失败】</view>
+            <view class="infomation">开团后24小时内未达到规定人数、库存不足活动提前结束、活动时间到期等原因将引起拼团失败。拼团失败后将自动取消订单，活动结束后立即退款。</view>
+        </view>
+        <view class="rules-item">
+            <view class="info-title">【其他说明】</view>
+            <view class="infomation">拼团活动不可使用优惠券、其他促销折扣、积分。</view>
+        </view>
+    </view>
+</view>
+
+<!--弹出更多门店-->
+<view class="maks {{show_more_shop ? 'cur' : ''}}">
+
+</view>
+<view class="more-shop-box {{show_more_shop ? 'cur' :''}}">
+    <view class="title iconfont icon-close" bindtap="changeMoreShop">
 
     </view>
 
-    <view class="popup-box {{show_discounts ? 'cur' : ''}}">
-        <view class="popup">
-            <view class="popup-top">
-                <view class="title">
-                    促销
-                    <view class="close" bindtap="changeDiscounts">
-                        X
+</view>
+<!--弹出更多拼团-->
+<view class="maks {{show_more ? 'cur' : ''}}" bindtap="closeMore">
+
+</view>
+
+    <view class="more-box {{show_more ? 'cur' : ''}}">
+        <view class="more-title">TA们也在拼</view>
+        <scroll-view scroll-y bindscrolltolower="scrollBottom">
+            <view class="more-content">
+                <view wx:for="{{groupon_itemList}}" wx:for-index="idx" wx:for-item="items">
+                    <view class="more-item" wx:for="{{groupon_itemList[idx]}}">
+                        <view class="use-info">
+                            <image src="{{item.leader.meta.avatar}}"></image>
+                            <view class="nick-name">{{item.leader.meta.nick_name}}</view>
+                        </view>
+                        <view class="offered-info">
+                            <view class="box">
+                                <view class="info-num">还差<span>{{groupon_itemList[0][0].gap_number}}人</span>成团</view>
+                                <view class="groups-time-box">
+                                    <span>剩余: </span>
+                                    <group end="{{groupon_itemList[0][0].ends_at}}" starts="{{groupon_itemList[0][0].starts_at}}" server="{{detailData.data.server_time}}" mold="list"></group>
+                                </view>
+                            </view>
+                            <view class="info-btn" bindtap="multiAddToCart" data-id="{{item.id}}" data-join="{{item.has_joined}}" data-no="{{item.multi_groupon_order_no}}">
+                                <span wx:if="{{item.has_joined == 1}}">已参团</span>
+                                <span wx:else>去参团</span>
+                            </view>
+                        </view>
                     </view>
                 </view>
-            </view>
-
-            <view class="popup-bottom discounts">
-                <view class="discounts-box">
-                    <view class="disconts-item mx-1px-bottom" wx:for="{{discounts}}" wx:key="{{index}}">
-                        <view class="discounts-tags-title">
-                            {{item.tags}}
-                        </view>
-                        <view class="tags-item">
-                            {{item.label}}
-                        </view>
-                    </view>
-                </view>
-            </view>
-
         </view>
+        </scroll-view>
+    </view>
+<!--弹出分享部分-->
+<view class="maks share {{show_share ? 'cur' : ''}}" bindtap="changeShare">
+
+</view>
+
+<view class="share-box {{show_share ? 'cur' : ''}}">
+    <button class="shaer-item" open-type="share">
+        分享给好友
+    </button>
+    <view class="shaer-item mx-1px-top" bindtap="getShearImg">
+        生成海报
+    </view>
+    <view class="shaer-item clear" bindtap="changeShare">
+        取消
+    </view>
+</view>
+<!--固定的分享盒子-->
+<view class="share-fixed" bindtap="changeShare">
+    <view class="iconfont icon--fenxiang"></view>
+    <view class="txt">分享</view>
+</view>
+
+
+<!--同款部分-->
+<view class="maks {{show_same ? 'cur' : ''}}">
+
+</view>
+
+<view class="see-discounts-box {{show_same ? 'cur' : ''}}">
+    <view class="select-discounts">
+        <view class="select-discounts-top">
+            <view class="title">
+                促销
+                <view class="close" bindtap="showSame">
+                    X
+                </view>
+            </view>
+        </view>
+
+        <view class="show-same">
+            该商品线上商城和线下商场同步销售，欢迎到线下商场体验购买。
+        </view>
+
+    </view>
+</view>
+
+<!--分享到朋友圈弹出-->
+<view class="share-img-box {{share_img ? 'cur' : ''}}" >
+    <view class="imgs-box">
+        <view class="img">
+            <image mode="widthFix" src="{{shareImg}}"></image>
+        </view>
+        <view class="text">
+            保存图片后，可分享到朋友圈
+        </view>
+        <view class="save" style="background: {{config.mainColor}}" bindtap="downImg">
+            保存图片
+        </view>
+        <i class="iconfont icon-delete" bindtap="changeImg"></i>
+    </view>
+</view>
+
+<!--加入购物车弹出-->
+<view class="cart-box" catchtouchmove="move" hidden="{{!show_cart}}">
+    <view class="cart-mask">
+
+    </view>
+    <view class="cart-dialog">
+        <view class="title mx-1px-bottom">
+            商品成功加入购物车
+        </view>
+        <view class="buttons">
+            <view class="button" style="background: {{config.mainColor}}" bindtap="goCart">
+                进入购物车
+            </view>
+            <view class="button agin" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" bindtap="changeCart">
+                继续购物
+            </view>
+        </view>
+
     </view>
 </view>

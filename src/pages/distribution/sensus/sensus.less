@@ -1,0 +1,48 @@
+@import "../../../assets/css/global";
+#sensus{
+  .sensuspage{
+    .sensus-detail{
+      height:260px;
+    }
+    .sensus-item{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      background-color: #ffffff;
+      view{
+        text-align: center;
+        width: 33.3%;
+        font-size: 13px;
+        color:#9b9b9b ;
+        border-right: 1px solid #d8d8d8;
+        border-bottom: 1px solid #d8d8d8;
+        padding:19px 0 17px 0;
+        span{
+          display: block;
+          &.item-top{
+            font-size: 17px;
+            line-height: 18px;
+            padding-bottom: 8px;
+          }
+          &.sale-earning{
+            color: @globalColor;
+          }
+        }
+      }
+    }
+    .check-money{
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      button{
+        background-color: #ffffff;
+        color: #4A90E2;
+        font-size:17px;
+      }
+      button::after{
+        border: none;
+      }
+    }
+  }
+}

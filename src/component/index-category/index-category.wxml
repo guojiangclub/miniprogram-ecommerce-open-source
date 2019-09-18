@@ -1,0 +1,22 @@
+<!--最佳销售单品-->
+<view class="index-categrory" wx:for="{{categoryData}}" wx:for-item="items" wx:for-index="idx" wx:key="{{idx}}">
+    <view class="best">
+        <view class="title">
+            {{items.meta.name}}
+        </view>
+        <view class="SalesGoods-box">
+            <view class="SalesGoods-item" data-id="{{item.id}}" data-point="{{item.redeem_point}}" wx:for="{{items.goodsList}}" wx:key="{{index}}" bindtap="_jumpToDetail">
+                <view class="item">
+                    <image mode="widthFix" class="slider-image" src="{{item.img}}" :alt="item.image" />
+                    <view class="goods-name">{{item.name}}</view>
+                    <view class="money-box">
+                        <view class="money-now">￥{{item.sell_price}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="button-box" data-src="/pages/store/list/list" bindtap="_jumpImg">
+            查看全部商品
+        </view>
+    </view>
+</view>

@@ -1,0 +1,19 @@
+<view id="retreat">
+   <view class="company">
+       <view class="detail">物流公司</view>
+       <picker value="{{selectedIndex}}" range="{{list}}" bindchange="change">
+           <input type="text" placeholder="选择物流公司" disabled  value="{{list[selectedIndex]}}"/>
+       </picker>
+   </view>
+    <view class="code">
+       <view class="air_way">
+           运单号
+       </view>
+        <input type="number" placeholder="填写运单号的条形码数字" bindinput="changeCodeNumber"/>
+    </view>
+    <view class="submit">
+        <button type="primary" bindtap="submit">完成</button>
+    </view>
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

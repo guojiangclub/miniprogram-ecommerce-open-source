@@ -1,0 +1,87 @@
+@import "../../../assets/css/global";
+#vipManage{
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    z-index: 20;
+    height: 50px;
+    line-height: 50px;
+    background: #FFFFFF;
+    font-size: 14px;
+    color: #9B9B9B;
+
+    .navbar-item {
+      flex: 1;
+      width: 0%;
+      text-align: center;
+
+      &.activity {
+        color:@globalColor;
+      }
+    }
+    .navbar-slider {
+      position: absolute;
+      content: " ";
+      left: 0;
+      bottom: 0;
+      width: 4em;
+      height: 3px;
+      background-color: @globalColor;
+      transition: transform .3s;
+    }
+  }
+  .vipManagepage{
+    padding-top:60px;
+    .isList{
+      margin-top: 10px;
+      text-align: center;
+      color: #959595;
+    }
+    .isLists{
+      margin-top: 10px;
+      text-align: center;
+    }
+    .vipManage-item{
+      background-color: #ffffff;
+      padding: 11px 0 11px 11px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #D8D8D8;
+      image{
+        width: 45px;
+        height: 45px;
+      }
+      .item-right{
+        margin-left: 11px;
+        flex: 1;
+        .username{
+          display: flex;
+          align-items: center;
+          .nickname{
+            color:#000000 ;
+            font-size: 17px;
+          }
+          .grade{
+            background-color:#FB8F00;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            font-size:10px;
+            margin-left: 10px;
+            color: #ffffff;
+          }
+        }
+        .vipdate{
+          font-size:13px;
+          color:#9B9B9B;
+          .vipnum{
+            padding-right: 15px;
+          }
+        }
+      }
+    }
+
+  }
+}

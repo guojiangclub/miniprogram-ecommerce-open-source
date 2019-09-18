@@ -1,0 +1,97 @@
+<view id="store-order">
+    <view class="border-box">
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                收货信息
+            </view>
+            <view class="address info" bindtap="selectAddress">
+
+                <view class="user" wx:if="{{form.address}}">
+                    <i class="iconfont icon-yonghu1"></i>
+                    <view class="name-box">
+                        <text class="name">{{form.address.accept_name}}</text>
+                        <text class="telephone">{{form.address.mobile}}</text>
+                    </view>
+                </view>
+                <view class="address" wx:if="{{form.address}}">
+                    <i class="iconfont icon-weizhi"></i>
+                    <text>{{form.address.address_name}} {{form.address.address}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                商品清单
+            </view>
+            <view class="goods info mx-1px-bottom" wx:for="{{block.order.items}}" wx:if="{{block.order.items.length == 1}}">
+                <view class="goods-item">
+                    <view class="item-left">
+                        <image  src="{{item.item_meta.image}}"></image>
+                    </view>
+                    <view class="item-right">
+                        <view class="goods-name item">
+                            <view class="name">
+                                {{item.item_name}}
+                            </view>
+                            <view>
+                                {{item.quantity}}件
+                            </view>
+                        </view>
+                        <view class="goods-money item">
+                            <view>
+                                {{item.item_meta.specs_text}}
+                            </view>
+                            <view>
+                                {{item.redeem_point}} 积分
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="info mx-1px-bottom all-goods" wx:if="{{block.order.items.length > 1}}" bindtap="jumpGoods">
+                <view class="good-box">
+                    <view class="good-img" wx:for="{{block.order.items}}" wx:for-index="index" wx:if="{{index < 4}}">
+                        <image src="{{item.item_meta.image}}" alt="" />
+                    </view>
+                </view>
+                <div class="num">
+                    共{{block.order.count}}件
+                </div>
+            </view>
+
+            <view class="total">
+                {{block.order.count}}件商品，合计 {{block.order.redeem_point}} 积分
+            </view>
+        </view>
+
+        <view class="order-item">
+            <view class="remarks  pointFlex">
+                <view>
+                    可用积分：
+                </view>
+                <view>
+                    {{extra.point}}
+                </view>
+
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="remarks ">
+                <view>
+                    <input type="text" bindinput="inputNote" placeholder="买家留言" />
+                </view>
+
+            </view>
+        </view>
+
+    </view>
+    <view class="sbumit-order mx-1px-top">
+        <view class="back">
+            支付积分：<text>{{block.order.redeem_point}}</text>
+        </view>
+        <button class="sbumit" bindtap="submitOrder" style="background: {{config.mainColor}}" loading="{{loading}}">
+            确定兑换
+        </button>
+    </view>
+</view>
+

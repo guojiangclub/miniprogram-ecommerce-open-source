@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "砍价帮帮忙",
+    "usingComponents": {
+      "wxparser": "plugin://wxparserPlugin/wxparser",
+        "seckill": "../../../component/seckill/seckill"
+    }
+  }

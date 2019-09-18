@@ -1,0 +1,49 @@
+<view id="pointstore-index">
+
+    <view class="contents">
+        <view class="list">
+            <view class="top">
+                <view class="login" wx:if="{{!token}}" bindtap="jumpLogin">
+                    快速登录 / 注册
+                </view>
+                <view class="point-info" style="background: {{config.mainColor}}" wx:else>
+                    <view class="left">
+                        <view>
+                            当前积分
+                        </view>
+                        <view class="num">
+                            {{point.pointValid}}
+                        </view>
+                    </view>
+                    <view class="right" >
+                        <view class="record" bindtap="jumpRecord">兑换记录</view>
+                    </view>
+                </view>
+            </view>
+            <view class="no-list" wx:if="{{init}}">暂无可兑换商品</view>
+            <view class="commodity-bottom" wx:else>
+                <view wx:for="{{storeList}}" wx:for-index="idx">
+                    <view class="commodity-out" data-id="{{item.id}}" wx:for="{{storeList[idx]}}" bindtap="jump">
+                        <view class="commodity-box">
+                            <view class="commodity-img">
+                                <image mode="widthFix" src="{{item.img}}" />
+                            </view>
+                            <view class="commodity-name">
+                                {{item.name}}
+                            </view>
+                            <view class="commodity-money">
+                                <view class="money">
+                                    {{item.redeem_point}}积分
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="loadingbox" hidden="{{!show}}">
+                    正在加载下一页数据
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

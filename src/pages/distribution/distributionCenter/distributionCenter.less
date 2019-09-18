@@ -1,0 +1,115 @@
+@import "../../../assets/css/global";
+#distributionCenter{
+  .distributionCenterpage{
+    .distributionCenter-top{
+      color: #ffffff;
+      background-color:@mainColor;
+      height: 120px;
+      text-align: center;
+      padding: 33px 0 ;
+      .current-title{
+        font-size:16px;
+        line-height: 16px;
+      }
+      .current-money{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 8px;
+        .cur-num{
+          font-size:32px;
+          font-weight: bold;
+          height:32px ;
+          line-height: 32px;
+        }
+        .current{
+          font-size: 16px;
+          height: 16px;
+          line-height: 16px;
+        }
+        .cur-topic{
+          font-size: 14px;
+          color: #ffffff;
+          display: inline-block;
+          width: 51px;
+          height: 23px;
+          line-height: 23px;
+          text-align: center;
+          border-radius: 23px;
+          border: 1px solid #ffffff;
+          position: relative;
+          left: 15px;
+        }
+
+      }
+    }
+    .distributionCenter-profit{
+      display: flex;
+      background-color: #ffffff;
+      align-items: center;
+      margin-bottom:15px;
+      .addUp{
+        flex: 1;
+        padding: 20px;
+        border-right:1px solid #D8D8D8;
+      }
+      .outStanding{
+        flex: 1;
+        padding: 20px;
+      }
+      .earnings{
+        font-size: 14px;
+        color: #9b9b9b;
+      }
+      .earnings-num{
+        font-size: 20px;
+        color: #4a4a4a;
+      }
+    }
+    .distributionCenter-handle{
+      padding: 20px 20px 0 20px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      //justify-content: space-around;
+      flex-wrap: wrap;
+      view{
+        width: 33.33%;
+        margin-bottom: 20px;
+        font-size:14px;
+        color:#4A4A4A;
+        text-align: center;
+        span{
+          display: block;
+          &.iconfont{
+            font-size: 35px;
+          }
+          &.icon-woyaotixian{
+            color:#76A73D;
+          }
+          &.icon-fenxiaodingdan{
+            color: #F5A344;
+          }
+          &.icon-shoukuanzhanghu{
+            color: #2C97D3;
+          }
+          &.icon-fenxiaotongji{
+            color: #2C97D3;
+          }
+          &.icon-woyaotuiguang{
+            color: #F86F5C;
+          }
+          &.icon-huiyuanguanli{
+            color: #FE7400;
+          }
+          &.icon-youhuiquan3 {
+            color: #F5A344;
+          }
+          &.icon-tuikeguanli{
+            color:#2C97D3;
+          }
+        }
+      }
+    }
+  }
+}

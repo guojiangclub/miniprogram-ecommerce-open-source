@@ -1,0 +1,141 @@
+ #birthday-box{
+    .mask{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 200;
+      overflow-y: hidden;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .box{
+      position: fixed;
+      z-index: 500;
+      width: 80%;
+      top: 47%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      overflow: auto;
+      height: 70%;
+      .title{
+        position: relative;
+        height: 45%;
+        background: url("http://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/18-12-27/10678114.jpg") no-repeat;
+        background-size: 100% 100%;
+        image{
+          position: absolute;
+          right: 0;
+          top: 2px;
+          color: #fff;
+          width: 30px;
+          height: 30px;
+        }
+        i{
+          position: absolute;
+          right: 0;
+          top: -5px;
+          color: #fff;
+          font-size: 30px;
+        }
+      }
+      .name{
+        font-size: 14px;
+        text-align: center;
+        margin-right: 2px;
+        color: #FFFFFF;
+        background: #ffce2f;
+        span{
+          color: #e7636f;
+        }
+      }
+      .coupon-list{
+        overflow: auto;
+        height: 37%;
+        background: #ffce2f;
+        /*margin: 0 9px 0 10px;*/
+        margin-right: 2px;
+        padding: 0 15px;
+        .item{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          padding: 5px 10px;
+          margin-bottom: 10px;
+          background: #FFFFFF;
+          border-radius: 4px;
+
+          &:first-child{
+            margin-top: 10px;
+          }
+          &::before {
+            position: absolute;
+            left: -5px;
+            top: 20px;
+            content: '';
+            background: #ffce2f;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+          }
+          &::after {
+            position: absolute;
+            right: -5px;
+            top: 20px;
+            content: '';
+            background: #ffce2f;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+          }
+
+          .left{
+            flex: 1;
+            font-size: 14px;
+            margin-right: 10px;
+            overflow: hidden;
+            div{
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+
+            }
+            .time{
+              font-size: 10px;
+              color: #9B9B9B;
+              min-height: 19px;
+            }
+          }
+          .right{
+
+            font-size: 16px;
+            color: #e7636f;
+          }
+          &.point{
+            padding: 13px 10px;
+          }
+        }
+      }
+
+      .buttom{
+        font-size: 14px;
+        padding: 14px;
+        /*height: 10%;*/
+        text-align: center;
+        color: #FFFFFF;
+        background: #ffce2f;
+        border-top: 4px solid #f7a63d;
+        border-radius: 0 0 5px 5px;
+        margin-right: 2px;
+        span{
+          background: #e7636f;
+          border-radius: 20px;
+          padding: 10px 50px;
+
+        }
+      }
+    }
+
+  }
+

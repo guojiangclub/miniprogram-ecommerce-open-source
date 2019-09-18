@@ -1,16 +1,19 @@
 <view id="store-order">
     <view class="border-box">
-        <view class="order-item">
-            <view class="title mx-1px-bottom">
-                收货信息
-            </view>
-            <view class="address info" bindtap="selectAddress">
+        
+        <view class="order-item mx-1px-top" wx:if="{{valueR == 0}}">
+            <!-- <view class="title mx-1px-bottom">
+                 收货信息
+             </view>--> 
+            <view class="address address_bg" bindtap="selectAddress">
+
                 <view class="user" wx:if="{{form.address == ''}}">
                     <i class="iconfont icon-juxing"></i>
                     <view class="name-box">
                         <text class="add">添加收货地址</text>
                     </view>
                 </view>
+
                 <view wx:else>
                     <view class="user">
                         <i class="iconfont icon-yonghu1"></i>
@@ -19,13 +22,23 @@
                             <text class="telephone">{{form.address.mobile}}</text>
                         </view>
                     </view>
-                    <view class="address">
+                    <view class="address info">
                         <i class="iconfont icon-weizhi"></i>
                         <text>{{form.address.address_name}} {{form.address.address}}</text>
                     </view>
                 </view>
+
+
+                <!--<view class="name" wx:if="{{form.address}}">-->
+                <!--<text>{{form.address.accept_name}}</text>-->
+                <!--<text>{{form.address.mobile}}</text>-->
+                <!--</view>-->
+                <!--<view wx:if="{{form.address}}">-->
+                <!--{{form.address.address}}-->
+                <!--</view>-->
             </view>
         </view>
+       
         <view class="order-item">
             <view class="title mx-1px-bottom">
                 商品清单
@@ -70,36 +83,87 @@
                 {{block.order.count}}件商品，合计￥{{(block.order.total/100)}}
             </view>
         </view>
+
         <view class="order-item">
             <view class="title__point info" bindtap="showDiscounts">
-                <text>促销活动</text>
-                <view wx:if="{{form.discount.id}}" class="coupon-label">
-                    {{form.discount.label}}  -￥{{-form.discount.adjustmentTotal / 100}}
+                <text class="infosles">促销活动</text>
+                <!--<view class="no-dis"  wx:if="{{!block.discounts || block.discounts.length == 0}}">
+                    您暂无可用优惠
+                </view>-->
+                <view wx:if="{{available.currentDiscount.id}}" class="coupon-label">
+                    {{available.currentDiscount.label}}  ￥{{currentItem.discountAdjustment / 100}}
                 </view>
-                <view class="discounts-item" wx:else>
-                    <text wx:if="{{block.discounts || block.discounts.length !== 0}}">{{block.discounts.length || 0}}个可用活动</text>
+                <view class="discounts-item" style="background: {{config.mainColor}}" wx:else>
+                    <text wx:if="{{available.discounts || available.discounts.length !== 0}}">{{available.discounts.length || 0}}个可用活动</text>
                 </view>
             </view>
 
         </view>
 
         <view class="order-item">
-
             <view class="coupon info" bindtap="select">
-                <view>优惠券</view>
+                <view class="infosles">优惠券</view>
                 <view class="coupon-item">
-
-                    <view wx:if="{{block.coupon.id}}" class="coupon-label">
-                        {{block.coupon.discount.label}}  -￥{{-paymentMoneys.discounts.coupon / 100}}
+                    <view wx:if="{{available.currentCoupon.id}}" class="coupon-label">
+                        {{available.currentCoupon.discount.label}}  ￥{{currentItem.couponAdjustment / 100}}
                     </view>
-                    <view class="coupon-num" wx:else>
-                        {{block.coupons.length || 0}}优惠券张可用
+                    <view class="coupon-num" style="background: {{config.mainColor}}" wx:else>
+                        {{available.coupons.length || 0}}优惠券张可用
                     </view>
                 </view>
 
             </view>
         </view>
+
+        <view class="order-item" wx:if="{{(available.coupons && available.coupons.length) || (available.discounts && available.discounts.length)}}">
+            <view class="info best">
+                <view>推荐组合</view>
+                <view class="text">
+                    <block  wx:if="{{bestDiscount}}">
+                        使用推荐组合省￥{{currentItem.adjustmentTotal_yuan}}
+                    </block>
+                </view>
+                <switch checked="{{bestDiscount}}" bindchange="bestSwitch"/>
+            </view>
+        </view>
+
+        <view class="order-item">
+            <view class="mx-1px-bottom title__point" wx:if="{{newBlock.orderPoint.pointCanUse && newBlock.orderPoint.pointCanUse > 0}}">
+                <view class="intnote">积分抵扣</view>
+                <view>
+                    <!--<switch checked />-->
+                    <switch bindchange="usePoint" />
+                </view>
+            </view>
+            <view class="info title__point" wx:if="{{!newBlock.orderPoint.pointCanUse || newBlock.orderPoint.pointCanUse <= 0}}">
+                <text>积分抵扣</text>
+
+                <view class="no-dis" wx:if="{{newBlock.orderPoint.length === 0}}">
+                    此商品不支持积分
+                </view>
+                <view class="no-dis" wx:else>
+                    您暂无可用积分
+                </view>
+            </view>
+            <view class="point info" wx:else>
+                <view class="input-box mx-1px-bottom">
+                    <view style="overflow: hidden">
+                        <view class="input__text">共有{{newBlock.orderPoint.userPoint}}积分， 可使用积分{{newBlock.orderPoint.pointCanUse || 0}}  抵扣￥{{-pointAmount || 0}}</view>
+                        <!--<input placeholder="可使用积分{{block.orderPoint.pointCanUse || 0}}" type="number" bindinput="modifyPoint" bindchange="saveForm" value="{{form.point !== 0 ? form.point : ''}}"/>-->
+                    </view>
+                    <!--<view class="use-all" bindtap="usePoint">
+                        全部使用
+                    </view>-->
+                    <!--<view class="offset">
+
+                    </view>-->
+                </view>
+
+            </view>
+        </view>
+
         <view class="order-item" wx:if="{{block.invoice_status == 1}}">
+
             <view class="invoice info" bindtap="addInvoice">
                 <view>
                     发票信息
@@ -111,20 +175,23 @@
                     <view wx:else>
                         不开发票
                     </view>
+
                 </view>
             </view>
         </view>
 
         <view class="order-item">
-            <view class="title mx-1px-bottom">
+            <view class="title mx-1px-bottom intnote">
                 备注
             </view>
             <view class="remarks info">
                 <view>
                     <input bindinput="inputNote" type="text" placeholder="选填：填写您的附加信息" />
                 </view>
+
             </view>
         </view>
+
         <view class="order-info">
             <view class="info-item">
                 <view class="item-left">
@@ -144,19 +211,43 @@
             </view>
             <view class="info-item">
                 <view class="item-left">
+                    积分抵扣
+                </view>
+                <view class="item-right">
+                    ￥{{discounts.point_yuan}}
+                </view>
+            </view>
+            <view class="info-item">
+                <view class="item-left">
                     优惠抵扣 ：
                 </view>
                 <view class="item-right">
-                    ￥{{paymentMoneys.discounts.total / 100}}
+                    ￥{{discounts.total_yuan}}
                 </view>
             </view>
+            <view class="info-item">
+                <view class="item-left">
+                    运费
+                </view>
+                <view class="item-right">
+                    -￥{{newBlock.order.payable_freight}}
+                </view>
+            </view>
+            <!--<view class="info-item">-->
+                <!--<view class="item-left money-title">-->
+                    <!--实际支付金额-->
+                <!--</view>-->
+                <!--<view class="item-right money">-->
+                    <!--￥{{(paymentMoneys.total + block.order.payable_freight) / 100}}-->
+                <!--</view>-->
+            <!--</view>-->
         </view>
     </view>
     <view class="sbumit-order mx-1px-top">
-        <view class="back">
-            {{block.order.count}}件商品, 合计 ￥{{(paymentMoneys.total + block.order.payable_freight) / 100}}
+        <view class="back" style="color: {{config.mainColor}}">
+            {{newBlock.order.count}}件商品, 合计 ￥{{(block.order.total/100)}}
         </view>
-        <button class="sbumit" bindtap="submitOrder" loading="{{loading}}">
+        <button class="sbumit" style="background: {{config.mainColor}}" bindtap="submitOrder" loading="{{loading}}">
             提交订单
         </button>
     </view>
@@ -165,11 +256,11 @@
 <view class="coupon-maks {{show ? 'cur' : ''}}">
     <view class="coupon-box">
         <radio-group bindchange="change" >
-            <view class="coupon-item" wx:for="{{block.coupons}}" wx:key="{{index}}">
+            <view class="coupon-item" wx:for="{{available.coupons}}" wx:key="{{index}}">
                 <radio id="index-{{index}}" value="{{index}}" checked="{{item.checked}}"/>
                 <label for="index-{{index}}">
                     <view class="coupon">
-                        <view class="coupon-left">
+                        <view class="coupon-left" style="background: {{config.mainColor}}">
                             <view class="text-wrap">
                                 <view class="text-box">
                                     <view class="text">
@@ -219,7 +310,7 @@
                                 </view>
                             </view>
 
-                            <view class="select {{ index == check ? 'activity' : ''}}">
+                            <view class="select {{ index == couponCheckIndex ? 'activity' : ''}}">
 
                             </view>
                         </view>
@@ -231,7 +322,7 @@
         </radio-group>
     </view>
     <view class="button-box">
-        <button class="sure" type="primary" bindtap="sure">确定</button>
+        <button class="sure" type="primary" style="background: {{config.mainColor}}" bindtap="sure">确定</button>
         <button type="default" bindtap="cancel">取消</button>
     </view>
 </view>
@@ -259,11 +350,11 @@
                 </view>
                 <block wx:else>
                     <radio-group bindchange="changeDiscounts">
-                        <view class="input-box mx-1px-bottom" wx:for="{{block.discounts}}" wx:key="{{index}}">
+                        <view class="input-box mx-1px-bottom" wx:for="{{available.discounts}}" wx:key="{{index}}">
                             <view>
                                 <label class="radio">
                                     <text>{{item.label}}</text>
-                                    <radio color="red" disabled="{{form.isDisabled}}" value="{{index}}" checked="{{formStates.discountsCheckIndex == index}}"/>
+                                    <radio color="red" value="{{index}}" checked="{{discountsCheckIndex == index}}"/>
                                 </label>
                             </view>
                         </view>
@@ -271,13 +362,19 @@
                             <view>
                                 <label class="radio" >
                                     <text>不使用优惠</text>
-                                    <radio value="-1" checked="{{formStates.discountsCheckIndex == -1}}"/>
+                                    <radio value="-1" checked="{{discountsCheckIndex == -1}}"/>
                                 </label>
                             </view>
                         </view>
                     </radio-group>
                 </block>
+
             </view>
         </view>
+
     </view>
 </view>
+<!--
+<view class="select-coupon-box {{show_discounts ? 'cur' : ''}}">
+
+</view>-->

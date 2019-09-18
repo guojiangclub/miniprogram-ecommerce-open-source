@@ -1,0 +1,24 @@
+<view id="pointstore-record">
+    <view class="contents">
+        <view>
+            <view class="no-list" wx:if="{{reveal}}">
+                暂无数据
+            </view>
+            <view class="record-box" wx:for="{{recordList}}" wx:for-index="idx">
+                <view class="item mx-1px-bottom" data-no="{{item.order_no}}" wx:for="{{recordList[idx]}}" bindtap="jump">
+                    <view class="left">
+                        <view class="name">
+                            {{item.items[0].item_name}}
+                        </view>
+                        <view class="time">
+                            {{item.submit_time}}
+                        </view>
+                    </view>
+                    <view class="right">
+                        -{{item.redeem_point}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

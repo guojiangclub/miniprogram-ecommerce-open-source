@@ -7,6 +7,7 @@ Page({
         open_id: ''
     },
     onLoad(e){
+        
         if (e.url) {
             this.setData({
                 url: decodeURIComponent(e.url)
@@ -46,12 +47,16 @@ Page({
                     cookieStorage.set('open_id', res.data.open_id);
                     wx.hideLoading();
                 }
+                // var res={
+                //     'status':true,
+                //     'data':res
+                //  }
                 // 如果接口返回token就直接登录，如果没有则弹出授权
                 if (res.data && res.data.access_token) {
                     wx.hideLoading();
                     var access_token = res.data.token_type + ' ' + res.data.access_token;
                     var expires_in = res.data.expires_in || 315360000;
-                    cookieStorage.set("user_token", access_token, expires_in);
+                     cookieStorage.set("user_token", access_token, expires_in);
                     // 判断来源
                     if (this.data.url) {
                         // 判断需要跳回的页面是否为tabbar页面
@@ -187,6 +192,10 @@ Page({
         }).then(res => {
             if (res.statusCode == 200) {
                 res = res.data;
+                // var res={
+                //     'status':true,
+                //     'data':res
+                //  }
                 if (res.data.access_token) {
                     var access_token = res.data.token_type + ' ' + res.data.access_token;
                     var expires_in = res.data.expires_in || 315360000;

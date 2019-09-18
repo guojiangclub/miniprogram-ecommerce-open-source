@@ -1,0 +1,24 @@
+<view id="spread">
+    <view class="spreadpage" wx:if="{{init}}">
+        <view class="content">
+            <view class="content-top {{erweima.show_agent_tips ? '' : 'hidden'}}">
+                邀请好友，当TA成功下单时，
+            </view>
+            <view class="content-bottom {{erweima.show_agent_tips ? '' : 'hidden'}}">
+                您将获得一笔佣金
+            </view>
+            <view  class="erweima">
+                <image mode="widthFix" src="{{erweima.agent_mini}}"></image>
+                <view class="btn-box">
+                    <view class="save btn" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" bindtap="down" wx:if="{{erweima.agent_mini}}">
+                        保存图片
+                    </view>
+                    <button class="btn share" style="background: {{config.mainColor}}" type="warn" open-type="share">立即邀请</button>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!--用户拒绝下载图片授权弹出-->
+    <alert is_refused="{{is_refused}}" bind:close="closeAlert"></alert>
+
+</view>

@@ -1,0 +1,34 @@
+<view id="pointstore-success">
+    <view class="contents">
+        <view class="is-ok" wx:if="{{isOK === true}}">
+            <view class="text">
+                兑换成功
+            </view>
+            <view>
+                感谢惠顾~
+            </view>
+        </view>
+        <view class="is-ok" wx:if="{{isOK === false}}">
+            <view class="no-text">
+                兑换失败
+            </view>
+            <view>
+                我还会在回来的~
+            </view>
+        </view>
+
+        <view class="point-box mx-1px-top" wx:if="{{isOK === true}}">
+            <view>本次消耗 <i class="red">{{order_info.pointUsed}}</i> 积分</view>
+            <view>当前可用 <i>{{order_info.pointTotal}}</i> 积分</view>
+        </view>
+
+        <view class="button-box" >
+            <view class="lock" style="color: {{config.mainColor}}" wx:if="{{isOK === true}}" bindtap="jumpOrder">
+                查看订单详情
+            </view>
+            <view bindtap="jumpStore" style="background: {{config.mainColor}}">
+                继续兑换
+            </view>
+        </view>
+    </view>
+</view>

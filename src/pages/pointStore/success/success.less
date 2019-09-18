@@ -1,0 +1,61 @@
+@import "../../../assets/css/global";
+#pointstore-success{
+  .contents{
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+
+
+    .is-ok{
+      background: #FFFFFF;
+      text-align: center;
+      padding: 25px 0;
+      font-size: 10px;
+      color:#9b9b9b;
+
+      .text{
+        font-size: 25px;
+        color:#f8b62d;
+      }
+      .no-text{
+        font-size: 25px;
+        color: @globalColor;
+      }
+    }
+
+    .point-box{
+      font-size: 14px;
+      background: #FFFFFF;
+      text-align: center;
+      padding: 15px 0;
+      .red{
+        color: @globalColor;
+      }
+      i{
+        color: #1AAD19;
+      }
+    }
+
+    .button-box{
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      background: @mainColor;
+      color: #FFFFFF;
+      text-align: center;
+      .lock{
+        background: #FFFFFF;
+        color:  @mainColor;
+      }
+      view{
+        width: 0%;
+        flex: 1;
+      }
+    }
+  }
+}

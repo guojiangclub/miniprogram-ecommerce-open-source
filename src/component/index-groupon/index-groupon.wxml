@@ -1,0 +1,34 @@
+<view class="groupon-item-box">
+    <view class="title mx-1px-bottom" data-src="/pages/store/groups/groups" bindtap="_jumpImg">
+        <text>超值拼团</text>
+        <text>更多></text>
+    </view>
+    <view wx:for="{{indexData}}" wx:key="{{index}}">
+        <view class="item" data-id="{{item.associate.goods.id}}"  bindtap="_jumpToDetail">
+            <view class="left">
+                <image mode="widthFix" src="{{item.associate.goods.img}}" alt="" />
+                <view style="background: {{config.mainColor}}; color: {{config.countColor}}" class="num">
+                    {{item.associate.number}}人团
+                </view>
+            </view>
+            <view class="right">
+                <view class="name">
+                    {{item.associate.goods.name}}
+                </view>
+                <view class="price-box">
+                    <view>
+                        <seckill end="{{item.associate.ends_at}}" starts="{{item.associate.starts_at}}" server="{{server}}" typename="拼团"></seckill>
+                    </view>
+                    <view class="meal-price">
+                        <view class="price">
+                            ￥{{item.associate.price}} <span class="old-price">￥{{item.associate.goods.sell_price}}</span>
+                        </view>
+                        <view class="btn" style="background: {{config.mainColor}}">
+                            <span>去拼团 <i class="iconfont icon-Chevron"></i></span>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

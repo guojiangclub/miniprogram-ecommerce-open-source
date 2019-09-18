@@ -99,5 +99,31 @@ export const sandBox = {
                 }
             })
         })
-    }
+    },
+    dowloadFile({api, filePath, header, name}) {
+        let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync(): {};
+        if (extConfig.appid) {
+            gbConfig = extConfig
+        }
+        if (header) {
+            header.appid = gbConfig.appid
+        } else {
+            header = {};
+            header.appid = gbConfig.appid
+        }
+        return new Promise((resolve, reject) => {
+            wx.downloadFile({
+                url:api,
+                header,
+                filePath,
+                name,
+                success:res => {
+                    resolve(res)
+                },
+                fail:rej => {
+                    reject(rej)
+                }
+            })
+        })
+    },
 };

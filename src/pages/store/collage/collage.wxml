@@ -1,0 +1,143 @@
+<view id="collage">
+    <view class="white"></view>
+    <view class="collage-progress">
+        <progress percent="{{percent}}" stroke-width="4" activeColor="#EA4448" backgroundColor="#DBDBDB"></progress>
+        <view class="launch active-emj" style="left: 10%">
+            <view class="iconfont icon-faqipintuan"></view>
+            <view class="text">发起拼团</view>
+        </view>
+        <view class="invite active-emj" style="left:40%">
+            <view class="iconfont icon-yaoqinghaoyou"></view>
+            <view class="text">邀请好友参团</view>
+        </view>
+        <view class="success {{showItemDate.status != 0 ? 'active-emj' :''}}" style="left: 80%">
+            <view class="iconfont icon-pintuanchenggong"></view>
+            <view class="text">拼团<block wx:if="{{showItemDate.status != 2}}">成功</block><block wx:if="{{showItemDate.status == 2}}">失败</block></view>
+        </view>
+    </view>
+    <view class="white b"></view>
+    <view class="collage-goods" bindtap="jumpDetail">
+        <view class="goods-img">
+            <image mode='widthFix' src="{{showItemDate.groupon.goods.img}}"></image>
+        </view>
+        <view class="goods-infomation">
+            <view class="info-name">{{showItemDate.groupon.goods.name}}</view>
+            <view class="original-cost marg-t" >
+                <view class="price">¥ {{showItemDate.groupon.goods.sell_price}}
+                </view>
+                <view class="o-text">单买价</view>
+            </view>
+            <view class="purchase-cost mar-t bor-c">
+                <view class="price bor-c">¥ {{showItemDate.groupon.price}}
+                </view>
+                <view class="o-text p-text">{{showItemDate.groupon.number}}人团</view>
+            </view>
+        </view>
+    </view>
+    <view class="collage-open">
+        <view class="open-title">
+            <view class="text">开团详情</view>
+            <view class="shar">. . .</view>
+        </view>
+        <view class="open-content" wx:if="{{showItemDate.overdue_status == 0 && showItemDate.status == 0}}">
+            <view class="time-text">
+                <view class="iconfont icon-weikaishi"></view>
+                <view class="text" wx:if="{{showItemDate.status}}">已成团，待发货</view>
+                <view class="text" wx:else>已开团，离成团还差 <view>{{showItemDate.gap_number}}</view>人</view>
+            </view>
+            <view class="count-down" wx:if="{{endtype == 1}}">
+                剩
+                <view class="timedown">
+                    <span>{{endTime.hour}}</span>时
+                    <span>{{endTime.minute}}</span>分
+                    <span>{{endTime.second}}</span>秒
+                </view>
+               <!-- <group class="my-class" end="{{showItemDate.groupon.ends_at}}" starts="{{showItemDate.groupon.starts_at}}" server="{{showItemMeta.server_time}}" mold="list">
+
+                </group>-->
+                自动结束
+            </view>
+            <view class="count-down" wx:if="{{endtype == 0}}">
+                {{endmessage}}
+            </view>
+        </view>
+        <view class="open-content" wx:if="{{showItemDate.overdue_status == 1 && showItemDate.status == 0}}">活动已过期</view>
+        <view class="open-content" wx:if="{{showItemDate.status == 1}}">赞！拼团成功</view>
+        <view class="open-content" wx:if="{{showItemDate.status == 2}}">拼团失败</view>
+
+    </view>
+    <view class="collage-records">
+        <view class="record-title">参团记录</view>
+        <view class="record-content">
+            <view class="item" wx:for="{{showItemDate.users}}">
+                <view class="avatar">
+                    <image src="{{item.meta.avatar}}"></image>
+                </view>
+                <view class="info">
+                   <view class="info-top">
+                       <span class="name">{{item.meta.nick_name}}</span>
+                       <span class="colonel" wx:if="{{item.is_leader}}">团长</span>
+                   </view>
+                    <view class="info-bottom">
+                        <span>{{item.created_at}} </span>
+                        <span wx:if="{{item.is_leader}}">开团</span>
+                        <span wx:else>参团</span>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <div class="order-share" wx:if="{{showItemDate.overdue_status == 0}}">
+        <div class="item" bindtap="jumpOrder" style="background: {{config.mainColor}}" wx:if="{{showItemDate.order_no && !showItemDate.is_virtual}}">
+            查看订单详情
+        </div>
+        <div class="item" bindtap="jumpDetail" style="background: {{config.mainColor}}" wx:if="{{!showItemDate.order_no}}">
+            立即参团
+        </div>
+        <div class="item look" style="color: {{config.mainColor}}" bindtap="changeShare">
+            分享给好友
+        </div>
+    </div>
+    <div class="order-share" wx:else>
+        <div class="item" style="background: {{config.mainColor}}" bindtap="jumpMore">
+            查看更多活动商品
+        </div>
+        <div class="item look" style="color: {{config.mainColor}}" bindtap="jumpOrder" wx:if="{{showItemDate.order_no}}">
+            查看订单详情
+        </div>
+    </div>
+    <!--弹出分享部分-->
+    <view class="maks {{show_share ? 'cur' : ''}}" bindtap="changeShare">
+
+    </view>
+
+    <view class="share-box {{show_share ? 'cur' : ''}}">
+        <button class="shaer-item" open-type="share">
+            分享给好友
+        </button>
+        <view class="shaer-item mx-1px-top" bindtap="createShareImg">
+            生成海报
+        </view>
+        <view class="shaer-item clear" bindtap="changeShare">
+            取消
+        </view>
+    </view>
+
+    <!--弹出分享到朋友圈-->
+    <view class="circle-friends {{show_friend ? 'cur':''}}">
+       <view class="imgboxs">
+           <view class="circle-img">
+               <image src="{{createImgUrl}}" mode="widthFix"></image>
+           </view>
+           <view class="save-img" style="background: {{config.mainColor}}" bindtap="downImg">
+               保存图片
+           </view>
+           <i class="iconfont icon-delete" bindtap="getShearImg"></i>
+       </view>
+    </view>
+    <view class="ibrand-author" wx:if="{{author}}" bindtap="jumpAuthor">
+        <i class="iconfont icon-dibu"></i>
+    </view>
+    <!--用户拒绝下载图片授权弹出-->
+    <alert is_refused="{{is_refused}}" bind:close="closeAlert"></alert>
+</view>

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": " ",
+  "usingComponents": {
+    "ten": "../../../component/ten/ten",
+    "wxparser": "plugin://wxparserPlugin/wxparser"
+  }
+}

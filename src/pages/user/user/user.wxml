@@ -43,6 +43,10 @@
                 <view>待评价</view>
                 <view class="position-num" wx:if="{{orderInfo.receiveCount}}">{{orderInfo.receiveCount}}</view>
             </view>
+            <view class="item"  bindtap="jumpAfterSales">
+                <view class="iconfont icon-shouhou"></view>
+                <view>售后</view>
+            </view>
         </view>
     </view>
     <view class="info-detail">
@@ -59,4 +63,25 @@
             <view>地址</view>
         </view>
     </view>
+    <!-- 我的奖励 -->
+    <view class="section-award"  wx:if="{{detail.distribution_status == 1 && detail.is_agent == 1}}" data-url="/pages/distribution/distributionCenter/distributionCenter" bindtap="jumpItem" >
+        <view class="award-header mx-1px-bottom" data-status="0" bindtap="">
+            <view class="award-text">我的奖励</view>
+            <view class="iconfont icon-Chevron" ></view>
+        </view>
+        <view class="award-box mx-1px-bottom">
+            <view class="item">
+                <view class="earnings ">{{list.balance}}</view>
+                <view>可提现收益</view>
+            </view>
+            <view class="item">
+                <view class="earnings ">{{list.unearnings_commission}}</view>
+                <view>未到账收益</view>
+            </view>
+            <view class="item">
+                <view class="earnings ">{{list.earnings_commission}}</view>
+                <view>累计收益</view>
+            </view>
+        </view>
+    </view> 
 </view>

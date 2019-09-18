@@ -1,0 +1,154 @@
+<view class="picture-cube">
+    <!--一图模式-->
+    <view class="one-mode" wx:if="{{showType == '1_1'}}">
+        <view class="title" wx:if="{{cubeTitle}}">{{cubeTitle}}</view>
+
+        <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+            <image mode="widthFix" src="{{cubeData[0].image}}" />
+        </navigator>
+        <image mode="widthFix" src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+    </view>
+    <!--二图模式-->
+    <view class="two-mode" wx:if="{{mode == 2}}">
+        <view class="title" wx:if="{{cubeTitle}}">{{cubeTitle}}</view>
+        <!--第一种表现形式-->
+        <view class="first-show" wx:if="{{showType == '2_1'}}">
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[0].image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+            </view>
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[1].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[1].image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{cubeData[1].image}}" wx:else data-src="{{cubeData[1].link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+        <!--第二种表现形式-->
+        <view class="common-show" wx:if="{{showType == '2_2'}}">
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[0].image}}" />
+                </navigator>
+                <image src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+            </view>
+            <view class="two-item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[1].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[1].image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{cubeData[1].image}}" wx:else data-src="{{cubeData[1].link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+        <!--第三种表现形式-->
+        <view class="common-show" wx:if="{{showType == '2_3'}}">
+            <view class="two-item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[0].image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+            </view>
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[1].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[1].image}}" />
+                </navigator>
+                <image src="{{cubeData[1].image}}" wx:else data-src="{{cubeData[1].link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+    </view>
+    <!--三图模式-->
+    <view class="three-mode" wx:if="{{mode == 3}}">
+        <view class="title" wx:if="{{cubeTitle}}">{{cubeTitle}}</view>
+        <!--第一种表现形式-->
+        <view class="first-show" wx:if="{{showType == '3_1'}}">
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[0].image}}" />
+                </navigator>
+                <image mode="widthFix"  src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+            </view>
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[1].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[1].image}}" />
+                </navigator>
+                <image mode="widthFix"  src="{{cubeData[1].image}}" wx:else data-src="{{cubeData[1].link}}" bindtap="_jumpLink"></image>
+            </view>
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[2].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[2].image}}" />
+                </navigator>
+                <image mode="widthFix"  src="{{cubeData[2].image}}" wx:else data-src="{{cubeData[2].link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+        <!--第二种表现形式-->
+        <view class="common-show"  wx:if="{{showType == '3_2'}}">
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none"  wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[0].image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+            </view>
+            <view class="item">
+                <view class="info">
+                    <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[1].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                        <image mode="widthFix" src="{{cubeData[1].image}}" />
+                    </navigator>
+                    <image src="{{cubeData[1].image}}" wx:else data-src="{{cubeData[1].link}}" bindtap="_jumpLink"></image>
+                </view>
+                <view class="info">
+                    <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[2].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                        <image mode="widthFix" src="{{cubeData[2].image}}" />
+                    </navigator>
+                    <image src="{{cubeData[2].image}}" wx:else data-src="{{cubeData[2].link}}" bindtap="_jumpLink"></image>
+                </view>
+            </view>
+        </view>
+        <!--第三种表现形式-->
+        <view class="common-show"  wx:if="{{showType == '3_3'}}">
+            <view class="item">
+                <view class="info">
+                    <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[1].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                        <image mode="widthFix" src="{{cubeData[1].image}}" />
+                    </navigator>
+                    <image src="{{cubeData[1].image}}" wx:else data-src="{{cubeData[1].link}}" bindtap="_jumpLink"></image>
+                </view>
+                <view class="info">
+                    <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[2].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                        <image mode="widthFix" src="{{cubeData[2].image}}" />
+                    </navigator>
+                    <image src="{{cubeData[2].image}}" wx:else data-src="{{cubeData[2].link}}" bindtap="_jumpLink"></image>
+                </view>
+            </view>
+            <view class="item">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{cubeData[0].link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{cubeData[0].image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{cubeData[0].image}}" wx:else data-src="{{cubeData[0].link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+
+    </view>
+    <!--四图模式-->
+    <view class="four-mode" wx:if="{{mode == 4}}">
+        <view class="title" wx:if="{{cubeTitle}}">{{cubeTitle}}</view>
+        <!--第一种表现形式-->
+        <view class="first-show" wx:if="{{showType == '4_1'}}">
+            <view class="item" wx:for="{{cubeData}}" wx:key="{{index}}">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{item.link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{item.image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{item.image}}" wx:else data-src="{{item.link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+        <!--第二种表现形式-->
+        <view class="second-show" wx:if="{{showType == '4_2'}}">
+            <view class="item" wx:for="{{cubeData}}" wx:key="{{index}}">
+                <navigator target="miniProgram" hover-class="none" wx:if="{{item.link == 'uto_miniprogram'}}"  app-id="wx009e0be72cbf5e80" class="item-navigator">
+                    <image mode="widthFix" src="{{item.image}}" />
+                </navigator>
+                <image mode="widthFix" src="{{item.image}}" wx:else data-src="{{item.link}}" bindtap="_jumpLink"></image>
+            </view>
+        </view>
+    </view>
+</view>

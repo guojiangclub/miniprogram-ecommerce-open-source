@@ -1,0 +1,192 @@
+@import '../../../assets/css/global';
+#order-index {
+
+  .navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    z-index: 20;
+    height: 50px;
+    line-height: 50px;
+    background: #FFFFFF;
+    font-size: 14px;
+    color: #353535;
+
+    .navbar-item {
+      flex: 1;
+      width: 0%;
+      text-align: center;
+      .navbar-title{
+        .triangle{
+          display: inline-block;
+          border-top:5px solid @globalColor;
+          border-right: 5px solid transparent;
+          border-left: 5px solid transparent;
+        }
+      }
+
+      &.activity {
+        color: @globalColor;
+
+      }
+    }
+    .navbar-slider {
+      position: absolute;
+      content: " ";
+      left: 0;
+      bottom: 0;
+      width: 4em;
+      height: 3px;
+      background-color: @globalColor;
+      -webkit-transition: -webkit-transform .3s;
+      transition: -webkit-transform .3s;
+      transition: transform .3s;
+      transition: transform .3s, -webkit-transform .3s
+    }
+    .select-list{
+      position: absolute;
+      background-color: #ffffff;
+      padding:0 0 0 15px;
+      left: 0;
+      right: 0;
+      top: 50px;
+      .item{
+        display: flex;
+        align-items:center;
+        justify-content: space-between;
+        height: 40px;
+        line-height: 40px;
+        color: #999999;
+        font-size: 13px;
+        .iconfont{
+          display: none;
+          padding-right: 15px;
+          font-size: 12px;
+        }
+      }
+      .activeItem{
+        color: @globalColor;
+        .iconfont{
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .tab-panel{
+    padding-top: 60px;
+  }
+  .order-box {
+    .order-item__none{
+      text-align: center;
+      color: #959595;
+      padding-top: 10px;
+    }
+    .order-item {
+      margin-bottom: 10px;
+      background: #FFFFFF;
+      font-size: 15px;
+      .item-add{
+        height: 40px;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        font-size: 12px;
+        color:#4A4A4A;
+        .left-info{
+          span{
+            color:#FB5054;
+          }
+        }
+        .right-info{
+          color:#FB5054;
+        }
+      }
+
+      .item-top {
+        font-size: 12px;
+        .indent {
+          line-height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 15px;
+
+          .order-num {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            flex: 1;
+            padding-right: 10px;
+
+            span {
+              font-weight: bold;
+            }
+          }
+          .order-type {
+            color: #666666;
+          }
+        }
+      }
+      .item-middle {
+        font-size: 12px;
+        .middle-item {
+          display: flex;
+          padding: 15px;
+          color: #959595;
+
+          image {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #e5e5e5;
+          }
+          .text {
+            flex: 1;
+            padding-left: 10px;
+            overflow: hidden;
+
+            .names {
+              color: #000000;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              font-size: 14px;
+            }
+          }
+          .money-box {
+            text-align: right;
+          }
+        }
+      }
+      .item-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+
+        .button-box {
+          font-size: 13px;
+          color: @globalColor;
+          padding: 5px 10px;
+          border: 1px solid @globalColor;
+          border-radius: 3px;
+        }
+      }
+    }
+    .loadingbox{
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+  }
+  .mask{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0.6);
+  }
+}

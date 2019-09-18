@@ -1,3 +1,8 @@
 {
-  "navigationBarTitleText": " "
+  "navigationBarTitleText": " ",
+  "usingComponents": {
+    "group": "../../../component/group/group",
+    "seckill": "../../../component/seckill/seckill",
+    "wxparser": "plugin://wxparserPlugin/wxparser"
+  }
 }

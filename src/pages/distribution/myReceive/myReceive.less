@@ -1,0 +1,88 @@
+@import "../../../assets/css/global";
+#myReceive{
+  .myRecivepage{
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      z-index: 20;
+      height: 50px;
+      line-height: 50px;
+      background: #FFFFFF;
+      font-size: 14px;
+      color: #9B9B9B;
+
+      .navbar-item {
+        flex: 1;
+        width: 0%;
+        text-align: center;
+
+        &.activity {
+          color: #000;
+        }
+      }
+      .navbar-slider {
+        position: absolute;
+        content: " ";
+        left: 0;
+        bottom: 0;
+        width: 4em;
+        height: 3px;
+        background-color: #000000;
+        transition: transform .3s;
+      }
+    }
+    .tab-panel{
+     .tab-content{
+       margin-top: 60px;
+       background: #ffffff;
+       height: 100%;
+       .myReceive-item{
+         padding: 15px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-flow: row nowrap;
+         border-bottom: 1px solid #ededed;
+         .orderNumber{
+           flex: 5;
+           justify-content: space-around;
+           align-items: flex-start;
+           flex-direction: column;
+           display: flex;
+         }
+         .ordertop{
+           font-size: 15px;
+         }
+         .orderbottom{
+           font-size: 13px;
+           color: #959595;
+         }
+         .add{
+           color: #22c03e;
+         }
+         .reduce{
+           color: #a1a1a1;
+         }
+         .orderPrice{
+           flex: 2;
+           line-height: 35px;
+           text-align: right;
+           font-size: 15px;
+         }
+       }
+     }
+    }
+    .no-list{
+      text-align: center;
+      font-size: 14px;
+      color: #888888;
+      margin-top: 10px;
+      i{
+        font-size: 80px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+@import "../../../assets/css/global";
+
+page{
+  width: 100%;
+  height: 100%;
+  background: url("https://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F/vipbg.png") no-repeat;
+  background-size: 100% 100%;
+}
+#spread{
+  .spreadpage{
+    .content{
+      padding-top: 50px;
+      text-align: center;
+      .content-top{
+        font-size: 18px;
+        text-shadow: 0 0 30px rgba(0, 0, 0, 0.38);
+        margin-bottom: 5px;
+        color: #ffffff;
+      }
+      .content-bottom{
+        font-size:28px;
+        text-shadow: 0 0 30px rgba(0, 0, 0, 0.38);
+        color: #ffffff;
+      }
+      .hidden {
+        opacity: 0;
+      }
+      .erweima{
+        box-sizing: border-box;
+        background: #FFFFFF;
+        margin: 15px;
+        text-align: center;
+        padding: 15px 15px 20px 15px;
+        image{
+          display: block;
+          width: 70%;
+          margin: 0 auto;
+        }
+        .btn-box {
+          .btn {
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            margin-top: 15px;
+            border-radius: 22px;
+
+            &.save {
+              color: @mainColor;
+              border: 2px solid @mainColor;
+            }
+            &.share {
+              background: @mainColor;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    .spread-btn{
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      button{
+        border-radius: 0;
+      }
+      button::after{
+        border: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<view id="order-detail">
+    <view class="border-box">
+        <view class="attention-box" wx:if="{{detail.has_refund == 1}}">
+            <span class="iconfont icon-warning"></span>
+            订单正在售后中，待售后结束后结算佣金
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                <view class="name">
+                    订单状态
+                </view>
+                <view class="type" wx:if="{{detail.has_refund == 0}}">
+                    {{typeList[order.status]}}
+                </view>
+                <view class="type" wx:if="{{detail.has_refund == 1}}">
+                    售后中
+                </view>
+            </view>
+            <view class="goods-item">
+                <view class="item-middle">
+                    <view class="middle-item mx-1px-bottom" data-id="{{item.item_meta.detail_id}}" wx:for="{{order.items}}" bindtap="jumpDetail">
+                        <image src="{{item.item_meta.image}}" />
+                        <view class="text">
+                            <view class="names">
+                                {{item.item_name}}
+                            </view>
+                            <view class="model">
+                                {{item.item_meta.specs_text}}
+                            </view>
+                        </view>
+                        <view class="money-box">
+                            <view>
+                                {{item.quantity}}件
+                            </view>
+                            <view>
+                                ￥{{item.units_total_yuan}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="item-bottom">
+                    <view class="all-money">
+                        {{order.count}}件, 共计 ￥{{order.items_total_yuan}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="item-add mx-1px-bottom">
+            <view class="left-info">
+                分销佣金：<span>¥ {{detail.commission}}</span>
+            </view>
+            <view class="right-info" wx:if="{{detail.status == 0}}">待结算</view>
+            <view class="right-info" wx:if="{{detail.status == 1}}">已入账</view>
+            <view class="right-info" wx:if="{{detail.status == 2}}">已失效</view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                订单信息
+            </view>
+            <view class="order-info">
+                <view class="info-item">
+                    <view class="name">
+                        订单编号 :
+                    </view>
+                    <view class="text">{{detail.agent_order_no}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        订单来源 :
+                    </view>
+                    <view class="text">官方商城</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        支付方式 :
+                    </view>
+                    <view class="text">{{order.payment_text}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        下单时间 :
+                    </view>
+                    <view class="text">{{order.submit_time}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="order-item">
+            <view class="title mx-1px-bottom">
+                备注
+            </view>
+            <view class="order-info order-note">
+                {{order.note || order.message || '暂无备注'}}
+            </view>
+        </view>
+        <view class="pay-attention" wx:if="{{detail.order_discount || detail.order_counpon || order.redeem_point}}">*此订单使用了
+           <block wx:if="{{detail.order_discount}}">促销活动</block><block wx:if="{{detail.order_discount && detail.order_counpon}}">和</block><block wx:if="{{detail.order_counpon}}">优惠券</block> <block wx:if="{{detail.order_counpon && order.redeem_point}}"></block><block wx:if="{{order.redeem_point}}">积分</block>
+            </view>
+    </view>
+</view>

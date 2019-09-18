@@ -1,0 +1,44 @@
+<view id="myReceive">
+    <view class="myRecivepage">
+        <view class="navbar mx-1px-top">
+            <block wx:for="{{tabList}}" wx:key="*this">
+                <view id="{{index}}" class="navbar-item {{activeIndex == index ? 'activity' : ''}}" bindtap="tabClick">
+                    <view class="navbar-title">{{item.title}}</view>
+                </view>
+            </block>
+            <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+        </view>
+        <view class="tab-panel">
+            <view class="tab-content" hidden="{{activeIndex != 0}}">
+                <view class="no-list" wx:if="{{!dataList[0][0].length && tabList[0].init}}">
+                    <view>暂无累计收益!!!</view>
+                </view>
+                <view wx:for="{{dataList[0]}}" wx:for-index="idx" wx:for-item="items">
+                   <view class="myReceive-item" wx:for="{{dataList[0][idx]}}">
+                       <view class="orderNumber">
+                           <span class="ordertop">分销订单{{item.agent_order_no}}</span>
+                           <span class="orderbottom">{{item.created_at}}</span>
+                       </view>
+                       <view class="orderPrice add">￥{{item.commission}}</view>
+
+                   </view>
+            </view>
+        </view>
+            <view class="tab-content" hidden="{{activeIndex != 1}}">
+                <view class="no-list" wx:if="{{!dataList[1][0].length && tabList[1].init}}">
+                    <view>暂无累计收益!!!</view>
+                </view>
+                <view wx:for="{{dataList[1]}}" wx:for-index="idx" wx:for-item="items">
+                    <view class="myReceive-item" wx:for="{{dataList[1][idx]}}">
+                        <view class="orderNumber">
+                            <span class="ordertop">分销订单{{item.agent_order_no}}</span>
+                            <span class="orderbottom">{{item.created_at}}</span>
+                        </view>
+                        <view class="orderPrice reduce">￥{{item.commission}}</view>
+
+                    </view>
+                </view>
+            </view>
+    </view>
+</view>
+</view>

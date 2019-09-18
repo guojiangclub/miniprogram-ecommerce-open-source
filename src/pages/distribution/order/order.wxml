@@ -1,0 +1,259 @@
+
+<view id="order-index">
+    <view class="navbar mx-1px-bottom">
+        <block wx:for="{{tabList}}" wx:key="*this">
+            <view id="{{index}}" class="navbar-item {{activeIndex == index ? 'activity' : ''}}" bindtap="tabClick">
+                <view class="navbar-title">{{item.title}}
+                <span class="triangle" wx:if="{{index == 0 && activeIndex == 0}}"></span>
+                </view>
+            </view>
+        </block>
+        <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+        <!--<view class="tab-switch" bindtap="tabSwitch">
+            <i class="iconfont icon-qiehuan"></i>
+        </view>-->
+        <view class="select-list" wx:if="{{isShow}}">
+            <view class="item mx-1px-bottom {{activeType == 'all' ? 'activeItem' : ''}}" bindtap="changeType" data-type="all">
+                <span>全部会员</span>
+                <span class="iconfont icon-Group96"></span>
+            </view>
+            <view class="item mx-1px-bottom {{activeType == 'level1' ? 'activeItem' : ''}}" bindtap="changeType" data-type="level1">
+                <span>一级会员</span>
+                <span class="iconfont icon-Group96"></span>
+            </view>
+            <view class="item mx-1px-bottom {{activeType == 'level2' ? 'activeItem' : ''}}" bindtap="changeType" data-type="level2">
+                <span>二级会员</span>
+                <span class="iconfont icon-Group96"></span>
+            </view>
+        </view>
+    </view>
+    <view class="tab-panel">
+        <view class="tab-content" hidden="{{activeIndex != 0}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{dataList[status[activeIndex]][0] == '' && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="dataList[status[activeIndex]][0]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order.order_no}}" wx:for="{{dataList[status[activeIndex]][0][idx]}}" wx:for-item="order" bindtap="jump" >
+                        <view class="item-add mx-1px-bottom">
+                            <view class="left-info">
+                                分销佣金：<span>¥ {{order.commission}}</span>
+                            </view>
+                            <view class="right-info" wx:if="{{order.status == 0}}">待结算</view>
+                            <view class="right-info" wx:if="{{order.status == 1}}">已入账</view>
+                            <view class="right-info" wx:if="{{order.status == 2}}">已失效</view>
+                        </view>
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    订单编号：{{order.agent_order_no}}
+                                </view>
+                                <view class="order-type">
+                                    <block wx:if="{{!order.has_refund}}">
+                                        {{typeList[order.order.status]}}
+                                    </block>
+                                    <block wx:else>
+                                        售后中
+                                    </block>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.order.items}}" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total_yuan}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 1}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{dataList[status[activeIndex]][1] == '' && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="dataList[status[activeIndex]][1]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order.order_no}}" wx:for="{{dataList[status[activeIndex]][1][idx]}}" wx:for-item="order" bindtap="jump">
+                        <view class="item-add mx-1px-bottom">
+                            <view class="left-info">
+                                分销佣金：<span>¥ {{order.commission}}</span>
+                            </view>
+                            <view class="right-info">待结算</view>
+                        </view>
+                        <view class="item-top">
+                        <view class="indent mx-1px-bottom">
+                            <view class="order-num">
+                                订单编号：{{order.agent_order_no}}
+                            </view>
+                            <view class="order-type">
+                                <block wx:if="{{!order.has_refund}}">
+                                    {{typeList[order.order.status]}}
+                                </block>
+                                <block wx:else>
+                                    售后中
+                                </block>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="item-middle">
+                        <view class="middle-item mx-1px-bottom" wx:for="{{order.order.items}}" wx:for-item="good">
+                            <image src="{{good.item_meta.image}}" />
+                            <view class="text">
+                                <view class="names">
+                                    {{good.item_name}}
+                                </view>
+                                <view class="model">
+                                    {{good.item_meta.specs_text}}
+                                </view>
+                            </view>
+                            <view class="money-box">
+                                <view>
+                                    {{good.quantity}}件
+                                </view>
+                                <view>
+                                    ￥{{good.total_yuan}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[1].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 2}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{dataList[status[activeIndex]][2] == '' && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="dataList[status[activeIndex]][2]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order.order_no}}" wx:for="{{dataList[status[activeIndex]][2][idx]}}" wx:for-item="order" bindtap="jump">
+                        <view class="item-add mx-1px-bottom">
+                            <view class="left-info">
+                                分销佣金：<span>¥{{order.commission}}</span>
+                            </view>
+                            <view class="right-info">已入账</view>
+                        </view>
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    订单编号：{{order.agent_order_no}}
+                                </view>
+                                <view class="order-type">
+                                    <block wx:if="{{!order.has_refund}}">
+                                        {{typeList[order.order.status]}}
+                                    </block>
+                                    <block wx:else>
+                                        售后中
+                                    </block>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.order.items}}" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total_yuan}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[2].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 3}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{dataList[status[activeIndex]][3] == '' && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="dataList[status[activeIndex]][3]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order.order_no}}" wx:for="{{dataList[status[activeIndex]][3][idx]}}" wx:for-item="order" bindtap="jump">
+                        <view class="item-add mx-1px-bottom">
+                            <view class="left-info">
+                                分销佣金：<span>¥ {{order.commission}}</span>
+                            </view>
+                            <view class="right-info">已失效</view>
+                        </view>
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    订单编号：{{order.agent_order_no}}
+                                </view>
+                                <view class="order-type">
+                                    <block wx:if="{{!order.has_refund}}">
+                                        {{typeList[order.order.status]}}
+                                    </block>
+                                    <block wx:else>
+                                        售后中
+                                    </block>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.order.items}}" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{good.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{good.quantity}}件
+                                    </view>
+                                    <view>
+                                        ￥{{good.total_yuan}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[3].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="mask" wx:if="{{isShow}}" bindtap="closeType"></view>
+</view>

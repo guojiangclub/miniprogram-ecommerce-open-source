@@ -1,0 +1,18 @@
+<view id="cashRecord">
+    <view class="isList" wx:if="{{!dataList[0].length && init}}">
+        暂无提现记录!!!
+    </view>
+    <view wx:for="{{dataList}}" wx:for-index="idx" wx:for-item="items">
+        <view class="cashRecord-item" wx:for="{{dataList[idx]}}">
+            <view class="record-area record-title">
+                <span class="recordnum">提现工单号:{{item.cash_no}}</span>
+                <span class="recordtxt">{{statusList[item.status]}}</span>
+            </view>
+            <view class="record-area record-count">
+                <span class="recorddate">{{item.created_at}}</span>
+                <span class="recordmon">-￥{{item.amount/100}}</span>
+            </view>
+        </view>
+    </view>
+
+</view>

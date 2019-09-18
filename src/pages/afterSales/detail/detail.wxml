@@ -1,0 +1,73 @@
+<view id="order-detail">
+    <view class="{{detail.data.status == 4?'status-title1':'status-title'}}">
+        当前服务状态：{{showStatus[detail.data.status]}}
+    </view>
+    <view class="detail_content">
+       <view class="store_title">
+          <view class="img">
+              <image src="{{detail.data.order_item.item_meta.image}}" alt="" />
+          </view>
+           <view class="store_text ">
+               <view class="name">{{detail.data.order_item.item_name}}</view>
+               <view class="num">{{detail.data.order_item.quantity}}件</view>
+           </view>
+       </view>
+        <view class="store_content mx-1px-top">
+            <view class="store_content_title">
+                <view>售后编号</view>
+                <view>{{detail.data.refund_no}}</view>
+            </view>
+            <view class="store_content_title">
+                <view>申请时间</view>
+                <view>{{detail.data.created_at}}</view>
+            </view>
+            <view class="store_content_title">
+                <view>服务类型</view>
+                <view>{{detail.data.service_type_text}}</view>
+            </view>
+            <view class="store_content_title">
+                <view>服务状态</view>
+                <view>{{statusList[detail.data.status]}}</view>
+            </view>
+            <view class="store_content_title">
+                <view>退款金额</view>
+                <view>￥{{detail.data.amount/100}}</view>
+            </view>
+            <view class="store_content_title">
+                <view class="refund_reason">退款原因</view>
+                <view>{{detail.data.content}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="status_content" wx:if="{{detail.data.status == 2 || detail.data.status == 3 || detail.data.status == 4 || detail.data.status == 5 || detail.data.status == 8}}">
+         <view class="status_title">
+             {{detail.data.tips_title}}
+         </view>
+         <view class="content">
+             {{detail.data.tips}}
+         </view>
+    </view>
+    <view class="submit">
+        <button type="primary" class="return-button {{ detail.data.order.distribution_status == 1 ? 'bottom' : '' }}" data-refund-no="{{detail.data.refund_no}}" bindtap="viewExpress" wx:if="{{(detail.data.status == 1 && detail.data.order.distribution_status == 1) || (detail.data.status == 5 && detail.data.order.distribution_status == 1)}}">立即退货</button>
+        <button class="cancel" bindtap="close" wx:if="{{detail.data.status == 0 || detail.data.status == 1 || detail.data.status == 5}}">取消申请</button>
+    </view>
+
+
+
+    <!--弹出框-->
+    <view class="popup" wx:if="{{showReason}}">
+        <view class="popup_alert">
+            <view class="title">是否取消</view>
+            <view class="content">
+                <input type="text" placeholder="备注" bindinput="changeReason"/>
+            </view>
+            <view class="buttom">
+                <view class="cancel"  bindtap="cancel">取消</view>
+                <view class="confirm" bindtap="confirm">确定</view>
+            </view>
+        </view>
+
+    </view>
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

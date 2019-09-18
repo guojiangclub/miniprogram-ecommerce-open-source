@@ -1,0 +1,21 @@
+<view id="pusher">
+    <block wx:for="{{twitterList}}" wx:for-index="idx" wx:for-item="items" wx:key="{{idx}}">
+        <view class="vipManage-item" wx:for="{{items}}" wx:key="{{index}}">
+            <image src="{{item.user.avatar}}"></image>
+            <view class="item-right">
+                <view class="username">
+                    <span class="nickname">{{item.user.nick_name}}</span>
+                    <!--<span class="grade">Vitem.grade</span>-->
+                </view>
+                <view class="vipdate">
+                    <span class="vipnum">会员号：{{item.user_id}}</span>
+                    <span>加入日期：{{item.user.created_at}}</span>
+                </view>
+            </view>
+        </view>
+    </block>
+    <block wx:if="{{twitterList[0].length == 0 && init}}">
+        <view  class="no-data">暂无数据</view>
+    </block>
+
+</view>

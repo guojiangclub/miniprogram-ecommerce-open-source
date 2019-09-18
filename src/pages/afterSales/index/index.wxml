@@ -1,0 +1,161 @@
+<view id="afterSales-center">
+    <view class="navbar mx-1px-bottom">
+        <block wx:for="{{tabList}}" wx:key="*this">
+            <view id="{{index}}" class="navbar-item {{activeIndex == index ? 'activity' : ''}}" bindtap="tabClick">
+                <view class="navbar-title">{{item.title}}</view>
+            </view>
+        </block>
+        <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+    <view class="tab-panel">
+        <view class="tab-content" hidden="{{activeIndex != 0}}">
+            <view class="order-box">
+               <view wx:for="dataList[0]" wx:for-index="idx">
+                   <view class="order-item" wx:if="{{order.can_refund}}" data-no="{{order.order_no}}" wx:for="{{dataList[0][idx]}}" wx:for-item="order">
+                       <view class="item-top">
+                           <view class="indent mx-1px-bottom">
+                               <view class="order-num">
+                                   订单编号：{{order.order_no}}
+                               </view>
+                               <view class="order-type">
+                                   {{statusList[order.status]}}
+                               </view>
+                           </view>
+                       </view>
+                       <view class="item-middle">
+                           <view class="middle-item mx-1px-bottom" wx:if="{{!good.is_refunded}}" wx:for="{{order.items}}" wx:for-item="good">
+                               <image src="{{good.item_meta.image}}" />
+                               <view class="text">
+                                   <view class="names">
+                                       {{good.item_name}}
+                                   </view>
+                                   <view class="model">
+                                       {{good.item_meta.specs_text}}
+                                   </view>
+                               </view>
+                               <view class="money-box">
+                                   <view>
+                                       {{good.quantity}}件
+                                   </view>
+                                   <view>
+                                       <view class="button-box" bindtap="viewRetreat" data-id="{{good.id}}" data-no="{{order.order_no}}" wx:if="{{!good.is_refunded}}">
+                                           申请售后
+                                       </view>
+                                   </view>
+                               </view>
+                           </view>
+                       </view>
+                       <view class="item-bottom">
+                           <view class="all-money">
+                               下单时间:{{order.submit_time}}
+                           </view>
+                       </view>
+                   </view>
+               </view>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+
+        <view class="tab-content" hidden="{{activeIndex != 1}}">
+            <view class="order-box">
+                <view wx:for="dataList[1]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.refund_no}}" data-status="{{order.status}}" wx:for="{{dataList[1][idx]}}" wx:for-item="order" bindtap="viewSales">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    订单编号：{{order.order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom">
+                                <image src="{{order.order_item.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{order.order_item.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{order.order_item.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{order.order_item.quantity}}件
+                                    </view>
+
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                申请时间:{{order.updated_at}}
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 1}}">
+                                立即退货
+                            </view>
+                            <view class="button-box" wx:if="{{order.status === 0}}">
+                                取消申请
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[1].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 2}}">
+            <view class="order-box">
+                <view wx:for="dataList[2]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.refund_no}}" data-status="{{order.status}}" wx:for="{{dataList[2][idx]}}" wx:for-item="order" bindtap="viewSales">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    订单编号：{{order.order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[order.status]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom">
+                                <image src="{{order.order_item.item_meta.image}}" />
+                                <view class="text">
+                                    <view class="names">
+                                        {{order.order_item.item_name}}
+                                    </view>
+                                    <view class="model">
+                                        {{order.order_item.item_meta.specs_text}}
+                                    </view>
+                                </view>
+                                <view class="money-box">
+                                    <view>
+                                        {{order.order_item.quantity}}件
+                                    </view>
+
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom">
+                            <view class="all-money">
+                                申请时间:{{order.updated_at}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[1].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

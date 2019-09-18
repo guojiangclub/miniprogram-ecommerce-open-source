@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "拼团列表",
+  "usingComponents": {
+    "group": "../../../component/group/group"
+  }
+}

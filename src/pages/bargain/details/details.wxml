@@ -1,0 +1,66 @@
+<view class="details_contanier">
+    <view class="details_head">
+        <view class="head_photo">
+            <image src="{{userInfo.avatar}}" />
+        </view>
+        <view class="head_message">
+            <view class="name">
+                {{userInfo.nick_name}}
+            </view>
+            <view class="notice">
+                在米尔优选发现好物，一起来砍价拿
+            </view>
+        </view>
+        <view class="rule" bindtap="showRule">
+            活动规则
+        </view>
+    </view>
+    <view class="details_body">
+        <view class="goods_message">
+            <view class="goods_left">
+                <image mode="widthFix" src="" />
+            </view>
+            <view class="goods_right">
+                <view class="goods_name">
+                    商品名称
+                </view>
+                <view class="past_price">
+                    原价￥198
+                </view>
+                <view class="new_price">
+                    砍后价￥0
+                </view>
+            </view>
+        </view>
+        <view class="text">
+                已砍{{}}0元
+                <view class="d3"></view>
+        </view>
+        <view class="bar">
+            <view class="bar_length" style="width:{{length}}px"></view>
+        </view>
+        <view class="tips">
+            已砍0元,还差
+        </view>
+        <button class="btn" open-type='share'>
+            邀请好友砍价
+        </button>
+        <view class="count_down">
+             <seckill end="{{item.associate.ends_at}}" starts="{{item.associate.starts_at}}" server="{{server}}" typename=""></seckill>
+        </view>
+        <view class="person_number">
+            <view class="person_tips">
+                快去邀请英雄助力吧
+            </view>
+        </view>
+    </view>
+    <view class="img">
+        <image mode="widthFix" src="" />
+    </view>
+    <view class="box_body" wx:if="{{show}}" catchtap="closeRule" catchtouchmove="true">
+        <view class="rule_box" catchtap="showRule">
+            <wxparser rich-text="{{rule}}" />
+        </view>
+        <view class="iconfont icon-close" bindtap="closeRule"></view>
+    </view>
+</view>

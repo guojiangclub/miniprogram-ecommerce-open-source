@@ -1,0 +1,57 @@
+<view id="order-apply">
+    <view class="title">选择类型</view>
+    <view class="content">
+       <text>服务类型</text>
+        <picker value="{{selectedIndex}}" range="{{list}}" range-key="{{'name'}}" bindchange="change">
+            <!--<view class="picker">{{list[selectedIndex]}}</view>-->
+            <input type="text" placeholder="选择售后服务类型" disabled  value="{{list[selectedIndex].name}}"/>
+        </picker>
+    </view>
+    <view class="title">退款信息</view>
+    <view class="list">
+         <view class="list-detail">
+             <text>申请数量</text>
+              <view class="num">
+                  <view class="subtraction" bindtap="plus">+</view>
+                  <view class="text-number">{{applyNum}}</view>
+                  <view class="plus" bindtap="minus">-</view>
+              </view>
+             <!--<input type="range" />-->
+         </view>
+        <view class="content">
+            <text>退换原因</text>
+            <picker value="{{reasonIndex}}" range="{{reason}}" range-key="{{'name'}}" bindchange="changeCause">
+                <!--<view class="picker">{{list[selectedIndex]}}</view>-->
+                <input type="text" placeholder="选择退换原因" disabled  value="{{reason[reasonIndex].name}}"/>
+            </picker>
+        </view>
+        <view class="list-detail">
+            <text>退款金额</text>
+            <view class="right"><input type="text" bindinput="changeValue" value="{{amount}}" placeholder="最多可退{{availableAmount}}元"/></view>
+
+        </view>
+    </view>
+    <view class="title">
+         问题描述
+    </view>
+    <view class="text-area">
+        <textarea bindinput="changeDetail" value="{{qestionDetail}}"></textarea>
+    </view>
+    <view class="title">
+        上传凭证
+    </view>
+    <view class="content btn-box">
+        <view class="imgContainer" wx:for="{{imgList}}"  wx:for-item="img">
+            <image src="{{img}}"/>
+            <view class="delete" data-index="{{index}}" bindtap="deleteImg">X</view>
+        </view>
+         <view class="append" bindtap="selectImage" wx:if="{{imgList.length<5}}">
+               +
+         </view>
+    </view>
+    <view class="submit" style="background: {{config.mainColor}}" bindtap="submitApplication">
+        提交
+    </view>
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

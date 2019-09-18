@@ -1,0 +1,70 @@
+#coupon-goods {
+  .commodity-bottom{
+    //height: 100%;
+    font-size: 0;
+    box-sizing: border-box;
+    padding: 0 5px 20px 5px;
+    .commodity-out{
+      width: 50%;
+      display: inline-block;
+      font-size: 12px;
+      padding: 10px 5px 0 5px;
+      box-sizing: border-box;
+      .commodity-box{
+        background: #ffffff;
+        overflow: hidden;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        font-size: 14px;
+
+        .commodity-img {
+          overflow: hidden;
+          image{
+            width: 100%;
+            //height: 310rpx;
+          }
+        }
+        .commodity-name{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .commodity-money{
+          display: flex;
+          margin-top: 10px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          height: 25px;
+          .money{
+            color: #ED3327;
+            margin-top: 2px;
+          }
+          .discount-tags{
+            font-size: 0;
+            overflow: hidden;
+
+            .tags-item{
+              display: block;
+              float: left;
+              color: #ffffff;
+              background: #C9171D;
+              border-radius: 2px;
+              padding: 2px;
+              font-size: 12px;
+              margin: 0 0 5px 5px;
+            }
+          }
+        }
+      }
+    }
+    .loadingbox{
+      margin-top: 10px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size:14px;
+    }
+  }
+}

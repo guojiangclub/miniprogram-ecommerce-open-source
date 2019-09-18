@@ -1,0 +1,68 @@
+<view id="store-seckill">
+    <view class="contents">
+        <view class="no-list" wx:if="{{!list[0].length && init}}">
+            暂无数据
+        </view>
+        <view class="seckill-list">
+            <!--<view wx:for="{{list}}" wx:key="*this" wx:for-index="idx" wx:for-item="items">
+                <view class="item" data-id="{{item.goods.id}}" wx:for="{{list[idx]}}" wx:key="*this" wx:for-index="index" wx:if="{{!item.is_end}}" bindtap="jump">
+                    <view class="groups-img">
+                        <view class="num">
+                            {{item.number}}人团
+                        </view>
+                        <image mode="widthFix" src="{{item.img}}" alt="" />
+                        <view class="time-box {{item.init_status == 1 ? 'active' : ''}}">
+                            <group end="{{item.ends_at}}" starts="{{item.starts_at}}" server="{{item.server_time}}" mold="list" index="{{index}}" findex="{{idx}}" bind:starts="isStarts" bind:end="isEnd"></group>
+                        </view>
+                    </view>
+                    <view class="groups-name">
+                        {{item.goods.name}}
+                    </view>
+                    <div class="groups-bottom">
+                        <view class="money">
+                            <view class="new">
+                                ￥{{item.groupon_price}}
+                            </view>
+                            <view class="old">
+                                单买价 <span>¥{{item.goods.sell_price}}</span>
+                            </view>
+                        </view>
+                        <view class="buttom">
+                            去拼团
+                        </view>
+                    </div>
+                </view>
+            </view>-->
+            <view wx:for="{{list}}" wx:key="*this" wx:for-index="idx" wx:for-item="items">
+                <view class="item" data-id="{{item.goods.id}}" wx:for="{{list[idx]}}" wx:key="*this" wx:for-index="index" bindtap="jump">
+                    <view class="left">
+                        <image mode="widthFix" src="{{item.goods.img}}" alt="" />
+                    </view>
+                    <view class="right">
+                        <view class="name">
+                            {{item.goods.name}}
+                        </view>
+                        <view class="price-box">
+                            <view class="old-price">
+                                单买价 ￥{{item.goods.sell_price}}
+                            </view>
+                            <view class="meal-price">
+                                <view class="price">
+                                    <span>{{item.number}}人团</span>
+                                    ￥{{item.price}}
+                                </view>
+                                <view class="btn" style="background: {{config.mainColor}}">
+                                    <span wx:if="{{item.init_status == 1}}">去拼团 <i class="iconfont icon-Chevron"></i></span>
+                                    <span wx:else>即将开抢 <i class="iconfont icon-Chevron"></i></span>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="loadingbox" hidden="{{!show}}">
+                {{showText}}
+            </view>
+        </view>
+    </view>
+</view>

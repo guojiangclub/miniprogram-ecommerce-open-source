@@ -9,6 +9,7 @@
     "pages/store/cart/cart",
     "pages/store/order/order",
     "pages/store/orderGoods/orderGoods",
+    "pages/store/groups/groups",
     "pages/store/payment/payment",
     "pages/store/success/success",
     "pages/user/register/register",
@@ -19,12 +20,16 @@
     "pages/address/add/add",
     "pages/address/list/list",
     "pages/order/detail/detail",
+    "pages/bargain/index/index",
+    "pages/bargain/details/details",
+    "pages/coupon/goods/goods",
     "pages/order/index/index",
     "pages/order/search/search",
     "pages/order/evaluate/evaluate",
     "pages/favorite/index/index",
     "pages/coupon/index/index",
-    "pages/coupon/onDetail/onDetail"
+    "pages/coupon/onDetail/onDetail",
+    "pages/afterSales/index/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -32,6 +37,12 @@
     "navigationBarTitleText": "商城首页",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#F3F3F3"
+  },
+  "plugins": {
+    "wxparserPlugin": {
+      "version": "0.2.1",
+      "provider": "wx9d4d4ffa781ff3ac"
+    }
   },
   "tabBar": {
     "backgroundColor": "#fff",

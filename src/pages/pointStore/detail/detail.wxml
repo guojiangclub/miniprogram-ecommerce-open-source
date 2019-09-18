@@ -1,0 +1,121 @@
+<view class="content">
+    <view class="top-image">
+        <swiper indicator-dots="true" autoplay="true" circular="true">
+            <swiper-item wx:for="{{detailData.data.photos}}">
+                <image src="{{item.url}}"  data-url="{{item.url}}" class="slide-image" bindtap="bigImg"/>
+            </swiper-item>
+        </swiper>
+    </view>
+    <view class="basic-information">
+
+        <view class="basic-top">
+            {{detailData.data.name}}
+        </view>
+
+        <view class="basic-bottom">
+            <text class="price">{{detailData.data.redeem_point}} 积分</text>
+        </view>
+
+    </view>
+    <view class="detail-item-box">
+
+        <!--商品详情-->
+        <view>
+            <view class="title mx-1px-bottom" data-type="commodity" bindtap="change">
+                <view class="title-text">
+                    图文详情
+                </view>
+                <view class="{{expands.commodity ? 'arrow-up' : 'arrow-down'}}">
+
+                </view>
+            </view>
+            <view class="content" wx:if="{{expands.commodity}}">
+                <wxparser rich-text="{{detailData.data.content}}" />
+            </view>
+        </view>
+    </view>
+    <!--<view class="to-top" hidden="{{!showToTop}}" bindtap="goTop">-->
+        <!--<i class="iconfont icon-xiangshang"></i>-->
+    <!--</view>-->
+
+    <view class="tabbar">
+        <view class="tabbar-item item_3 {{cart_status.status ? 'globalBgcolor' : 'btn_1'}}" style="background: {{config.mainColor}}" bindtap="showSelect">
+            {{cart_status.message}}
+        </view>
+    </view>
+</view>
+<view class="maks {{!show_select ? 'cur' : ''}}" bindtap="closeSelect">
+
+</view>
+
+<view class="detail-popup" hidden="{{show_select}}"  animation="{{show.animation}}" >
+    <view class="select_goods_container">
+        <!--关闭按钮-->
+        <view class="select_goods_cloese" bindtap="closeSelect"></view>
+        <view class="select_goods_header" >
+
+            <view class="img_box" >
+
+                <image wx:if="{{select_product && select_product.img}}" src="{{select_product.img}}" alt="{{select_product.sku}}"></image>
+                <image wx:else src="{{commodity.img}} " alt=""></image>
+            </view>
+            <!--<view class="img_box" style="background-color: {{select_product.bac}};width: 78px;height: 78px;"  wx:if="{{!select_product.img && !!select_product.color}}"></view>-->
+            <view class="price_item">
+                <text >{{detailData.data.redeem_point}} 积分</text>
+                <text wx:if="{{detailData.data.shop_show_store == 1}}">库存{{store_count}}</text>
+            </view>
+
+        </view>
+
+        <view class="select_spec">
+            <view class="spec_line" wx:for="{{specs}}" wx:for-item="spec">
+                <view class="spec_title">{{spec.label}}</view>
+                <view class="spec_value">
+                    <view  class="spec_block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
+                                <!--<view class="spec_icon spec_text" wx:if="{{item.spec_img}}">-->
+                                    <!--<image src="{{item.spec_img}}" data-alt="{{item.alias || item.value}}"></image>-->
+                                <!--</view>-->
+                        <!--<text class="spec_icon" style="background-color:{{item.color}}" wx:if="{{!item.spec_img && item.color}}"></text>-->
+                        <view class="spec_text"  wx:if="{{(item.alias || item.value) && item.spec_img !== undefined}}">
+                            {{item.alias || item.value}}
+
+                            <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">
+
+                            </view>
+                        </view>
+                        <view class="spec_text"  wx:if="{{!item.spec_img && !item.color}}">
+                            {{item.alias || item.value}}
+
+                            <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">
+
+
+                            </view>
+                        </view>
+                    </view>
+                    <!--<view class="spec_list" wx:if="{{spec.id != 2}}">尺码表</view>-->
+                </view>
+            </view>
+
+            <view class="spec_line">
+                <view class="num_title">数量</view>
+                <view class="num_value">
+                    <text bindtap="changeCount" data-index="0">-</text>
+                    <view class="none_border">
+                        <input bindinput="modifyCount" value="{{select_count}}"  type="number" confirm-type="done"/>
+                    </view>
+                    <text bindtap="changeCount" data-index="1">+</text>
+
+                </view>
+            </view>
+
+            <button class="button {{ canBuy ? 'disabled' : '' }} " loading="{{loading}}" style="background: {{config.mainColor}}" bindtap="confirm">确定</button>
+            <!--<view  class="button {{ canBuy ? 'disabled' : '' }}" bindtap="confirm">-->
+
+                <!--&lt;!&ndash;<submit-button v-ref:button bindsubmit="confirm" :status="disallow_cart ? 'disabled' : 'normal'">确定</submit-button>&ndash;&gt;-->
+            <!--</view>-->
+        </view>
+    </view>
+
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

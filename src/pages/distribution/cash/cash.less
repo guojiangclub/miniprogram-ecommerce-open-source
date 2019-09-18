@@ -1,0 +1,136 @@
+@import "../../../assets/css/global";
+#distribution-cash {
+
+  .cash-to-card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #ffffff;
+    background: @mainColor;
+    font-size: 16px;
+    padding: 12px 0px;
+  }
+
+  .cash-input-container {
+    margin-bottom:10px;
+    background: #ffffff;
+    .cash-input-money {
+      padding:12px 15px;
+      font-size: 14px;
+      color: #8a8a8a;
+
+    }
+    .cash-input-title {
+      padding:12px 15px;
+      font-size: 16px;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .cash-input-area {
+      padding: 20px 15px;
+
+      .cash-input {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        .symbol {
+          font-size: 32px;
+          margin-right: 15px;
+          text-indent: -5px;
+        }
+
+        input {
+          flex: 1;
+          border: none;
+          font-size: 18px;
+          align-self: center;
+        }
+
+        .delete {
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          border-radius: 100%;
+          background: #cccccc;
+          color: #ffffff;
+          line-height: 15px;
+          text-align: center;
+          margin-right: 15px
+        }
+
+        .cash__input_all {
+          color: #0e7eff;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .cash-card {
+    //height: 40px;
+    &.content-box {
+      background: #ffffff;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      .toCashRecord {
+        font-size:16px;
+        line-height:40px;
+        color:#000000;
+        font-weight: bold;
+      }
+      .arrow {
+        position: relative;
+        width: 15px;
+        height: 100%;
+        float: right;
+        &:before {
+          position: absolute;
+          content: '';
+          width: 13px;
+          height: 13px;
+          border-top: 1px solid #a5a5a5;
+          border-right: 1px solid #a5a5a5;
+          left: -60%;
+          top: 50%;
+          transform: rotate(45deg) translate3d(0, -50%, 0);
+
+        }
+      }
+    }
+    .card-item {
+      display: flex;
+      align-items: center;
+      width: 90%;
+      height: 100%;
+      line-height: 100%;
+      image {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        object-fit: fill;
+        margin: 7px 5px 5px 5px;
+      }
+      .item__ul {
+        display: inline-block;
+        line-height: 1.3;
+
+
+        .item_name{
+          font-size: 16px;
+          color: #000000;
+        }
+        .item_num{
+          font-size: 13px;
+          color: #8a8a8a;
+        }
+        }
+      }
+    }
+}

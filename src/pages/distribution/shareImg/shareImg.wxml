@@ -1,0 +1,10 @@
+<view id="shareImg" wx:if="{{init}}">
+    <view class="img-box">
+        <image mode="widthFix" src="{{info.url}}" alt="" />
+    </view>
+    <view class="btn-box">
+        <view class="btn" bindtap="downImg">保存海报</view>
+    </view>
+    <!--用户拒绝下载图片授权弹出-->
+    <alert is_refused="{{is_refused}}" bind:close="closeAlert"></alert>
+</view>

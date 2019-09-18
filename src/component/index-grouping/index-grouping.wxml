@@ -1,0 +1,27 @@
+<view class="g-main">
+    <view class="m-lead">
+        <view class="ul-box">
+            <view class="li-box" bindtap="_changeItem" data-index="{{index}}"  wx:for="{{groupingData}}" wx:key="{{index}}" >
+                <span class="{{tapIndex == index ? 'hover' : ''}}">{{item.name}}</span>
+            </view>
+        </view>
+    </view>
+    <view class="m-content">
+        <view class="m-main" wx:if="{{goods_arr.type && goods_arr.type == 'micro_page_componet_goods_group'}}">
+            <view class="goods_box" data-id="{{item.associate.id}}" data-point="{{item.associate.redeem_point}}" bindtap="_jumpToDetail" wx:for="{{goods_arr.children}}" wx:key="{{index}}" >
+                <view class="goods_image">
+                    <image src="{{item.associate.img}}"></image>
+                </view>
+                <view class="title">{{item.associate.name}}</view>
+                <view class="price">￥ {{item.associate.sell_price}}</view>
+            </view>
+        </view>
+
+        <view class="m-main" wx:else>
+            <view class="img-box" data-src="{{item.link}}"  wx:for="{{goods_arr.children}}" wx:key="{{index}}" bindtap="_jumpImg">
+                <image mode="widthFix" src="{{item.image}}" />
+                <view class="description" wx:if="{{item.name}}">{{item.name}}</view>
+            </view>
+        </view>
+    </view>
+</view>

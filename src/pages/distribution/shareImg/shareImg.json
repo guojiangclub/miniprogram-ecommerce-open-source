@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "分享优惠券",
+  "usingComponents": {
+    "alert":"../../../component/alert/alert"
+  }
+}

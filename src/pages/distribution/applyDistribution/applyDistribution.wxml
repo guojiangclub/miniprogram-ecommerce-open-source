@@ -1,0 +1,24 @@
+<view id="distribution">
+    <view class="distribution">
+        <view class="distributeconent">
+            <view class="cardInfo selectName">
+                <input type="text" placeholder="请输入姓名" bindinput="getName"/>
+            </view>
+            <view class="cardInfo selectPhone">
+                <input type="text" placeholder="请输入手机号码" bindinput="getPhone"/>
+            </view>
+            <view class="cardInfo selectOther">
+                <input type="text" placeholder="备注" bindinput="getInfo"/>
+            </view>
+        </view>
+        <view class="saveCard" >
+            <button  style="background: {{config.mainColor}}" bindtap="checkValue">提交申请</button>
+        </view>
+    </view>
+    <view class="home" bindtap="jumpHome" style="background: {{config.mainColor}}">
+        <i class="iconfont icon--shouye"></i>
+        <view>
+            首页
+        </view>
+    </view>
+</view>

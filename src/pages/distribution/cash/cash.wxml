@@ -1,0 +1,50 @@
+<view id="distribution-cash">
+    <view class="cashContainer">
+        <picker value="{{selectedIndex}}" range="{{nameList}}" bindchange="change">
+            <view class="cash-card content-box" >
+                <view class="card-item">
+                    <!--<image src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3082730538,885471532&fm=27&gp=0.jpg"/>-->
+                    <view style="line-height: 40px;color: #8a8a8a" wx:if="{{!sink}}">
+                        您还未选择提现的账户
+                    </view>
+                    <view class="item__ul" wx:else>
+                        <view class="item_name">{{bank_name}}</view>
+                        <view class="item_num">{{bank_card_number}}</view>
+                    </view>
+                </view>
+                <span class="arrow "></span>
+            </view>
+        </picker>
+        <!--<view class="cash-card content-box" >
+            <view class="card-item">
+                &lt;!&ndash;<image src=""/>&ndash;&gt;
+                <view style="line-height: 40px;color: #8a8a8a" >
+                    微信账户
+                </view>
+            </view>
+            <span class="arrow "></span>
+        </view>-->
+        <view class=" cash-input-container">
+            <view class="cash-input-title">提现金额</view>
+            <view class="cash-input-area mx-1px-top-bottom">
+                <view class="cash-input">
+                    <span class="symbol">￥</span>
+                    <input type="number" placeholder="请输入提现金额" value="{{inputValue}}" bindinput="inputMoney" />
+                    <span class="delete" bindtap="eliminate">×</span>
+                    <span class="cash__input_all" bindtap="allMoney">全部提现</span>
+                </view>
+            </view>
+            <view class="cash-input-money">可提现金额{{balance}}元</view>
+        </view>
+        <view class="cash-card content-box cash_padding" data-url="/pages/distribution/cashRecord/cashRecord" bindtap="jumpItem">
+            <span class="toCashRecord">查看提现记录</span>
+            <span class="arrow"></span>
+        </view>
+
+        <view class="cash-to-card" style="background: {{config.mainColor}}" bindtap="submit">
+            确认提现
+        </view>
+    </view>
+
+
+</view>

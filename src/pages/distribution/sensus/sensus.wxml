@@ -1,0 +1,47 @@
+<view id="sensus">
+    <view class="sensuspage">
+        <!--<view class="sensus-detail"></view>-->
+        <view class="sensus-item">
+            <view>
+                <span class="item-top sale-earning">￥{{order.money_sum_today || 0}}</span>
+                <span>今日销售</span>
+            </view>
+            <view>
+                <span class="item-top">{{order.agent_order_count_today || 0}}</span>
+                <span>今日订单</span>
+            </view>
+            <view>
+                <span class="item-top">{{order.user_count_today || 0}}</span>
+                <span>今日新增会员</span>
+            </view>
+            <view>
+                <span class="item-top sale-earning">￥{{order.money_sum_seven || 0}}</span>
+                <span>近七天销售</span>
+            </view>
+            <view>
+                <span class="item-top ">{{order.agent_order_count_seven || 0}}</span>
+                <span>近七天订单</span>
+            </view>
+            <view>
+                <span class="item-top">{{order.user_count_seven || 0}}</span>
+                <span>近七天新增会员</span>
+            </view>
+            <view>
+                <span class="item-top sale-earning">￥{{order.money_sum_month || 0}}</span>
+                <span>近一月销售</span>
+            </view>
+            <view>
+                <span class="item-top">{{order.agent_order_count_month || 0}}</span>
+                <span>近一月订单</span>
+            </view>
+            <view>
+                <span class="item-top">{{order.user_count_month || 0}}</span>
+                <span>近一月新增会员</span>
+            </view>
+        </view>
+        <view class="check-money" bindtap="checkmoney">
+            <button>查看收益明细</button>
+        </view>
+    </view>
+
+</view>

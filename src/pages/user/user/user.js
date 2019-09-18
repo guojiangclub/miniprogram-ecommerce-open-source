@@ -4,17 +4,95 @@ Page({
         detail:"",
         orderInfo:"",
         token:"",
+        list: {balance: "0.00", earnings_commission: "0.00", unearnings_commission: "0.00"}
     },
     onShow(){
+        this.port();
         var token=cookieStorage.get('user_token');
         this.setData({
             token:token
         });
+        var bgConfig = cookieStorage.get('globalConfig') || '';
+        var initInfo = cookieStorage.get('init');
+
+        this.setData({
+            config: bgConfig,
+            initInfo: initInfo,
+            author: initInfo && initInfo.other_technical_support ? initInfo.other_technical_support : ''
+        })
         if(token){
             this.gitUserInfo();
             this.getCenter();
         }
     },
+    jumpAfterSales() {
+        if (!this.data.token) {
+            return this.jumpLogin();
+        }
+        wx.navigateTo({
+            url: '/pages/afterSales/index/index'
+        })
+    },
+    port() {
+        var token = cookieStorage.get('user_token');
+        sandBox.get({
+            api: 'api/distribution/balance',
+            header: {
+                Authorization: token
+            }
+        }).then(res => {
+            if (res.statusCode == 200) {
+                var res = res.data;
+                if (res.status) {
+                    this.setData({
+                        list: res.data
+                    })
+                    console.log(this.data.list,'这是list');
+                    
+                }
+            }
+        })
+    },
+    getUserInfo() {
+        sandBox.get({
+            api: 'api/me',
+            header: {
+                Authorization: cookieStorage.get('user_token')
+            },
+        }).then(res => {
+            console.log(res.data, '这个是list数据');
+
+            if (res.data.data.status) {
+                // 此处控制我的奖励部分的显示与隐藏
+                let agent = res.data.data.is_agent;
+                if (agent == 1) {
+                    this.port()
+                    this.setData({
+                        userAgent: true,
+                    })
+                   
+                } else {
+                    this.setData({
+                        userAgent: false,
+                    })
+                }
+                if (!res.data.data.mobile || !res.data.data.user_info_fill) {
+                    this.setData({
+                        top: 0,
+                        bottom: '5px'
+                    })
+                }
+                this.setData({
+                    detail: res.data.data,
+                    init: true
+                })
+                console.log(this.data.detail,"这是detail")
+                cookieStorage.set('userInfoImg', res.data.data.avatar)
+                cookieStorage.set('userInfoName', res.data.data.nick_name) 
+            }
+        })
+    },
+
     jump(e){
         if(!this.data.token){
             return this.jumpLogin();
@@ -39,7 +117,7 @@ Page({
         })
     },
     bindgetuserinfo(e) {
-        console.log(e);
+        console.log(e,"e");
         // 说明用户同意授权
         if (e.detail.userInfo) {
             this.updateUserInfo(e.detail.userInfo)

@@ -1,0 +1,137 @@
+@import "../../../assets/css/global";
+#pointstore-index{
+  .contents{
+    .top{
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .point-info{
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 30px 15px 35px;
+        background: @mainColor;
+        .left{
+          font-size: 12px;
+          color:#fff;
+          text-align: center;
+
+          .num{
+            font-size: 30px;
+            color:#fff;
+          }
+        }
+        .right{
+          font-size: 12px;
+          color: rgba(255,255,255,.8);
+
+          .record{
+            padding: 1px 10px;
+            text-align: center;
+            border:1px solid rgba(255,255,255,.7);
+            border-radius:5px;
+          }
+          .frozen{
+            padding: 5px 0;
+
+          }
+          .overdue{
+            padding-top: 5px;
+            border-top: 1px solid #FFFFFF;
+
+          }
+        }
+      }
+      .login{
+        padding: 0 20px;
+        font-size: 16px;
+        color:#ffffff;
+        background: @mainColor;
+        border-radius:5px;
+        height: 40px;
+        line-height: 40px;
+        margin: 15px 0;
+      }
+    }
+    .no-list{
+      font-size: 16px;
+      text-align: center;
+      margin: 10px 0;
+    }
+    .commodity-bottom{
+      //height: 100%;
+      font-size: 0;
+      box-sizing: border-box;
+      padding-top: 15px;
+      .commodity-out{
+        width: 50%;
+        display: inline-block;
+        font-size: 12px;
+        box-sizing: border-box;
+        padding: 0 3px 7px 3px;
+        &:nth-of-type(odd) {
+          padding-left: 0;
+        }
+        &:nth-of-type(even) {
+          padding-right: 0;
+        }
+        .commodity-box{
+          background: #ffffff;
+          overflow: hidden;
+          width: 100%;
+          padding: 10px;
+          box-sizing: border-box;
+          font-size: 14px;
+          .commodity-img {
+            overflow: hidden;
+            image{
+              width: 290rpx;
+              //height: 310rpx;
+            }
+          }
+          .commodity-name{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .commodity-money{
+            display: flex;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 25px;
+            .money{
+              color: #ED3327;
+              margin-top: 2px;
+            }
+            .discount-tags{
+              font-size: 0;
+              overflow: hidden;
+
+              .tags-item{
+                display: block;
+                float: left;
+                color: #ffffff;
+                background: #C9171D;
+                border-radius: 2px;
+                padding: 2px;
+                font-size: 12px;
+                margin: 0 0 5px 5px;
+              }
+            }
+          }
+        }
+      }
+      .loadingbox{
+        margin-top: 10px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size:14px;
+      }
+    }
+  }
+}
