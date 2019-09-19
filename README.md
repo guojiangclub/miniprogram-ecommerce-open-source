@@ -38,4 +38,4 @@ npm run build // 编译当前项目
 如果你发现任何错误或者问题，请提交到 [官方社区](https://www.ibrand.cc/open/discuss) 或者 [提交ISSUE](https://github.com/ibrandcc/miniprogram-ecommerce-open-source/issues)
 
 ## 讨论交流
-![image](https://camo.githubusercontent.com/4106aa796a82cb22ace9134bf7f68574ea63dda2/68747470733a2f2f69796f796f2e6f73732d636e2d68616e677a686f752e616c6979756e63732e636f6d2f706f73742f2545342542412538432545372542422542342545372541302538312e6a7067)
+![image](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/qrcode.jpg)
