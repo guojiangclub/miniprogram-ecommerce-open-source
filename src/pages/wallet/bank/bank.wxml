@@ -1,0 +1,60 @@
+<view id="wallet-bank">
+    <view class="add__account" wx:if="{{bankList == ''}}">
+        <view class="add__bank" bindtap="jumpItem" data-url="/pages/wallet/bank-add/bank-add">
+            <i class="iconfont icon-juxing"></i>
+        </view>
+        <view class="add__bank_hint">
+            <span>您还没有添加账户</span>
+            <span>添加账号后将可提现佣金</span>
+        </view>
+
+    </view>
+    <view class="have__account" wx:else>
+        <checkbox-group bindchange="select">
+            <view class="num-box">
+                <view class="goods">您添加了 <text class="num">{{total}}</text> 个账户</view>
+                <view class="operation" bindtap="edit">{{edit ? '完成' : '编辑'}}</view>
+            </view>
+            <view class="goods-list">
+                <view wx:for="{{bankList}}" wx:for-index="idx">
+                    <view class="goods-item">
+                        <label>
+                            <view class="item__box">
+                                <checkbox hidden="{{!edit}}" color="#fff" bindtap="fClick" checked="{{item.isCheck}}" data-ischecked="{{item.isCheck}}" data-findex="{{idx}}" data-value="{{item.id}}" value="{{item.id}}" />
+                                <view class="bank_card" style="background: url({{item.bank.bg_image}}) no-repeat;background-size: cover" bindtap="editBank" data-id="{{item.id}}">
+                                    <view class="bank_content">
+                                        <view class="bank_logo">
+                                            <image src="{{item.bank.logo_url}}" alt="" />
+                                        </view>
+                                        <view class="bank_number">
+                                            {{item.bank_card_number}}
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </label>
+
+                    </view>
+
+                </view>
+                <view class="loadingbox" hidden="{{!show}}">
+                    正在加载下一页数据
+                </view>
+            </view>
+        </checkbox-group>
+        <view class="cancel mx-1px-top" wx:if="{{edit}}">
+            <view class="checkbox">
+                <label>
+                    <checkbox bindtap="click" color="#fff" checked="{{allCheck}}" /> 全选
+                </label>
+            </view>
+            <view class="cancel-button" style="background: {{config.mainColor}}" bindtap="cancel">
+                删除
+            </view>
+
+        </view>
+    </view>
+    <view class="add__btn" style="background: {{config.mainColor}}" bindtap="jumpItem" data-url="/pages/wallet/bank-add/bank-add">
+        添加账户
+    </view>
+</view>

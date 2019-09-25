@@ -1,34 +1,36 @@
-<view class="bargain_contanier">
+<view class="bargain_contanier" style="height:{{Height}}px">
     <view class="bargain_head">
         <image mode="widthFix"  src="" />
         <view class="rule" bindtap="showRule">
             活动规则
         </view>
     </view>
-    <view class="bargain_body">
+    <view class="body_box">
+        <view class="bargain_body" wx:for="{{list}}" wx:for-item="item" :key="{{index}}">
         <view class="bargain_goods">
             <view class="goods_left">
-                <image mode="widthFix" src="" />
+                <image src="{{item.goods.img}}" />
             </view>
             <view class="goods_right">
-                <view class="goods_name">我是商品名称</view>
-                <view class="number">剩余985砍价名额</view>
-                <view class="past_price">原价 ￥<span>198</span></view>
+                <view class="goods_name">{{item.goods.name}}</view>
+                <view class="number">剩余{{item.store_nums}}砍价名额</view>
+                <view class="past_price">原价 ￥<span>{{prices[index]}}</span></view>
                 <view class="right_foot">
                     <view class="new_price">
-                        砍后价￥0.00
+                        砍后价￥{{item.price}}
                     </view>
-                    <view class="btn" bindtap="bargain">
+                    <view class="btn" bindtap="bargain" data-id="{{item.id}}" data-goodsId="{{item.goods_id}}">
                         发起砍价
                     </view>
                 </view>
             </view>
         </view>
     </view>
+    </view>
     <view class="box_body" wx:if="{{show}}" catchtap="closeRule" catchtouchmove="true">
-        <view class="rule_box" catchtap="showRule">
+        <scroll-view scroll-y class="rule_box" catchtap="showRule" >
             <wxparser rich-text="{{rule}}" />
-        </view>
+        </scroll-view>
         <view class="iconfont icon-close" bindtap="closeRule"></view>
     </view>
 </view>

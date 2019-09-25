@@ -60,40 +60,41 @@ Page({
         }
 
     },
+    //账户数量
     getBankAccount() {
-        var token = cookieStorage.get('user_token');
-        sandBox.get({
-            api: 'api/users/BankAccount/show/number',
-            header: {
-                Authorization: token
-            }
-        }).then(res => {
-            if (res.statusCode == 200) {
-                res = res.data;
-                if (res.status) {
-                    this.setData({
-                        info: res.data
-                    })
+        // var token = cookieStorage.get('user_token');
+        // sandBox.get({
+        //     api: 'api/users/BankAccount/show/number',
+        //     header: {
+        //         Authorization: token
+        //     }
+        // }).then(res => {
+        //     if (res.statusCode == 200) {
+        //         res = res.data;
+        //         if (res.status) {
+        //             this.setData({
+        //                 info: res.data
+        //             })
 
-                } else {
-                    wx.showModal({
-                        title: '请求失败，请稍后重试',
-                        showCancel: false
-                    })
+        //         } else {
+        //             wx.showModal({
+        //                 title: '请求失败，请稍后重试',
+        //                 showCancel: false
+        //             })
 
-                }
-            } else {
-                wx.showModal({
-                    title: '请求失败，请稍后重试',
-                    showCancel: false
-                })
-            }
-        }).catch(rej => {
-            wx.showModal({
-                content: '请求失败，请稍后重试',
-                showCancel: false
-            })
-        })
+        //         }
+        //     } else {
+        //         wx.showModal({
+        //             title: '请求失败，请稍后重试',
+        //             showCancel: false
+        //         })
+        //     }
+        // }).catch(rej => {
+        //     wx.showModal({
+        //         content: '请求失败，请稍后重试',
+        //         showCancel: false
+        //     })
+        // })
     },
     //获取提现数据
     getmoney(e) {

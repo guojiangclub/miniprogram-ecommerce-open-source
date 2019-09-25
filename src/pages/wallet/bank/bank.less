@@ -1,0 +1,140 @@
+@import "../../../assets/css/global";
+#wallet-bank{
+  .add__account{
+    .add__bank{
+      margin: 45px 15px 30px 15px;
+      border: 2px dotted #c6c6c6;
+      padding: 20px 0;
+      border-radius: 4px;
+      text-align: center;
+      i{
+        font-size: 45px;
+        color: #c6c6c6;
+      }
+    }
+    .add__bank_hint{
+      font-size: 16px;
+      color: #595959;
+      text-align: center;
+      span{
+        display: block;
+        line-height: 25px;
+      }
+    }
+
+  }
+  .have__account{
+    .num-box{
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 45px;
+      padding: 0 10px;
+      font-size: 15px;
+      z-index: 10;
+      //background: #eeeeee;
+
+      .goods{
+        color: #959595;
+        flex: 1;
+
+        .num{
+          color: #d0021b;
+        }
+      }
+      .operation{
+        color: #0479ff;
+      }
+    }
+    .goods-list{
+      padding: 45px 0 55px 0;
+      .goods-item {
+        padding: 0px 12px;
+        width: 100%;
+        .item__box{
+          display: flex;
+          align-items: center;
+          checkbox{
+            margin-right: 10px;
+          }
+          .bank_card{
+            height: 90px;
+            background-size: cover;
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            flex: 1;
+            .bank_logo{
+              padding: 14px 0 0 14px;
+
+              image{
+                width: 125px;
+                height: 34px;
+              }
+            }
+
+            .bank_number{
+              margin-left: 45px;
+            }
+
+          }
+        }
+      }
+    }
+    .cancel{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      background: #FFFFFF;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 20;
+
+      .checkbox{
+        margin-left: 10px;
+      }
+
+      .cancel-button{
+        height: 50px;
+        line-height: 50px;
+        width: 110px;
+        text-align: center;
+        color: #FFFFFF;
+        background: @mainColor;
+
+      }
+    }
+    //重置按钮样式
+    checkbox .wx-checkbox-input{
+      border-radius: 100%;
+      background-color: #fff;
+      border: 1px solid #c1caca;
+      box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 -15px 10px -12px rgba(0,0,0,.05);
+      height: 14px;
+      width: 14px;
+    }
+    checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+      background-color: @globalColor;
+      border: 1px solid @globalColor;
+    }
+  }
+
+  .add__btn{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 17px 0;
+    line-height: 16px;
+    background: @mainColor;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+  }
+
+}

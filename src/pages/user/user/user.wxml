@@ -63,6 +63,16 @@
             <view>地址</view>
         </view>
     </view>
+    <view class="info-detail">
+       <!--  <view class="item" data-url="/pages/favorite/index/index" >
+            <view class="number"><text>{{group.number || 0}}</text></view>
+            <view>我的拼团</view>
+        </view>-->
+        <view class="item" data-url="/pages/bargain/list/list" bindtap="jumpItem">
+            <view class="number"><text>{{bargain.number || 0}}</text></view>
+            <view>我的砍价</view>
+        </view>
+    </view>
     <!-- 我的奖励 -->
     <view class="section-award"  wx:if="{{detail.distribution_status == 1 && detail.is_agent == 1}}" data-url="/pages/distribution/distributionCenter/distributionCenter" bindtap="jumpItem" >
         <view class="award-header mx-1px-bottom" data-status="0" bindtap="">

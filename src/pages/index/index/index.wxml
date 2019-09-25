@@ -35,6 +35,9 @@
             <view wx:if="{{item.name == 'micro_page_componet_groupon' && item.value && item.value.length}}">
                 <indexGroupon index-data="{{item.value}}" config="{{config}}" server="{{microData.server_time}}" typename="拼团"></indexGroupon>
             </view>
+            <view wx:if="{{item.name == 'micro_page_componet_bargain'}}">
+                <indexBargain list-data="{{}}"></indexBargain>
+            </view>
             <!--快捷导航-->
             <view wx:if="{{item.name == 'micro_page_componet_nav' && item.value && item.value.length}}">
                 <indexNav nav-data="{{item.value}}"></indexNav>

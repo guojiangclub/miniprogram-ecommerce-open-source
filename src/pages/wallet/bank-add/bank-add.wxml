@@ -1,0 +1,25 @@
+<view id="wallet-bank-add">
+    <view class="add__account" >
+        <view class="add__bank_hint">
+            <picker value="{{selectedIndex}}" range="{{bankList}}" range-key="{{'bank_name'}}" bindchange="change">
+                <view class="bank_name">
+                    <input type="text" placeholder="选择开户银行或者电子账户" disabled  value="{{bank_name}}"/>
+                    <i class="iconfont icon--xiangxia"></i>
+                </view>
+            </picker>
+            <view class="bank_name">
+                <input type="text" placeholder="账号" bindinput="AccountNumber" value="{{mobilePhone}}"/>
+            </view>
+            <view class="bank_name">
+                <input type="text" placeholder="开户人姓名" bindinput="AccountHolder" value="{{name}}"/>
+            </view>
+        </view>
+        <view class="remark">
+            注：提现功能暂不支持银行卡
+        </view>
+        <view class="add__btn" style="background: {{config.mainColor}}" bindtap="preservation">
+            保存
+        </view>
+    </view>
+
+</view>

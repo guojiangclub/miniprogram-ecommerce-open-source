@@ -68,7 +68,7 @@ Page({
         if (!bank.bank_name) {
             message = '请选择账户';
         } else if (!bank.money) {
-            message = '请输入提现金额';
+            message = '请正确输入提现金额';
         }
         else if (bank.money > Number(this.data.balance)) {
             message = '可提现金额不足';
@@ -91,82 +91,69 @@ Page({
             this.applyCash(data);
         }
     },
-    // 直接提取到微信钱包，不需要支付宝以及其他渠道  2018.12.28
+    // 直接提取到微信钱包
     queryBankCardList(){
-        sandBox.get({
-            api:"api/users/BankAccount/show",
-            header:{
-                Authorization:cookieStorage.get('user_token')
+        var arr=[];
+        var name=[];
+        var info = {
+            bank:{
+                id: '',
+                bank_name: '微信钱包',
             },
-        }).then(res =>{
-            if (res.statusCode == 200) {
-                res = res.data
-                if (res.status) {
-                    var arr=[];
-                    var name=[];
-                    this.setData({
-                        cash_type: res.meta.type
-                    })
+            id: '',
+            bank_card_number: '微信钱包直接提现到微信钱包'
+        };
+        arr.push(info);
+        name.push('微信钱包')
 
-                    var info = {
-                        bank:{
-                            id: '',
-                            bank_name: '微信钱包',
-                        },
-                        id: '',
-                        bank_card_number: '微信钱包直接提现到微信钱包'
-                    };
-                    arr.push(info);
-                    name.push('微信钱包')
-
-                    this.setData({
-                        bankList: arr,
-                        nameList: name
-                    })
-                    //customer_wechat
-                   /* if (res.meta.type == 'customer_wechat') {
-                        var info = {
-                            bank:{
-                                id: '',
-                                bank_name: '微信钱包',
-                            },
-                            id: '',
-                            bank_card_number: '微信钱包直接提现到微信钱包'
-                        };
-                        arr.push(info);
-                        name.push('微信钱包')
-
-                        this.setData({
-                            bankList: arr,
-                            nameList: name
-                        })
-                    } else {
-                        res.data.forEach((val)=>{
-                            if(val.bank.bank_name == "支付宝"){
-                                arr.push(val);
-                                var list = val.bank.bank_name + val.bank_card_number
-                                name.push(list)
-                                this.setData({
-                                    bankList: arr,
-                                    nameList: name
-                                })
-                            }
-                        })
-                    }*/
-                } else{
-                    wx.showModal({
-                        content: res.message || '请求失败',
-                        showCancel: false
-                    })
-                }
-            } else {
-                wx.showModal({
-                    content: res.message || '请求失败',
-                    showCancel: false
-                })
-            }
-
+        this.setData({
+            bankList: arr,
+            nameList: name
         })
+        // sandBox.get({
+        //     api:"api/users/BankAccount/show",
+        //     header:{
+        //         Authorization:cookieStorage.get('user_token')
+        //     },
+        // }).then(res =>{
+        //     if (res.statusCode == 200) {
+        //         res = res.data
+        //         if (res.status) {
+        //             var arr=[];
+        //             var name=[];
+        //             this.setData({
+        //                 cash_type: res.meta.type
+        //             })
+
+        //             var info = {
+        //                 bank:{
+        //                     id: '',
+        //                     bank_name: '微信钱包',
+        //                 },
+        //                 id: '',
+        //                 bank_card_number: '微信钱包直接提现到微信钱包'
+        //             };
+        //             arr.push(info);
+        //             name.push('微信钱包')
+
+        //             this.setData({
+        //                 bankList: arr,
+        //                 nameList: name
+        //             })
+        //         } else{
+        //             wx.showModal({
+        //                 content: res.message || '请求失败',
+        //                 showCancel: false
+        //             })
+        //         }
+        //     } else {
+        //         wx.showModal({
+        //             content: res.message || '请求失败',
+        //             showCancel: false
+        //         })
+        //     }
+
+        // })
     },
     //分销中心余额
     queryBalance() {

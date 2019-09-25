@@ -1,5 +1,6 @@
 {
     "navigationBarTitleText": "砍价帮帮忙",
+    "enablePullDownRefresh": true,
     "usingComponents": {
       "wxparser": "plugin://wxparserPlugin/wxparser",
         "seckill": "../../../component/seckill/seckill"

@@ -22,6 +22,7 @@
     "pages/order/detail/detail",
     "pages/bargain/index/index",
     "pages/bargain/details/details",
+    "pages/bargain/list/list",
     "pages/coupon/goods/goods",
     "pages/order/index/index",
     "pages/order/search/search",

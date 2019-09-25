@@ -1,11 +1,11 @@
-<view class="details_contanier">
+<view class="details_contanier" style="height:{{Height}}px;">
     <view class="details_head">
         <view class="head_photo">
-            <image src="{{userInfo.avatar}}" />
+            <image src="{{detailsMessage.user.meta.avatar}}"/>
         </view>
         <view class="head_message">
             <view class="name">
-                {{userInfo.nick_name}}
+                {{detailsMessage.users.meta.nick_name}}
             </view>
             <view class="notice">
                 在米尔优选发现好物，一起来砍价拿
@@ -18,49 +18,172 @@
     <view class="details_body">
         <view class="goods_message">
             <view class="goods_left">
-                <image mode="widthFix" src="" />
+                <image mode="widthFix" src="{{detailsMessage.reduce.goods.img}}" />
             </view>
             <view class="goods_right">
                 <view class="goods_name">
-                    商品名称
+                    {{detailsMessage.reduce.goods.name}}
                 </view>
                 <view class="past_price">
-                    原价￥198
+                    原价￥{{detailsMessage.reduce.goods.max_price}}
                 </view>
                 <view class="new_price">
-                    砍后价￥0
+                    砍后价￥{{detailsMessage.reduce.price}}
                 </view>
             </view>
         </view>
-        <view class="text">
-                已砍{{}}0元
-                <view class="d3"></view>
+        <view class="text_message" wx:if="{{overTime==false && overActivity==false}}" style="margin-left:{{left}}%">
+                已砍{{detailsMessage.reduce_amount}}元
+        </view>
+        <view class="text-copy" wx:if="{{overTime==true || overActivity==true}}" style="margin-left:{{left}}%">
+                已砍{{detailsMessage.reduce_amount}}元
         </view>
         <view class="bar">
-            <view class="bar_length" style="width:{{length}}px"></view>
+            <progress percent="{{detailsMessage.progress_par*100}}" color="#{{setColor}}" border-radius="3px" />
         </view>
-        <view class="tips">
-            已砍0元,还差
+        <view class="tips" wx:if="{{is_leader==1 && overTime==false && overActivity==false}}">
+            已砍{{detailsMessage.reduce_amount}}元,还可砍{{detailsMessage.reduce_surplus_amount}}元
         </view>
-        <button class="btn" open-type='share'>
-            邀请好友砍价
-        </button>
-        <view class="count_down">
-             <seckill end="{{item.associate.ends_at}}" starts="{{item.associate.starts_at}}" server="{{server}}" typename=""></seckill>
+        <view class="tips" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
+            很遗憾超时了，本次砍价失败
         </view>
-        <view class="person_number">
-            <view class="person_tips">
+        <view class="tips" wx:if="{{ overTime==true || overActivity==true}}">
+            很遗憾活动已结束
+        </view>
+        <view class="tips" wx:if="{{is_leader==0 && overActivity==false}}">
+            帮我砍价，你拿红包，新人有礼
+        </view>
+        <!-- 后台没设置可提前购买-->
+        <button class="btn" open-type='share' wx:if="{{is_leader==1 && buy==false && overTime==false && overActivity==false}}">
+            <text>{{message}}</text>
+        </button> 
+        <view class="btn" bindtap="goStore" wx:if="{{overActivity==true}}">去商城看看</view>
+        <!-- 后台设置了可提前购买-->
+        <view class="can_buy"  wx:if="{{is_leader==1 && buy && overTime==false && overActivity==false}}"> 
+            <button class="invite" open-type='share' wx:if="{{over==false}}">
+                <text>{{message}}</text>
+            </button>
+            <view class="now_buy" bindtap="nowBuy" wx:if="{{over==false}}">马上购买</view>
+            <!-- 活动未结束但是用户砍价已完成-->
+            <view class="btn" bindtap="nowBuy" wx:if="{{over==true}}">{{detailsMessage.reduce.time_price}}元购买商品</view>
+        </view>
+        <!-- 用户时间结束-->
+        <view class="btn2" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
+            <view class="child_btn1" bindtap="bargainAgin">
+                重新发起砍价
+            </view>
+            <view class="child_btn2" catchtap="goStore">
+                去商城看看
+            </view>
+        </view>
+        <view class="btn" bindtap="bargain" wx:if="{{is_leader==0 && step==1 && overTime==false && overActivity==false}}">
+            <text>{{message}}</text>
+        </view>
+        <view class="btn2" wx:if="{{is_leader==0 && step==2 && overActivity==false}}">
+            <view class="child_btn1" bindtap="joinBargain">
+                {{message}}
+            </view>
+            <view class="child_btn2" bindtap="helpShare">
+                帮好友分享
+            </view>
+        </view>
+        <view class="count_down" wx:if="{{overTime==false && overActivity==false}}">
+             <seckill end="{{detailsMessage.ends_at}}" starts="{{detailsMessage.starts_at}}" server="{{server}}" typename="砍价"bind:starts="isStarts" bind:end="isEnd"></seckill>
+        </view>
+        <view class="person_number" wx:if="{{overActivity==false}}">
+            <view class="left"></view>
+            <view class="right"></view>
+            <view class="title">
+                砍价英雄榜
+            </view>
+            <view class="person_tips" wx:if="{{detailsMessage.users.length==0}}">
                 快去邀请英雄助力吧
+            </view>
+            <view class="person_list" wx:if="{{detailsMessage.users.length!==0}}">
+                <view class="hero_box" wx:for="{{detailsMessage.users}}" wx:for-item="item">
+                    <view class="hero_message">
+                        <view class="head_img">
+                            <image src="{{item.meta.avatar}}" />
+                        </view>
+                        <view class="message_box">
+                            <view class="message_name">
+                                {{item.meta.nick_name}}
+                            </view>
+                            <view class="message_share">
+                                分享给好友，免费拿好货
+                            </view>
+                        </view>
+                    </view>
+                    <view class="reduce_money">
+                        已成功砍掉{{item.reduce_amount}}元
+                    </view>
+                </view>
             </view>
         </view>
     </view>
     <view class="img">
         <image mode="widthFix" src="" />
     </view>
+    <!-- 活动规则弹层-->
     <view class="box_body" wx:if="{{show}}" catchtap="closeRule" catchtouchmove="true">
-        <view class="rule_box" catchtap="showRule">
+        <scroll-view scroll-y class="rule_box" catchtap="showRule" >
             <wxparser rich-text="{{rule}}" />
-        </view>
+        </scroll-view>
         <view class="iconfont icon-close" bindtap="closeRule"></view>
+    </view>
+    <!-- 砍价成功弹层-->
+    <view class="box_body" catchtouchmove="true" wx:if="{{showNotice && is_leader==0}}" bindtap="closeNotice">
+        <view class="notice_box" catchtap="showNotice">
+            <view class="iconfont icon-xiaolian1"></view>
+            <view class="thanks">
+                <text>谢英雄拔刀相助,为我</text>
+                <text>砍掉{{theReduce}}元</text>
+            </view>
+            <view class="true_btn" catchtap="closeNotice">
+                确定
+            </view>
+            <view class="gostore" catchtap="goStore">
+                去商城看看
+            </view>
+        </view>
+        <view class="iconfont icon-close" bindtap="closeNotice"></view>
+    </view>
+    <!-- 分享弹层-->
+    <view class="box_body" catchtouchmove="true" wx:if="{{showShare}}" >
+        <view class="share_box">
+            <view class="share_way">
+                <button class="friends" open-type="share">
+                    <view class="iconfont icon--weixin">
+                        
+                    </view>
+                    <view class="text">
+                        微信好友
+                    </view>
+                </button>
+                <view class="post" bindtap="createShareImg">
+                    <view class="iconfont icon-tupian">
+                        
+                    </view>
+                    <view class="text">
+                        海报分享
+                    </view>
+                </view>
+            </view>
+            <view class="exit" bindtap="closeShare">取消</view>
+        </view>
+    </view>
+    <!-- 活动结束好友新开零元拿弹层-->
+    <view class="box_body" catchtouchmove="true" wx:if="{{showTell && is_leader==0 && overActivity==false}}" bindtap="closeTell">
+        <view class="notice_box" catchtap="showTell">
+            <view class="iconfont icon-kulian"></view>
+            <view class="tells">
+                <text>很遗憾本次活动已结束！</text>
+                <text>去商城看看新活动吧！</text>
+            </view>
+            <view class="btn_gostore" catchtap="goStore">
+                去商城看看
+            </view>
+        </view>
+        <view class="iconfont icon-close" bindtap="closeTell"></view>
     </view>
 </view>
