@@ -6,7 +6,7 @@ Page({
         show:false,//控制活动规则的显示
         rule:'的叫法是看到了福建省的<br/><br/>打梵蒂冈飞机速度快放假',//活动规则
         number:17,
-        is_leader:0,//1为自己，0为好友
+        is_leader:1,//1为自己，0为好友
         message:'',
         showShare:false,//显示分享
         showNotice:false,//控制砍价后弹框显示
@@ -59,22 +59,26 @@ Page({
 				Authorization: token
 			},
         }).then(res =>{
-            console.log("res",res)
             if (res.statusCode == 200) {
+                console.log("is_leader",res.data.data.user_is_leader)
                 if(res.data.data.status_text=="已失效" && res.data.data.reduce.status_text=="进行中"){
                     this.setData({
-                        overTime:true
+                        overTime:true,
+                        overActivity:false,
+                        setColor:'AAAAAA'
                     })
                 }else if(res.data.data.reduce.status_text !=="进行中"){
                     this.setData({
-                        overActivity:true
+                        overActivity:true,
+                        setColor:'AAAAAA'
                     })
                 }
                 that.setData({
                     detailsMessage:res.data.data,
-                   // is_leader:res.data.data.is_leader
-                   is_leader:0
+                   is_leader:res.data.data.user_is_leader
+                   //is_leader:0
                 })
+                that.showWitch()
                 console.log("detailsMessage",this.data.detailsMessage)
                if(this.data.detailsMessage.progress_par>0.17){
                 let percent=parseInt(this.data.detailsMessage.progress_par*100)-17
@@ -95,6 +99,7 @@ Page({
                 })
             }
         })
+        //this.showWitch()
     },
     bargainAgin(){
         wx.navigateTo({

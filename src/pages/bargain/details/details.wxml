@@ -5,7 +5,7 @@
         </view>
         <view class="head_message">
             <view class="name">
-                {{detailsMessage.users.meta.nick_name}}
+                {{detailsMessage.user.meta.nick_name}}
             </view>
             <view class="notice">
                 在米尔优选发现好物，一起来砍价拿
@@ -47,7 +47,7 @@
         <view class="tips" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
             很遗憾超时了，本次砍价失败
         </view>
-        <view class="tips" wx:if="{{ overTime==true || overActivity==true}}">
+        <view class="tips" wx:if="{{  overActivity==true}}">
             很遗憾活动已结束
         </view>
         <view class="tips" wx:if="{{is_leader==0 && overActivity==false}}">
