@@ -1,12 +1,11 @@
+@import "../../assets/css/global";
 .g-main {
   position: relative;
 
   .m-lead {
     font-size: 13px;
-    height: 45px;
     background: #ffffff;
-
-    padding: 0 20px;
+    padding:10px 15px;
 
     .ul-box {
 
@@ -20,15 +19,12 @@
         flex: 1;
         width: 1px;
         height: 100%;
-        text-align: center;
         span {
           display: inline-block;
-          text-align: center;
-          line-height: 45px;
-          width: auto;
-          height: 100%;
-          font-size: 14px;
-          box-sizing: content-box;
+          font-size: 22px;
+          //padding-left: 6px;
+          //border-left: 4px solid #E7031C;
+          font-weight: 700;
         }
 
         .hover {
@@ -49,8 +45,44 @@
     }
   }
 
+  .grouping-tap-box {
+    height: 45px;
+    line-height: 45px;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    margin-bottom: 10px;
+    color: #999999;
+    .tap-item {
+      flex: 1;
+      text-align: center;
+
+
+      &.active {
+        span {
+          position: relative;
+          color: @globalColor;
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: -10px;
+            right: -10px;
+            height: 2px;
+            background: @globalColor;
+          }
+        }
+      }
+    }
+  }
+
   .m-content {
     padding: 10px 15px;
+    padding-top: 0;
+
+    &.g-bg {
+      background: #F3F3F3;
+    }
     .m-main {
       display: flex;
       justify-content: space-between;
@@ -89,9 +121,11 @@
         }
       }
       .goods_box {
-        width: 48%;
+        width: 49%;
         background: #ffffff;
-        margin-top: 10px;
+        margin-bottom: 6px;
+        box-shadow:0px 1px 4px 0px rgba(210,210,210,0.5);
+        overflow: hidden;
         .goods_image {
           position: relative;
           padding-top: 100%;
@@ -109,17 +143,22 @@
         }
 
         .title {
-          font-size: 16px;
+          font-size: 13px;
           color: #4a4a4a;
+          padding:0 10px;
+          height: 36px;
+          line-height: 18px;
+          margin-top: 5px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp:2;
           overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
         }
 
         .price {
           color: #ea4448;
           font-size: 14px;
-          text-indent: 5px;
+          padding: 6px 10px;
         }
       }
     }

@@ -7,7 +7,6 @@ Page({
         list: {balance: "0.00", earnings_commission: "0.00", unearnings_commission: "0.00"}
     },
     onShow(){
-        this.port();
         var token=cookieStorage.get('user_token');
         this.setData({
             token:token
@@ -173,6 +172,7 @@ Page({
     },
     // 获取用户信息
     gitUserInfo() {
+        let that=this
         sandBox.get({
             api: 'api/me',
             header:{
@@ -183,6 +183,9 @@ Page({
                 this.setData({
                     detail:res.data.data
                 })
+                if(this.data.detail.status==1){
+                    that.port();
+                }
             }
         })
     },

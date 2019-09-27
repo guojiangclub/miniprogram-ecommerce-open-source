@@ -6,8 +6,7 @@ Page({
         list:[],
         prices:[],
         current_page:1,
-
-
+        total_pages:1
     },
     showRule(){
         console.log("显示活动规则")
@@ -50,14 +49,26 @@ Page({
         this.getMessage();
     },
     onShow: function() {
-        
+        this.getRule()
     },
     onPullDownRefresh: function() {
         console.log("刷新下数据")
         
     },
+    getRule(){
+        sandBox.get({
+            api:'api/reduce/help/text'
+        }).then(res=>{
+            if(res.statusCode == 200){
+                console.log("规则",res.data.data.reduce_help_text)
+                this.setData({
+                    rule:res.data.data.reduce_help_text
+                })
+            }
+        })
+    },
     getMessage(){
-        let older_prices=[]
+        let that =this
         sandBox.get({
             api:'api/reduce/list',
             data:{
@@ -66,22 +77,16 @@ Page({
         }).then(res=>{
             if(res.statusCode == 200){
                 console.log("res.data",res.data)
-                this.setData({
-                    list:res.data.data,
-                    current_page:this.data.current_page++
-                })
-                console.log("this.data.list",this.data.list)
-                this.data.list.forEach(item => {
-                    item.older=parseInt(item.reduce_total) + parseInt(item.price)
-                    item.older_price=item.older.toFixed(2)
-                    older_prices.push(item.older_price)
-                    this.setData({
-                        prices:older_prices
+                    res.data.data.forEach(item=>{
+                        this.data.list.push(item)
                     })
-                    console.log("item.older_price",item.older_price)
-                });
-                console.log("this.data.list",this.data.list)
+                    that.setData({
+                        list:this.data.list,
+                        current_page:res.data.meta.pagination.current_page++,
+                        total_pages:res.data.meta.pagination.total_pages
+                    })
             }
+            console.log("list",this.data.list)
         })
     },
     onReachBottom(){

@@ -20,15 +20,15 @@ Component({
         _jumpToDetail(e){
             var id = e.currentTarget.dataset.id;
             var point = e.currentTarget.dataset.point;
-            if(point == 0){
+            //if(point == 0){
                 wx.navigateTo({
                     url:`/pages/store/detail/detail?id=${id}`
                 })
-            } else {
-                wx.navigateTo({
-                    url:`/pages/pointStore/detail/detail?id=${id}`
-                })
-            }
+            // } else {
+            //     wx.navigateTo({
+            //         url:`/pages/pointStore/detail/detail?id=${id}`
+            //     })
+            // }
         },
         _jumpImg(e) {
             var src = e.currentTarget.dataset.src;

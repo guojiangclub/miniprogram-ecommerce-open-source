@@ -14,7 +14,7 @@
             <view class="goods_right">
                 <view class="goods_name">{{item.goods.name}}</view>
                 <view class="number">剩余{{item.store_nums}}砍价名额</view>
-                <view class="past_price">原价 ￥<span>{{prices[index]}}</span></view>
+                <view class="past_price">原价 ￥<span>{{item.goods.max_price}}</span></view>
                 <view class="right_foot">
                     <view class="new_price">
                         砍后价￥{{item.price}}

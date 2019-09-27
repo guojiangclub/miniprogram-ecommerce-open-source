@@ -18,7 +18,7 @@
     <view class="details_body">
         <view class="goods_message">
             <view class="goods_left">
-                <image mode="widthFix" src="{{detailsMessage.reduce.goods.img}}" />
+                <image src="{{detailsMessage.reduce.goods.img}}" />
             </view>
             <view class="goods_right">
                 <view class="goods_name">
@@ -41,23 +41,24 @@
         <view class="bar">
             <progress percent="{{detailsMessage.progress_par*100}}" color="#{{setColor}}" border-radius="3px" />
         </view>
-        <view class="tips" wx:if="{{is_leader==1 && overTime==false && overActivity==false}}">
+        <view class="tips" wx:if="{{ overTime==false && overActivity==false}}">
             已砍{{detailsMessage.reduce_amount}}元,还可砍{{detailsMessage.reduce_surplus_amount}}元
         </view>
-        <view class="tips" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
+        <view class="tips" wx:if="{{overTime==true && overActivity==false}}">
             很遗憾超时了，本次砍价失败
         </view>
-        <view class="tips" wx:if="{{  overActivity==true}}">
+        <view class="tips" wx:if="{{overActivity==true}}">
             很遗憾活动已结束
         </view>
-        <view class="tips" wx:if="{{is_leader==0 && overActivity==false}}">
+        <view class="tips" wx:if="{{is_leader==0 && overActivity==false &&overTime==false}}">
             帮我砍价，你拿红包，新人有礼
         </view>
         <!-- 后台没设置可提前购买-->
         <button class="btn" open-type='share' wx:if="{{is_leader==1 && buy==false && overTime==false && overActivity==false}}">
             <text>{{message}}</text>
         </button> 
-        <view class="btn" bindtap="goStore" wx:if="{{overActivity==true}}">去商城看看</view>
+        <view class="btn" bindtap="goStore" wx:if="{{is_leader==1 &&overActivity==true}}">去商城看看</view>
+        <view class="btn" bindtap="goStore" wx:if="{{is_leader==0 && overTime==true }}">去商城看看</view>
         <!-- 后台设置了可提前购买-->
         <view class="can_buy"  wx:if="{{is_leader==1 && buy && overTime==false && overActivity==false}}"> 
             <button class="invite" open-type='share' wx:if="{{over==false}}">
@@ -65,7 +66,7 @@
             </button>
             <view class="now_buy" bindtap="nowBuy" wx:if="{{over==false}}">马上购买</view>
             <!-- 活动未结束但是用户砍价已完成-->
-            <view class="btn" bindtap="nowBuy" wx:if="{{over==true}}">{{detailsMessage.reduce.time_price}}元购买商品</view>
+            <view class="btn" bindtap="nowBuy" wx:if="{{over==true}}">{{detailsMessage.reduce_surplus_amount}}元购买商品</view>
         </view>
         <!-- 用户时间结束-->
         <view class="btn2" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
@@ -79,6 +80,7 @@
         <view class="btn" bindtap="bargain" wx:if="{{is_leader==0 && step==1 && overTime==false && overActivity==false}}">
             <text>{{message}}</text>
         </view>
+        
         <view class="btn2" wx:if="{{is_leader==0 && step==2 && overActivity==false}}">
             <view class="child_btn1" bindtap="joinBargain">
                 {{message}}
@@ -93,13 +95,13 @@
         <view class="person_number" wx:if="{{overActivity==false}}">
             <view class="left"></view>
             <view class="right"></view>
-            <view class="title">
+            <view class="title" wx:if="{{overActivity==false}}">
                 砍价英雄榜
             </view>
-            <view class="person_tips" wx:if="{{detailsMessage.users.length==0}}">
+            <view class="person_tips" wx:if="{{detailsMessage.users.length==0 && overActivity==false}}">
                 快去邀请英雄助力吧
             </view>
-            <view class="person_list" wx:if="{{detailsMessage.users.length!==0}}">
+            <view class="person_list" wx:if="{{detailsMessage.users.length!==0 && overActivity==false}}">
                 <view class="hero_box" wx:for="{{detailsMessage.users}}" wx:for-item="item">
                     <view class="hero_message">
                         <view class="head_img">
@@ -137,7 +139,7 @@
             <view class="iconfont icon-xiaolian1"></view>
             <view class="thanks">
                 <text>谢英雄拔刀相助,为我</text>
-                <text>砍掉{{theReduce}}元</text>
+                <text>砍掉{{reduce_amount}}元</text>
             </view>
             <view class="true_btn" catchtap="closeNotice">
                 确定

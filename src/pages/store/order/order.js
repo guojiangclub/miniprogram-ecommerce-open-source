@@ -23,7 +23,10 @@ Page({
 
 
         newBlock: {
-
+            orderPoint:{
+                pointCanUse:0
+            },
+            discountGroup:[]
         },
         newForm: {
 
@@ -656,7 +659,7 @@ Page({
         }
     },
     // 计算订单优惠以及积分等信息
-    calculateOrder() {
+     calculateOrder() {
         let dis = {
             order: 0,
             discounts: 0, // 促销抵扣的钱
@@ -669,7 +672,8 @@ Page({
         let pay_amount =  amount;
         let block = this.data.newBlock;
         console.log(block);
-        let pointCanotUseAmount = block.orderPoint.pointCanotUseAmount || 0;
+        // let pointCanotUseAmount = block.orderPoint.pointCanotUseAmount || 0;
+        let pointCanotUseAmount =  0;
         let currentDiscount = this.data.available.currentDiscount;
         let currentDiscountID = currentDiscount ? currentDiscount.id : 0;
         let currentCoupon = this.data.available.currentCoupon;
@@ -831,43 +835,45 @@ Page({
             })
         }
 
-        this.setData({
-            [`newBlock.orderPoint.pointCanUse`]: Number(Math.min((pay_amount - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
-            [`newBlock.orderPoint.pointAmount`]: Number(Math.max(-((pay_amount - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney)).toFixed(2))
-        }, () => {
-            this.setData({
-                [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse,
-                pointAmount: (this.data.newBlock.orderPoint.pointAmount / 100).toFixed(2)
-            })
-        })
+        // this.setData({
+        //     [`newBlock.orderPoint.pointCanUse`]: Number(Math.min((pay_amount - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
+        //     [`newBlock.orderPoint.pointAmount`]: Number(Math.max(-((pay_amount - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney)).toFixed(2))
+        // }, () => {
+        //     this.setData({
+        //         [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse,
+        //         pointAmount: (this.data.newBlock.orderPoint.pointAmount / 100).toFixed(2)
+        //     })
+        // })
         /*dis.pointCanUse = Number(Math.min((pay_amount - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney,this.data.block.orderPoint.userPoint).toFixed(2));
         dis.point = Number(Math.min((pay_amount - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit, this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney).toFixed(2))*/
         // 如果使用了积分
-        if (pointStatus) {
-            let factor = this.data.extra.factor;
-            let discount = this.data.available.currentPoint * factor;
-            console.log('为什么',this.data.available.currentPoint, discount);
-            if (discount <= pay_amount) {
-                dis.point = -discount;
-                pay_amount -= discount;
-                if (pay_amount < 0) {
-                    pay_amount = 0;
-                    if (dis.point != 0) {
-                        pay_amount = -(fixedTotal + dis.point);
-                    }
-                }
-            } else {
-                this.setData({
-                    [`available.currentPoint`]: 0
-                })
-            }
-        } else {
+        // if (pointStatus) {
+        //     debugger
+        //     let factor = this.data.extra.factor;
+        //     let discount = this.data.available.currentPoint * factor;
+        //     console.log('为什么',this.data.available.currentPoint, discount);
+        //     if (discount <= pay_amount) {
+        //         dis.point = -discount;
+        //         pay_amount -= discount;
+        //         if (pay_amount < 0) {
+        //             pay_amount = 0;
+        //             if (dis.point != 0) {
+        //                 pay_amount = -(fixedTotal + dis.point);
+        //             }
+        //         }
+        //     } else {
+        //         this.setData({
+        //             [`available.currentPoint`]: 0
+        //         })
+        //     }
+        // } else {
             this.setData({
                 [`available.currentPoint`]: 0
             })
-        }
+       // }
         let bestDiscount = false;
-        let bestDiscountItem = block.discountGroup[0];
+        if (block.discountGroup && block.discountGroup.length) {
+        var bestDiscountItem = block.discountGroup[0];}
         if (bestDiscountItem && currentDiscountID == bestDiscountItem.discount && currentCouponId == bestDiscountItem.coupon) {
             bestDiscount = true
         }
@@ -910,6 +916,7 @@ Page({
     // 使用了最优组合
     bestSwitch(e) {
         var block =cookieStorage.get('local_order');
+        console.log("block",block)
         var form = cookieStorage.get('order_form');
         if (e.detail.value) {
             if (block.discountGroup && block.discountGroup.length) {

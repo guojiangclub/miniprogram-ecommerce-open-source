@@ -61,7 +61,7 @@ Page({
         }).then(res =>{
             if (res.statusCode == 200) {
                 console.log("is_leader",res.data.data.user_is_leader)
-                if(res.data.data.status_text=="已失效" && res.data.data.reduce.status_text=="进行中"){
+                if(res.data.data.status_text !=="进行中" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
                     this.setData({
                         overTime:true,
                         overActivity:false,
@@ -72,19 +72,28 @@ Page({
                         overActivity:true,
                         setColor:'AAAAAA'
                     })
-                }
+                 }if(res.data.data.time_price=="0.00"){
+                     this.setData({
+                        over:true
+                     })
+                 }
                 that.setData({
                     detailsMessage:res.data.data,
                    is_leader:res.data.data.user_is_leader
                    //is_leader:0
                 })
+                console.log("this.data.is_leader",this.data.is_leader)
                 that.showWitch()
                 console.log("detailsMessage",this.data.detailsMessage)
-               if(this.data.detailsMessage.progress_par>0.17){
+               if(this.data.detailsMessage.progress_par>0.17 && this.data.detailsMessage.progress_par<0.83){
                 let percent=parseInt(this.data.detailsMessage.progress_par*100)-17
                 that.setData({
                     left:percent
                 })
+               }else if(this.data.detailsMessage.progress_par==0.83 ||this.data.detailsMessage.progress_par>0.83){
+                    that.setData({
+                        left:67
+                    })
                }else{
                    that.setData({
                        left:0
@@ -117,7 +126,7 @@ Page({
             })
         }else if(this.data.is_leader==0 && this.data.step==2){
             this.setData({
-                message:'我也要0元拿'
+                message:'我也要去砍价'
             })
         } 
     },
@@ -226,7 +235,9 @@ Page({
                 showTell:true
             })
         }else{
-
+            wx.navigateTo({
+                url:'/pages/bargain/index/index'
+            })
         }
     },
     goStore(){
@@ -244,13 +255,17 @@ Page({
             if(this.data.success){
                 console.log("这里请求砍价的接口,并且计算进度条")
                 sandBox.post({
-                    api:`api/reduce/help?reduce_items_id=${this.data.detailsMessage.reduce_items_id}`,
+                    api:`api/reduce/help?reduce_items_id=${this.data.reduce_items_id}`,
                     header: {
                             Authorization: token
                         },
                 }).then(res=>{
                     if (res.statusCode == 200){
-                        console.log("res",res.data)
+                        console.log("this.data.detailsMessage.reduce_items_id",this.data.detailsMessage.reduce_items_id)
+                        console.log("res",res.data.data.reduce_amount)
+                        that.setData({
+                            reduce_amount:res.data.data.reduce_amount
+                        })
                         if(res.data.code==400){
                             wx.showToast({
                                 title:res.data.message,
@@ -287,6 +302,7 @@ Page({
             }
         }
         that.showWitch();
+        that.getMessage()
     },
     onShareAppMessage: function (res) {
         let that =this
@@ -332,8 +348,20 @@ Page({
         })
     },
     onShow: function() {
-        
-        
+        this.getRule()       
+    },
+    //活动规则
+    getRule(){
+        sandBox.get({
+            api:'api/reduce/help/text'
+        }).then(res=>{
+            if(res.statusCode == 200){
+                console.log("规则",res.data.data.reduce_help_text)
+                this.setData({
+                    rule:res.data.data.reduce_help_text
+                })
+            }
+        })
     },
     onPullDownRefresh: function() {
        console.log("刷新下数据")

@@ -4,6 +4,10 @@ Component({
         groupingData:{
             type:Array,
             value:''
+        },
+        meta:{
+            type:Object,
+            value:""
         }
 
     },
@@ -12,7 +16,6 @@ Component({
         currentDesc:'news',
         goods_arr:[],
         tapIndex:0
-
     },
     //组件数据字段监听器，用于监听properties 和 data的变化
     observers:{
@@ -29,20 +32,10 @@ Component({
             })
         },
         _jumpToDetail(e){
-            console.log("...",e)
-            var id = e.currentTarget.dataset.id;
-            var point = e.currentTarget.dataset.point;
-            console.log(point,"point")
-            //if(point == 0){
-                wx.navigateTo({
-                    url:`/pages/store/detail/detail?id=${id}`
-                })
-            // } else {
-            //     wx.navigateTo({
-            //         url:`/pages/pointStore/detail/detail?id=${id}`
-            //     })
-            // }
-
+            var id = e.currentTarget.dataset.id
+            wx.navigateTo({
+                url:`/pages/store/detail/detail?id=${id}`
+            })
         },
         _jumpImg(e) {
             var src = e.currentTarget.dataset.src;

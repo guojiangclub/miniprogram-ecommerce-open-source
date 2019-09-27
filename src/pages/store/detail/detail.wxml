@@ -598,11 +598,7 @@
                 <view class="spec_title">{{spec.label}}</view>
                 <view class="spec_value">
                     <view  class="spec_block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" wx:key="{{index}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
-                                <!--<view class="spec_icon spec_text" wx:if="{{item.spec_img}}">-->
-                                    <!--<image src="{{item.spec_img}}" data-alt="{{item.alias || item.value}}"></image>-->
-                                <!--</view>-->
-                        <!--<text class="spec_icon" style="background-color:{{item.color}}" wx:if="{{!item.spec_img && item.color}}"></text>-->
-                        <view class="spec_text"   wx:if="{{(item.alias || item.value) && item.spec_img !== undefined}}">
+                        <view class="spec_text"   wx:if="{{(item.alias || item.value) && item.spec_img !== ''}}">
                             {{item.alias || item.value}}
 
                             <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">

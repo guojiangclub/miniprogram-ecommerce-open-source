@@ -2283,7 +2283,7 @@ Page({
                     that.setData({
                             specs: specs
                         })
-                        // console.log(specs)
+                         console.log(specs,"sku")
 
                     var canBuy = this.disallow_cart()
 

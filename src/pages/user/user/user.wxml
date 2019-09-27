@@ -74,7 +74,7 @@
         </view>
     </view>
     <!-- 我的奖励 -->
-    <view class="section-award"  wx:if="{{detail.distribution_status == 1 && detail.is_agent == 1}}" data-url="/pages/distribution/distributionCenter/distributionCenter" bindtap="jumpItem" >
+    <view class="section-award"  wx:if="{{detail.status == 1 }}" data-url="/pages/distribution/distributionCenter/distributionCenter" bindtap="jumpItem" >
         <view class="award-header mx-1px-bottom" data-status="0" bindtap="">
             <view class="award-text">我的奖励</view>
             <view class="iconfont icon-Chevron" ></view>
