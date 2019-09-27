@@ -1,0 +1,33 @@
+.alert-box{
+  position:fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,.6);
+  z-index: 100;
+  .paney{
+    width: 80%;
+    background-color: #ffffff;
+    border-radius: 4px;
+    margin: 40% auto 0 auto;
+    .paney-body{
+      text-align: center;
+      height: 110px;
+      line-height: 110px;
+      padding:0 10px;
+    }
+    .paney-foot{
+      display: flex;
+      button{
+        font-size: 16px;
+        flex: 1;
+        padding: 0;
+        line-height: 50px;
+      }
+      button::after{
+        border:none;
+      }
+    }
+  }
+}

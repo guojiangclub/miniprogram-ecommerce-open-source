@@ -1,0 +1,12 @@
+<!--用户拒绝授权弹出-->
+<view class="alert-box" wx:if="{{is_refused}}">
+    <view class="paney">
+        <view class="paney-body">
+            重新授权，保存图片至相册
+        </view>
+        <view class="paney-foot">
+            <button bindtap="changeSave" class="mx-1px-right">取消</button>
+            <button  open-type="openSetting" bindtap="changeSave">确定</button>
+        </view>
+    </view>
+</view>

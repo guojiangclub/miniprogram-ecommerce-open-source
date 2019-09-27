@@ -76,16 +76,28 @@ Page({
             }
         }).then(res=>{
             if(res.statusCode == 200){
-                console.log("res.data",res.data)
+                console.log("res.data.meta.pagination.current_page",res.data.meta.pagination.current_page)
+                if(this.data.total_pages<this.data.current_page){
+                    wx.showToast({
+                        title: '再拉没有了',
+                        icon: 'none',
+                        duration:2000
+                    })
+                }else{
                     res.data.data.forEach(item=>{
                         this.data.list.push(item)
                     })
-                    that.setData({
-                        list:this.data.list,
-                        current_page:res.data.meta.pagination.current_page++,
-                        total_pages:res.data.meta.pagination.total_pages
-                    })
+                }
             }
+            this.data.current_page=res.data.meta.pagination.current_page
+            this.data.current_page++
+            that.setData({
+                list:this.data.list,
+                current_page:this.data.current_page,
+                total_pages:res.data.meta.pagination.total_pages
+            })
+            console.log("current_page",this.data.current_page)
+            console.log("total_pages",this.data.total_pages)
             console.log("list",this.data.list)
         })
     },
