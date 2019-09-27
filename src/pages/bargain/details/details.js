@@ -1,4 +1,5 @@
 import {config,pageLogin,sandBox,getUrl,cookieStorage} from '../../../lib/myapp.js';
+import { compose } from 'redux';
 Page({
     data: {
         userInfo:{},
@@ -163,23 +164,23 @@ Page({
     },
      // 生成海报
      createShareImg(){
-        // wx.showLoading({
-        //     title: "生成中",
-        //     mask: true
-        // })
+        wx.showLoading({
+            title: "生成中",
+            mask: true
+        })
        var token = cookieStorage.get('user_token') || '';
        sandBox.get({
-           api :'api/multiGroupon/createShareImage',
+           api :`api/reduce/share?reduce_items_id=${this.data.reduce_items_id}`,
            header:{
                Authorization: token
            },
            data:{
                goods_id: this.data.showItemDate.multi_groupon_goods_id,
-               multi_groupon_item_id:this.data.showItemDate.id
            }
        }).then(res => {
            if(res.statusCode == 200){
                res = res.data;
+               console.log('res',res)
                if(res.status){
                    this.setData({
                        createImgUrl : res.data.image
@@ -373,7 +374,7 @@ Page({
     let that = this;
     wx.showLoading({
         title: '玩命加载中',
-        duration: 2000,
+        duration: 1000,
       })
       that.setData({
         page : this.data.page + 1
