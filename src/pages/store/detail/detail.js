@@ -310,6 +310,7 @@ Page({
     },
     setCode(e) {
         var agent_code = '';
+        console.log(e,"agent_code")
         if (e.agent_code) {
             agent_code = e.agent_code
         }
@@ -323,7 +324,7 @@ Page({
         // 获取agent_code存缓存里
         if (agent_code) {
 
-
+            console.log("缓存里的agent_code",agent_code)
             // 如果有agent_code并且有coupon_agent_code就将coupon_agent_code清除，保证agent_code为第一位
             if (cookieStorage.get('coupon_agent_code')) {
                 cookieStorage.clear('coupon_agent_code')

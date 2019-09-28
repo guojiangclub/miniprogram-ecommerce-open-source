@@ -31,7 +31,7 @@ Page({
 				Authorization: token
 			},
         }).then(res =>{
-            console.log("res发起",res.data.data.reduce_items_id)
+            //console.log("res发起",res.data.data.reduce_items_id)
             if (res.statusCode == 200) {
                 wx.navigateTo({
                     url:`/pages/bargain/details/details?reduce_items_id=${res.data.data.reduce_items_id}&id=${id}`

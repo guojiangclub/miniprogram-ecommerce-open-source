@@ -1,12 +1,13 @@
-<view id="register">
+<view id="login-type">
     <view class="phone__warning">
         <image src="{{logo}}"></image>
+        <!--<i class="iconfont icon-anquanjinggao"></i>-->
     </view>
-    <button class="wechat-phoneBtn phone__btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+    <button class="wechat-phoneBtn phone__btn" style="background: {{config.mainColor}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
         <i class="iconfont icon-hudong"></i>
         <view class="btn__text">微信登录</view>
     </button>
-    <view class="again-phoneBtn phone__btn" bindtap="jumpLogin">
+    <view class="again-phoneBtn phone__btn" style="color: {{config.mainColor}}; border-color: {{config.mainColor}}" bindtap="jumpLogin">
         <i class="iconfont icon--dianhua"></i>
         <view class="btn__text">手机号登录</view>
     </view>

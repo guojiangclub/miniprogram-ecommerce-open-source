@@ -1,13 +1,12 @@
 @import "../../../assets/css/global";
-#register{
+#login-type{
   //margin-top: 100px;
   padding: 0 15px;
   .phone__warning{
     text-align:center;
-    width:80px;
-    height:80px;
-    margin:80px auto 180px auto;
-    border-radius:100%;
+    width:95px;
+    height:95px;
+    margin:59px auto 129px auto;
     overflow:hidden;
 
     image{
@@ -15,7 +14,6 @@
       height: 100%;
     }
     i{
-
       color: #FFBE00;
       font-size: 50px;
     }
@@ -28,26 +26,89 @@
   }
   .phone__btn{
     width: 100%;
-    padding:15px 0;
-    line-height: 1;
-    font-size: 17px;
+    height: 50px;
+    line-height:50px;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 3px;
+    border-radius: 4px;
     &.wechat-phoneBtn{
       color:#FFFFFF;
-      background: @globalColor;
-      border: @globalColor;
-      margin-bottom:20px;
+      background: @mainColor;
+      margin-bottom:26px;
+      border: 1px solid @mainColor ;
     }
     &.again-phoneBtn{
-      color: @globalColor;
+      color: @mainColor;
       background: #ffffff;
-      border: 1px solid @globalColor;
+      border: 1px solid @mainColor;
+    }
+
+    &:after {
+      border: none;
     }
     i{
       padding-right:10px;
     }
+  }
+
+  .phone_login {
+    text-align: center;
+    font-size: 15px;
+    color: #999999;
+  }
+  .getUser {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+  }
+  .select {
+    position: absolute;
+    bottom: 40px;
+    text-align: center;
+    color: #999999;
+    font-size: 12px;
+    left: 15px;
+    right: 15px;
+  }
+  .greement-box {
+    position: fixed;
+    width: 85%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #FFFFFF;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    z-index: 300;
+    .title {
+      font-weight: bold;
+      padding: 15px 0;
+    }
+    .content {
+      text-align: center;
+      padding: 15px;
+      max-height: 250px;
+      overflow: auto;
+    }
+    .btn {
+      padding: 15px;
+      color: @mainColor;
+    }
+  }
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background-color: rgba(0,0,0,.4);
   }
 }

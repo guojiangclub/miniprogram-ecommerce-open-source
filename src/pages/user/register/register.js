@@ -34,7 +34,13 @@ Page({
         sandBox.post({
             api: 'api/oauth/MiniProgramLogin',
             data: {
-                code: code
+                code: code,
+                open_type:'miniprogram',
+                shop_id: cookieStorage.get('shop_id') || '',
+                agent_code: cookieStorage.get('coupon_agent_code') || cookieStorage.get('agent_code') || '',
+                clerk_id: cookieStorage.get('clerk_id') || '',
+                agent_code_time: cookieStorage.get('agent_code_time') || '',
+                shop_id_time: cookieStorage.get('shop_id_time') || '',
             },
         }).then(res => {
             if (res.statusCode == 200) {
@@ -187,7 +193,11 @@ Page({
                 code: this.data.code,
                 encryptedData: e.detail.encryptedData,
                 iv: e.detail.iv,
-                open_id: this.data.open_id
+                open_id: this.data.open_id,
+                agent_code: cookieStorage.get('coupon_agent_code') || cookieStorage.get('agent_code') || '',
+                clerk_id: cookieStorage.get('clerk_id') || '',
+                agent_code_time: cookieStorage.get('agent_code_time') || '',
+                shop_id_time: cookieStorage.get('shop_id_time') || '',
             }
         }).then(res => {
             if (res.statusCode == 200) {
