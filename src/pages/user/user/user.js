@@ -184,8 +184,9 @@ Page({
                 this.setData({
                     detail:res.data.data
                 })
+                console.log("this.data.detail",this.data.detail)
                 if(this.data.detail.status==1){
-                    //that.port();
+                    that.port();
                 }
             }
         })
