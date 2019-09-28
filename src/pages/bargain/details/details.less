@@ -124,7 +124,7 @@
             position: relative;
             display: flex;
             justify-content: center;
-            align-items: center;
+           // align-items: center;
             max-width: 222rpx;
             padding:0 18px;
             height:20px;
@@ -599,4 +599,58 @@
             }
         }
     }
+    //分享到朋友圈弹出
+.share-img-box {
+    background:rgba(0,0,0,.8);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    z-index: 50;
+    transition:all .3s linear;
+  
+    .imgs-box {
+      background: #F3F3F3;
+      border-radius: 10px;
+      margin:20px;
+      overflow: hidden;
+      .img{
+        box-shadow:0px 4px 8px 0px rgba(155,155,155,0.5);
+        border-radius: 6px;
+        margin: 30px;
+        box-sizing: border-box;
+  
+        image{
+          display: block;
+          width: 100%;
+        }
+      }
+      .text {
+        text-align: center;
+        margin-top: 22px;
+        font-size: 12px;
+        color: #9B9B9B;
+      }
+      .save {
+        background: #FC2F44;
+        height: 44px;
+        line-height: 44px;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 10px;
+        margin: 10px 20px;
+      }
+      i{
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: #CCCCCC;
+        font-size: 30px;
+      }
+    }
+    &.cur{
+      height: 100%;
+  
+    }
+  }
 }

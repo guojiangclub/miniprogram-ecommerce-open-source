@@ -188,4 +188,18 @@
         </view>
         <view class="iconfont icon-close" bindtap="closeTell"></view>
     </view>
+    <view class="share-img-box {{share_img ? 'cur' : ''}}" >
+        <view class="imgs-box">
+            <view class="img">
+                <image mode="aspectFit" src="{{shareImg}}"></image>
+            </view>
+            <view class="text">
+                保存图片后，可分享到朋友圈
+            </view>
+            <view class="save" style="background: {{config.mainColor}}" bindtap="downImg">
+                保存图片
+            </view>
+            <i class="iconfont icon-delete" bindtap="changeImg"></i>
+        </view>
+    </view>
 </view>

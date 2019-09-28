@@ -238,7 +238,7 @@ Page({
             user_id: user_id
         });
         // this.queryDiscounts(e.id);
-        //this.init(e);
+        this.init(e);
 
 
 
@@ -403,91 +403,91 @@ Page({
     },
 
     // 初始化数据
-    // init(e) {
-    //     var token = cookieStorage.get('user_token');
-    //     var agent_code = '';
-    //     if (e.agent_code) {
-    //         agent_code = e.agent_code
-    //     }
-    //     if (e.scene) {
-    //         var scene = decodeURIComponent(e.scene);
-    //         var sceneArr = scene.split(',');
-    //         if (sceneArr.length > 0) {
-    //             agent_code = sceneArr[1]
-    //         }
-    //     }
-    //     sandBox.get({
-    //         api: 'api/system/init'
-    //     }).then(res => {
-    //         if (res.statusCode == 200) {
-    //             res = res.data;
-    //             if (res.status) {
-    //                 cookieStorage.set('init_info', res.data.h5_share);
-    //                 cookieStorage.set('service_info', res.data.online_service_data);
-    //                 cookieStorage.set('distribution_valid_time', res.data.distribution_valid_time);
-    //                 cookieStorage.set('init', res.data)
+    init(e) {
+        var token = cookieStorage.get('user_token');
+        var agent_code = '';
+        if (e.agent_code) {
+            agent_code = e.agent_code
+        }
+        if (e.scene) {
+            var scene = decodeURIComponent(e.scene);
+            var sceneArr = scene.split(',');
+            if (sceneArr.length > 0) {
+                agent_code = sceneArr[1]
+            }
+        }
+        sandBox.get({
+            api: 'api/system/init'
+        }).then(res => {
+            if (res.statusCode == 200) {
+                res = res.data;
+                if (res.status) {
+                    cookieStorage.set('init_info', res.data.h5_share);
+                    cookieStorage.set('service_info', res.data.online_service_data);
+                    cookieStorage.set('distribution_valid_time', res.data.distribution_valid_time);
+                    cookieStorage.set('init', res.data)
 
-    //                 var shareTicketInfo = cookieStorage.get('shareTicketInfo');
-    //                 var init = cookieStorage.get('init');
-    //                 var service_info = cookieStorage.get('service_info');
+                    var shareTicketInfo = cookieStorage.get('shareTicketInfo');
+                    var init = cookieStorage.get('init');
+                    var service_info = cookieStorage.get('service_info');
 
-    //                 this.setData({
-    //                     service_info: service_info,
-    //                     initInfoData: res.data
-    //                 })
-    //                 if (shareTicketInfo && init && init.get_gid == 1) {
+                    this.setData({
+                        service_info: service_info,
+                        initInfoData: res.data
+                    })
+                    if (shareTicketInfo && init && init.get_gid == 1) {
 
-    //                     this.getGid(shareTicketInfo);
-    //                 } else {
-    //                     this.getStoreDetail();
-    //                 }
-    //                 if (agent_code && res.data.mini_program_login_type == 'default' && !token) {
-    //                     wx.showLoading({
-    //                         title: '正在自动登录',
-    //                         mask: true
-    //                     })
-    //                     wx.login({
-    //                         success: res => {
-    //                             if (res.code) {
-    //                                 app.autoLogin(res.code, agent_code)
-    //                                     .then(res => {
-    //                                         if (res.status) {
-    //                                             if (res.data.access_token) {
-    //                                                 var access_token = res.data.token_type + ' ' + res.data.access_token;
-    //                                                 this.setData({
-    //                                                     is_login: access_token
-    //                                                 })
-    //                                             }
-    //                                             if (res.data.open_id) {
-    //                                                 wx.reLaunch({
-    //                                                     url: '/pages/user/agentlogin/agentlogin?agent_code=' + agent_code + '&open_id=' + res.data.open_id + '&url=' + getUrl()
-    //                                                 })
-    //                                             }
-    //                                         }
-    //                                         wx.hideLoading();
-    //                                     }, err => {
-    //                                         wx.hideLoading();
-    //                                     })
-    //                             } else {
-    //                                 wx.showToast({
-    //                                     title: '获取code失败',
-    //                                     icon: 'none'
-    //                                 })
-    //                             }
-    //                         }
-    //                     })
-    //                 }
-    //             } else {
-    //                 this.getStoreDetail();
-    //             }
-    //             this.setCode(e)
-    //         } else {
-    //             this.setCode(e)
-    //         }
-    //     }).catch(err => {
-    //         this.setCode(e)
-    //     })
-    // },
+                        this.getGid(shareTicketInfo);
+                    } else {
+                        this.getStoreDetail();
+                    }
+                    if (agent_code && res.data.mini_program_login_type == 'default' && !token) {
+                        wx.showLoading({
+                            title: '正在自动登录',
+                            mask: true
+                        })
+                        wx.login({
+                            success: res => {
+                                if (res.code) {
+                                    app.autoLogin(res.code, agent_code)
+                                        .then(res => {
+                                            if (res.status) {
+                                                if (res.data.access_token) {
+                                                    var access_token = res.data.token_type + ' ' + res.data.access_token;
+                                                    this.setData({
+                                                        is_login: access_token
+                                                    })
+                                                }
+                                                if (res.data.open_id) {
+                                                    wx.reLaunch({
+                                                        url: '/pages/user/agentlogin/agentlogin?agent_code=' + agent_code + '&open_id=' + res.data.open_id + '&url=' + getUrl()
+                                                    })
+                                                }
+                                            }
+                                            wx.hideLoading();
+                                        }, err => {
+                                            wx.hideLoading();
+                                        })
+                                } else {
+                                    wx.showToast({
+                                        title: '获取code失败',
+                                        icon: 'none'
+                                    })
+                                }
+                            }
+                        })
+                    }
+                } else {
+                    this.getStoreDetail();
+                }
+                this.setCode(e)
+            } else {
+                this.setCode(e)
+            }
+        }).catch(err => {
+            this.setCode(e)
+        })
+    },
 
     // 获取群id信息
     getGid(shareTicketInfo) {

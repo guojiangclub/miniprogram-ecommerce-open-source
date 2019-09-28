@@ -1,5 +1,5 @@
 import {config,pageLogin,sandBox,getUrl,cookieStorage} from '../../../lib/myapp.js';
-import { compose } from 'redux';
+//import { compose } from 'redux';
 Page({
     data: {
         userInfo:{},
@@ -7,7 +7,7 @@ Page({
         show:false,//控制活动规则的显示
         rule:'的叫法是看到了福建省的<br/><br/>打梵蒂冈飞机速度快放假',//活动规则
         number:17,
-        is_leader:1,//1为自己，0为好友
+        is_leader:0,//1为自己，0为好友
         message:'',
         showShare:false,//显示分享
         showNotice:false,//控制砍价后弹框显示
@@ -26,17 +26,22 @@ Page({
         heroList:[]//砍价英雄榜的数据
     },
     onLoad(e) {
-        let that =this
+        var  that =this
         this.getServer()
-        console.log("e.reduce_items_id",e.reduce_items_id)
+        console.log("e",e)
         if(e.reduce_items_id){
-            this.setData({
+            that.setData({
                 reduce_items_id:e.reduce_items_id
             })
         that.getMessage()
 
         }
-        console.log("e",e)
+        // if(e.id){
+        //     that.setData({
+        //         id:e.id
+        //     })
+        // }
+        // console.log("这是id",that.data.id)
         if(this.data.overTime==true || this.data.overActivity==true){
             that.setData({
                 setColor:'AAAAAA'
@@ -80,7 +85,9 @@ Page({
                  }
                 that.setData({
                     detailsMessage:res.data.data,
-                   is_leader:res.data.data.user_is_leader
+                   is_leader:res.data.data.user_is_leader,
+                   reduce_id:res.data.data.reduce_id,
+                   id:res.data.data.id
                    //is_leader:0
                 })
                 console.log("this.data.is_leader",this.data.is_leader)
@@ -112,8 +119,27 @@ Page({
         //this.showWitch()
     },
     bargainAgin(){
-        wx.navigateTo({
-            url: '/pages/bargain/index/index'
+        var token = cookieStorage.get('user_token'); 
+         var id = this.data.id;
+         console.log("晕",id)
+        //var goods_id = e.currentTarget.dataset.goods_id;
+        //console.log(id,goods_id)
+        // var  data={
+        //     reduce_id:this.data.id
+        // };
+        sandBox.post({
+            api:  `api/reduce?reduce_id=${id}`,
+            header: {
+				Authorization: token
+            },
+            // data:data
+        }).then(res =>{
+            console.log("res发起",res.data)
+            if (res.statusCode == 200) {
+                wx.navigateTo({
+                    url:`/pages/bargain/details/details?reduce_items_id=${res.data.data.reduce_items_id}`
+                })
+            }else{}
         })
     },
     showWitch(){
@@ -162,6 +188,19 @@ Page({
             showShare:false
         })
     },
+    //生成海报
+    // getShearImg(){
+    //     wx.navigateTo({
+    //     	url:'/pages/distribution/shareImg/shareImg?id='+this.data.id+'&channel='+this.data.detail.channel
+	// 	})
+    //     this.changeShare()
+	// },
+    // // 弹出分享
+    // changeShare() {
+    //     this.setData({
+    //         show_share: !this.data.show_share
+    //     })
+    // },
      // 生成海报
      createShareImg(){
         wx.showLoading({
@@ -174,18 +213,19 @@ Page({
            header:{
                Authorization: token
            },
-           data:{
-               goods_id: this.data.showItemDate.multi_groupon_goods_id,
-           }
+        //    data:{
+        //        goods_id: this.data.showItemDate.multi_groupon_goods_id,
+        //    }
        }).then(res => {
+        console.log('res',res)
            if(res.statusCode == 200){
-               res = res.data;
-               console.log('res',res)
+            var res = res.data
                if(res.status){
                    this.setData({
-                       createImgUrl : res.data.image
+                    shareImg : res.data.image
                    });
-                   this.getShearImg();
+                   console.log(this.data.shareImg)
+                  //this.getShearImg();
                } else {
                    wx.showModal({
                        content: res.message || '请求失败',
@@ -199,14 +239,7 @@ Page({
                });
            }
            wx.hideLoading();
-           this.changeShare();
-       }).catch(rej =>{
-           wx.showModal({
-               content: '内部错误',
-               showCancel: false
-           })
-           wx.hideLoading();
-           this.changeShare();
+           //this.changeShare();
        })
     },
     closeAlert(){
@@ -260,13 +293,18 @@ Page({
                     header: {
                             Authorization: token
                         },
+                        data:{
+
+                        }
                 }).then(res=>{
                     if (res.statusCode == 200){
-                        console.log("this.data.detailsMessage.reduce_items_id",this.data.detailsMessage.reduce_items_id)
-                        console.log("res",res.data.data.reduce_amount)
-                        that.setData({
+                        console.log("this.data.detailsMessage.reduce_items_id",this.data.reduce_items_id)
+                        if(res.data.data.reduce_amount){
+                            console.log("res",res.data.data.reduce_amount)
+                            that.setData({
                             reduce_amount:res.data.data.reduce_amount
                         })
+                        }
                         if(res.data.code==400){
                             wx.showToast({
                                 title:res.data.message,
@@ -300,10 +338,10 @@ Page({
                           },2000)
                     }
                 })
+                that.getMessage()
             }
         }
         that.showWitch();
-        that.getMessage()
     },
     onShareAppMessage: function (res) {
         let that =this
@@ -351,6 +389,12 @@ Page({
     onShow: function() {
         this.getRule()       
     },
+    //购买商品
+    nowBuy(){
+        sandBox.post({
+            api:`api/shopping/order/checkout?product_id=${this.data.reduce_items_id}`
+        })
+    },
     //活动规则
     getRule(){
         sandBox.get({
@@ -370,6 +414,7 @@ Page({
     },
 //触底加载
   onReachBottom: function () { 
+    var token = cookieStorage.get('user_token');
       console.log("触底加载")     
     let that = this;
     wx.showLoading({
@@ -377,7 +422,7 @@ Page({
         duration: 1000,
       })
       that.setData({
-        page : this.data.page + 1
+        page : this.data.page ++
       })
       sandBox.get({
         api: '',

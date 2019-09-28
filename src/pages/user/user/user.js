@@ -179,12 +179,13 @@ Page({
                 Authorization:cookieStorage.get('user_token')
             },
         }).then(res =>{
+            console.log(res,"res返回")
             if(res.data.status){
                 this.setData({
                     detail:res.data.data
                 })
                 if(this.data.detail.status==1){
-                    that.port();
+                    //that.port();
                 }
             }
         })
