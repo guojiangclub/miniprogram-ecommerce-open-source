@@ -150,7 +150,7 @@ Page({
 
     onLoad(e) {
         console.log(e,"加载时候的e")
-        console.warn('这个是详情获取到的参数', e);
+        console.warn('这个是详情获取到的参数', e); 
         // 第三方平台配置颜色
         var gbConfig = cookieStorage.get('globalConfig') || '';
         var init = cookieStorage.get('init');
@@ -310,10 +310,11 @@ Page({
     },
     setCode(e) {
         var agent_code = '';
-        console.log(e,"agent_code")
         if (e.agent_code) {
             agent_code = e.agent_code
+            console.log('分享有agen_code',agent_code)
         }
+        console.log('这是分享的code',agent_code)
         if (e.scene) {
             var scene = decodeURIComponent(e.scene);
             var sceneArr = scene.split(',');
@@ -322,7 +323,7 @@ Page({
             }
         }
         // 获取agent_code存缓存里
-        if (agent_code) {
+        if (agent_code) { 
 
             console.log("缓存里的agent_code",agent_code)
             // 如果有agent_code并且有coupon_agent_code就将coupon_agent_code清除，保证agent_code为第一位
