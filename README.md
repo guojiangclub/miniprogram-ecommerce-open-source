@@ -29,7 +29,7 @@ npm run build // 编译当前项目
 [后端API](https://github.com/ibrandcc/ecommerce-open-api)
 
 ## 文档
-[iBrand 电商系统教程](https://www.ibrand.cc/open/article?course_id=7&chapter_id=21&article_id=22)
+[果酱小店开源电商系统教程](https://www.ibrand.cc/open/article?course_id=7&chapter_id=21&article_id=22)
 
 
 ## 贡献源码
@@ -38,4 +38,4 @@ npm run build // 编译当前项目
 如果你发现任何错误或者问题，请提交到 [官方社区](https://www.ibrand.cc/open/discuss) 或者 [提交ISSUE](https://github.com/ibrandcc/miniprogram-ecommerce-open-source/issues)
 
 ## 讨论交流
-![image](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/qrcode.jpg)
+![image](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/qrcodenew.jpg)
