@@ -1831,6 +1831,7 @@ Page({
             loading: true
         })
         var select_product = this.data.select_product;
+        console.log(select_product,'select_product')
         var select_count = Number(this.data.select_count)
         var data = this.data.specs.length ? {
             id: select_product.id,
@@ -2433,7 +2434,7 @@ Page({
                                 detailData: res,
                                 commodity: res.data,
                             })
-
+                            console.log('commodity',this.data.commodity)
                             /*if (res.meta.seckill) {
                                 var interval = setInterval(this.countStartsTime, 1000);
 

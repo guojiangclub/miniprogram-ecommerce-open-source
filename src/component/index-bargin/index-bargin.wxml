@@ -1,17 +1,20 @@
-
-    <view class="body_box">
-        <view class="bargain_body" wx:for="{{list}}" wx:for-item="item" :key="{{index}}">
-            <view class="bargain_goods">
+<view class="groupon-item-box">
+    <view class="title mx-1px-bottom" data-src="/pages/bargain/index/index" bindtap="_jumpImg">
+        <text>砍价</text>
+        <text>更多></text>
+    </view>
+    <view>
+        <view class="bargain_goods">
                 <view class="goods_left">
                     <image src="{{item.reduce.goods.img}}" />
                 </view>
                 <view class="goods_right">
-                    <view class="goods_name">{{item.reduce.goods.name}}</view>
-                    <view class="number">剩余{{item.store_nums}}砍价名额</view>
-                    <view class="past_price">原价 ￥<span>{{item.reduce.goods.max_price}}</span></view>
+                    <view class="goods_name">{{item.reduce.goods.name}}发电机股份</view>
+                    <view class="number">剩余{{item.store_nums}}488砍价名额</view>
+                    <view class="past_price">原价 ￥<span>{{item.reduce.goods.max_price}}454</span></view>
                     <view class="right_foot">
                         <view class="new_price">
-                            砍后价￥{{item.reduce.price}}
+                            砍后价￥{{item.reduce.price}}5
                         </view>
                         <view class="btn" bindtap="bargain" data-id="{{item.id}}" data-goodsId="{{item.goods_id}}">
                             查看详情
@@ -19,5 +22,5 @@
                     </view>
                 </view>
             </view>
-        </view>
     </view>
+</view>

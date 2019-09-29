@@ -64,9 +64,9 @@
             <button class="invite" open-type='share' wx:if="{{over==false}}">
                 <text>{{message}}</text>
             </button>
-            <view class="now_buy" bindtap="nowBuy" wx:if="{{over==false}}">马上购买</view>
+            <view class="now_buy" bindtap="showSelect" wx:if="{{over==false}}">马上购买</view>
             <!-- 活动未结束但是用户砍价已完成-->
-            <view class="btn" bindtap="nowBuy" wx:if="{{over==true}}">{{detailsMessage.reduce_surplus_amount}}元购买商品</view>
+            <view class="btn" bindtap="showSelect" wx:if="{{over==true}}">{{detailsMessage.reduce_surplus_amount}}元购买商品</view>
         </view>
         <!-- 用户时间结束-->
         <view class="btn2" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
@@ -174,20 +174,86 @@
             <view class="exit" bindtap="closeShare">取消</view>
         </view>
     </view>
-    <!-- 活动结束好友新开零元拿弹层-->
-    <view class="box_body" catchtouchmove="true" wx:if="{{showTell && is_leader==0 && overActivity==false}}" bindtap="closeTell">
-        <view class="notice_box" catchtap="showTell">
-            <view class="iconfont icon-kulian"></view>
-            <view class="tells">
-                <text>很遗憾本次活动已结束！</text>
-                <text>去商城看看新活动吧！</text>
+    <view class="maks {{!show_select ? 'cur' : ''}}" bindtap="closeSelect">
+
+</view>
+    <view class="detail-popup" hidden="{{show_select}}"  animation="{{show.animation}}" >
+    <view class="select_goods_container">
+        <!--关闭按钮-->
+        <view class="select_goods_cloese" bindtap="closeSelect"></view>
+        <view class="select_goods_header" >
+
+            <view class="img_box" >
+
+                <image wx:if="{{select_product && detailsMessage.reduce.goods.img}}" src="{{detailsMessage.reduce.goods.img}}" alt="{{select_product.sku}}"></image>
+                <image wx:else src="{{commodity.img}} " alt=""></image>
             </view>
-            <view class="btn_gostore" catchtap="goStore">
-                去商城看看
+            <!--<view class="img_box" style="background-color: {{select_product.bac}};width: 78px;height: 78px;"  wx:if="{{!select_product.img && !!select_product.color}}"></view>-->
+            <view class="price_item">
+               <span wx:if="{{select_product}}">
+                    <text wx:if="{{time_price}}">￥{{time_price}}</text>
+               
+               </span>
+                <span style="font-weight:bold;color:#ee2b1d;" wx:else>
+                    {{price_interval}}
+                </span>
+                <!--<text  wx:else>￥{{price}}</text>-->
+                <!--<text  wx:else>{{detailData.meta.groupon.groupon_price}}</text>-->
+                <text wx:if="{{detailData.data.shop_show_store == 1}}">库存{{store_count}}</text>
             </view>
+
         </view>
-        <view class="iconfont icon-close" bindtap="closeTell"></view>
+
+        <view class="select_spec">
+            <view class="spec_line" wx:for="{{specs}}" wx:for-item="spec" wx:key="{{index}}">
+                <view class="spec_title">{{spec.label}}</view>
+                <view class="spec_value">
+                    <view  class="spec_block {{ !!item.active ? 'active' : '' }} {{ !!item.disabled ? 'disabled' : '' }}" wx:for="{{spec.values}}" wx:key="{{index}}" data-key="{{index}}" data-index="{{item.index}}" data-disabled="{{item.disabled ? 1 : 0}}" data-id="{{item.id}}" data-active="{{item.active ? 1 : 0}}" bindtap="selectSpec">
+                        <view class="spec_text"   wx:if="{{(item.alias || item.value) && item.spec_img !== ''}}">
+                            {{item.alias || item.value}}
+
+                            <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">
+
+                            </view>
+                        </view>
+                        <view class="spec_text"  wx:if="{{!item.spec_img && !item.color}}">
+                            {{item.alias || item.value}}
+
+                            <view wx:if="{{!!item.active}}" style="border-color: {{config.mainColor}}" class="border-color">
+
+                            </view>
+                        </view>
+                    </view>
+                    <!--<view class="spec_list" wx:if="{{spec.id != 2}}">尺码表</view>-->
+                </view>
+            </view>
+
+            <view class="spec_line">
+                <view class="num_title">数量</view>
+                <view class="num_value">
+                    <text bindtap="changeCount" data-index="0">-</text>
+                    <view class="none_border">
+                        <input bindinput="modifyCount" value="{{select_count}}"  type="number" confirm-type="done"/>
+                    </view>
+                    <text bindtap="changeCount" data-index="1">+</text>
+
+                </view>
+                <view class="purchase" wx:if="{{detailData.data.user_limit}}">
+                    本商品每人限购{{detailData.data.user_limit}}件
+                </view>
+            </view>
+
+            <button class="button"  wx:if="{{!canBuy}}" style="background: {{config.mainColor}}" type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+            <button class="button disabled" wx:else type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+
+            <!--<view  class="button {{ canBuy ? 'disabled' : '' }}" bindtap="confirm">-->
+
+                <!--&lt;!&ndash;<submit-button v-ref:button bindsubmit="confirm" :status="disallow_cart ? 'disabled' : 'normal'">确定</submit-button>&ndash;&gt;-->
+            <!--</view>-->
+        </view>
     </view>
+
+</view>
     <view class="share-img-box {{share_img ? 'cur' : ''}}" >
         <view class="imgs-box">
             <view class="img">

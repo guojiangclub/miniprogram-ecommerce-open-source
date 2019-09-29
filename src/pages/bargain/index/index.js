@@ -21,22 +21,67 @@ Page({
     },
     //发起砍价
     bargain(e){
+        let that =this
         var token = cookieStorage.get('user_token'); 
         var id = e.currentTarget.dataset.id;
         var goods_id = e.currentTarget.dataset.goods_id;
+        var data={
+            reduce_id:id
+        }
+        that.setData({
+            id:id
+        })
         console.log(id,goods_id)
         sandBox.post({
-            api:`api/reduce?reduce_id=${id}`,
+            api:`api/reduce`,
+            header: {
+				Authorization: token
+            },
+            data:data
+        }).then(res =>{
+            console.log("res发起")
+            if (res.statusCode == 200) {
+                that.setData({
+                    reduce_items_id: res.data.data.reduce_items_id 
+                })
+                console.log("resjifod发起")
+                that.listgetMessage();
+                // wx.navigateTo({
+                //     url:`/pages/bargain/details/details?reduce_items_id=${res.data.data.reduce_items_id}&id=${id}`
+                // })
+            }else{}
+        })
+    },
+    //获取详情页信息
+    listgetMessage(){
+        let that=this
+        var token = cookieStorage.get('user_token'); 
+        sandBox.get({
+            api:`api/reduce/showItem?reduce_items_id=${this.data.reduce_items_id}`,
             header: {
 				Authorization: token
 			},
         }).then(res =>{
-            //console.log("res发起",res.data.data.reduce_items_id)
             if (res.statusCode == 200) {
-                wx.navigateTo({
-                    url:`/pages/bargain/details/details?reduce_items_id=${res.data.data.reduce_items_id}&id=${id}`
+                console.log("获取详情res",res)
+                if(res.data.data.order&&res.data.data.order.status==0){
+                    wx.navigateTo({
+                        url:`/pages/store/order/order`
+                    })
+                }
+                else{
+                    wx.navigateTo({
+                            url:`/pages/bargain/details/details?reduce_items_id=${this.data.reduce_items_id}&id=${this.data.id}`
+                        })               
+            } 
+            }else{
+                wx.showToast({
+                    title:res.data.data.message,
+                    icon:none,
+                    duration: 2000,
+                    
                 })
-            }else{}
+            }
         })
     },
     onLoad: function(options) { 

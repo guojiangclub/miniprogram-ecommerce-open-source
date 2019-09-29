@@ -4,9 +4,11 @@ Page({
     data: {
         userInfo:{},
         left:0,
+        select_count: 1,
         show:false,//控制活动规则的显示
         rule:'的叫法是看到了福建省的<br/><br/>打梵蒂冈飞机速度快放假',//活动规则
         number:17,
+        skuTable: {},
         is_leader:0,//1为自己，0为好友
         message:'',
         showShare:false,//显示分享
@@ -23,9 +25,11 @@ Page({
         starts_at:'',//开始时间
         setColor:'fb5054',//进度条的颜色
         page:1,//页
+        show_select: true, //选尺寸
         heroList:[]//砍价英雄榜的数据
     },
     onLoad(e) {
+        //this.getMessage()
         var  that =this
         this.getServer()
         console.log("e",e)
@@ -53,11 +57,543 @@ Page({
             Height:windowHeight
         })
         //this.getUserInfo();  
-        this.showWitch();
+        that.showWitch();
+       // that.getStoreDetail()
+    },
+    selectSpec(e) {
+
+        var spec = {
+            key: e.currentTarget.dataset.key,
+            index: e.currentTarget.dataset.index,
+            disabled: Number(e.currentTarget.dataset.disabled),
+            active: Number(e.currentTarget.dataset.active),
+            id: Number(e.currentTarget.dataset.id)
+        };
+
+        if (spec.disabled) return;
+        var specs = this.data.specs;
+        if (!spec.active) {
+            for (let item of specs[spec.index].values) {
+                if (item.active) {
+                    item.active = false;
+                    break;
+                }
+            }
+        }
+
+        specs[spec.index].values[spec.key].active = !specs[spec.index].values[spec.key].active
+        spec.active = !spec.active;
+        specs[spec.index].select = spec.active ? spec.id : '';
+
+
+        this.setData({
+            specs: specs
+        })
+
+
+        var canBuy = this.disallow_cart()
+        this.setData({
+                canBuy: canBuy
+            })
+        this.specStore(this.data.result, spec.index)
+    }, 
+    // 请求商品详情页面数据
+    getStoreDetail(wechat_group_id) {
+        var token = cookieStorage.get('user_token') || '';
+        var wechat_group_id = wechat_group_id || cookieStorage.get('openGId') || '';
+        console.log("this.data.id",this.data.id)
+        this.getGoodsDetail({
+            api: `api/store/detail/${this.data.goods_id}`,
+            header: {
+                Authorization: token
+            },
+            data: {
+                include: 'photos,oneComment,guessYouLike,point,user',
+                //...
+                multi_groupon_item_id: this.data.groupon_item_id,
+                wechat_group_id: wechat_group_id
+            }
+        }).then(() => {
+            if (this.data.detailData.data.shop_hidden_more_info == 0) {
+                this.getDomInfo('.js__top', 'shop');
+                // this.getDomInfo('.js__like', 'like');
+                this.getDomInfo('.js__comment', 'comment');
+            }
+
+            if (this.data.detailData.data.oneComment && this.data.detailData.data.oneComment.length) {
+                Rater.init('store', {
+                    value: this.data.detailData.data.oneComment[0].point,
+                    disabled: true,
+                    activeColor: '#EA4448',
+                    fontSize: 14
+                })
+            }
+
+
+
+            this.attributesList(this.data.detailData.meta);
+            wx.setNavigationBarTitle({
+                title: this.data.detailData.data.name
+            })
+            var price_interval = '￥' + this.data.detailData.data.min_price + ' - ' + '￥' + this.data.detailData.data.max_price;
+            if (this.data.detailData.data.min_price == this.data.detailData.data.max_price) {
+                // price_interval = '￥' + this.data.detailData.data.min_price
+            }
+            this.setData({
+                    price_interval: price_interval,
+                    is_show_tabbar: true
+                })
+                // 新增
+            // this.setData({
+            //     price: Number(this.data.commodity.sell_price).toFixed(2),
+            //     store_count: this.data.commodity.store_nums
+            // })
+            this.changeText();
+            this.immediatelyText();
+            //this.disallow_cart();
+            this.queryCommodityStore(this.data.id)
+            this.queryFavoriteStatus(this.data.id, 'goods');
+           // this.getFree(this.data.id);
+
+
+        });
+    },
+     // 请求商品详情页面数据
+     getGoodsDetail(obj) {
+        var that = this;
+        return new Promise((resolve, reject) => {
+            sandBox.get(obj)
+                .then(res => {
+
+                    if (res.statusCode == 200) {
+                        res = res.data;
+                        console.log(res, '88888888888888888888888888888888888')
+                        if (res.status) {
+                            that.setData({
+                                detailData: res,
+                                commodity: res.data,
+                            })
+
+                            /*if (res.meta.seckill) {
+                                var interval = setInterval(this.countStartsTime, 1000);
+
+                                that.setData({
+                                    'startsTime.interval': interval
+                                })
+                            }*/
+                            if (res.meta.discounts) {
+                                res.meta.discounts.coupons.forEach(v => v.receive = false);
+                                that.setData({
+                                    coupons: res.meta.discounts.coupons,
+                                    discounts: res.meta.discounts.discounts
+                                })
+                            }
+                            if (res.meta.multiGroupon) { //当有拼团，并且拼团正在进行中
+                                var id = this.data.id; // 商品id
+                                var multi_groupon_item_id = this.data.groupon_item_id; // 子参团id
+                                this.getGrouponUserList(id, multi_groupon_item_id);
+                                this.getGrouponItems(res.meta.multiGroupon.id, 1, multi_groupon_item_id);
+                                this.controlProgress();
+                            }
+                            resolve()
+                        } else {
+                            wx.showModal({
+                                content: res.message || '请求失败',
+                                showCancel: false
+                            })
+                            wx.hideLoading();
+                            reject()
+                        }
+
+                    } else {
+                        wx.showModal({
+                            content: res.message || '请求失败',
+                            showCancel: false
+                        })
+                        wx.hideLoading();
+                        reject()
+                    }
+
+
+                })
+                .catch(err => {
+                    wx.showModal({
+                        content: res.message || '请求失败',
+                        showCancel: false
+                    })
+                    wx.hideLoading();
+                    // console.log(err);
+                    reject()
+                })
+        })
+
+    },
+
+    specStore(result, key) {
+        var query = this.data.query;
+        var data = result.data;
+        var specs = this.data.specs;
+
+        if (key === undefined) {
+
+            specs.forEach(spec => {
+
+                for (let v of spec.values) {
+                    v.disabled = !data[v.id] || data[v.id].count == 0;
+                }
+            });
+
+
+            this.setData({
+                specs: specs,
+                skuTable: result.table
+            })
+
+            specs = this.data.specs
+            var canBuy = this.disallow_cart()
+
+
+            this.setData({
+                canBuy: canBuy
+            })
+
+            specs.forEach(spec => {
+
+                let name = 'spec[' + spec.id + ']';
+                if (query[name]) {
+                    let id = query[name];
+
+
+                    for (let v of spec.values) {
+
+                        if (v.id == id && !v.disabled && data[v.id] && data[v.id].count) {
+                            v.active = true;
+                            spec.select = v.id;
+                            this.setData({
+                                specs: specs
+                            })
+                            specs = this.data.specs
+                            var canBuy = this.disallow_cart()
+
+
+                            this.setData({
+                                canBuy: canBuy
+                            })
+                            this.specStore(result, v.index)
+
+                            return;
+                        }
+                    }
+                }
+
+                if (!spec.select) {
+                    for (let v of spec.values) {
+
+                        if (!v.disabled && data[v.id] && data[v.id].count) {
+                            v.active = true;
+                            spec.select = v.id;
+                            this.setData({
+                                specs: specs
+                            })
+                            specs = this.data.specs
+                            var canBuy = this.disallow_cart()
+
+
+                            this.setData({
+                                canBuy: canBuy
+                            })
+
+                            // this.$emit('specStore', result, v.index);
+                            this.specStore(result, v.index)
+
+                            return;
+                        }
+                    }
+                    return
+                }
+
+                this.setData({
+                    specs: specs
+                })
+
+            });
+
+
+            return;
+        }
+
+        var spec = specs[key];
+        if (spec.select) {
+            this.setData({
+                store_count: data[spec.select].count
+            })
+
+            for (let i = 0; i < specs.length; i++) {
+
+                if (i === key) continue;
+                specs[i].values.forEach(v => {
+
+                    v.disabled = !data[spec.select].specs[v.id].count;
+
+                });
+
+
+                if (specs[i].select) {
+                    this.setData({
+                        store_count: data[spec.select].specs[specs[i].select].count,
+                    })
+                }
+
+                this.setData({
+                    specs: specs
+                })
+            }
+        } else {
+
+            this.setData({
+                store_count: this.data.commodity.store
+            })
+
+
+            for (let i = 0; i < specs.length; i++) {
+
+                if (i === key) continue;
+
+
+                specs[i].values.forEach(v => {
+                    v.disabled = !data[v.id] || !data[v.id].count;
+                });
+
+
+                if (specs[i].select) {
+                    this.setData({
+                        store_count: data[specs[i].select].count,
+                    })
+
+                }
+
+                this.setData({
+                    specs: specs
+                })
+
+                // console.log(specs)
+
+            }
+
+        }
+
+        if (parseInt(this.data.select_count) > this.data.store_count) {
+            this.setData({
+                select_count: String(this.data.store_count)
+            })
+
+        } else if (parseInt(this.data.select_count) === 0) {
+            this.setData({
+                select_count: '1'
+            })
+        }
+        this.setData({
+            specs: specs,
+        })
+
+
+        var canBuy = this.disallow_cart()
+
+
+        this.setData({
+            canBuy: canBuy
+        })
+    },
+    confirm() {
+        if (this.data.loading) return;
+        if (this.disallow_cart()) return;
+
+        this.setData({
+            loading: true
+        })
+        var select_product = this.data.select_product;
+        var select_count = Number(this.data.select_count)
+        var data = this.data.specs.length ? {
+            id: select_product.id,
+            name: this.data.name,
+            qty: select_count,
+            store_count: this.data.store_count,
+            price: this.data.time_price,
+            market_price: this.data.market_price,
+            attributes: {
+                img: this.data.detailsMessage.reduce.goods.img,
+                size: select_product.size,
+                color: select_product.color,
+                com_id: this.data.goods_id
+            }
+        } : {
+            id: this.data.commodity.id,
+            name: this.data.commodity.name,
+            qty: select_count,
+            store_count: this.data.store_count,
+            price: this.data.commodity.sell_price,
+            market_price: this.data.commodity.market_price,
+            attributes: {
+                img: this.data.commodity.img || this.data.detailData.data.photos[0].url,
+                com_id: this.data.commodity.id
+            }
+        };
+        if (select_product.sku) {data.attributes.sku = select_product.sku;}
+        this.checkoutImmdeOrder(data)
+    },
+    disallow_cart() {
+        if (!this.data.specs.length) {
+            return !this.data.store_count;
+        }
+
+        var ids = [],
+            select_product = {},
+            specs = this.data.specs;
+        // console.log(this.data.commodity.sell_price)
+        // this.setData({
+        //     price: Number(this.data.commodity.sell_price).toFixed(2),
+        // })
+        for (let spec of specs) {
+            // if (!spec.select) {
+            //     this.setData({
+            //         price: Number(this.data.commodity.sell_price).toFixed(2),
+            //         select_product: null
+            //     })
+            //     return true;
+            // }
+
+            ids.push(spec.select);
+            // console.log("这是spec.values",spec.values)
+            for (let v of spec.values) {
+                if (v.id === spec.select) {
+                    // switch (spec.label_key) {
+                    //     case 'color':
+                    //         select_product.img = v.img;
+                    //         select_product.color = v.alias || v.value;
+                    //         select_product.bac = v.color
+                    //        // break;
+                    //     case 'Size':
+                    //         select_product.size = v.alias || v.value;
+                    // }
+
+                    // break;
+                    if(spec.label_key=='Color'){
+                        select_product.color = v.alias || v.value;
+                        console.log('select_product.color',select_product.color)
+                    }
+                    else if(spec.label_key=='Size'){
+                        select_product.size = v.alias || v.value;
+                        console.log('select_product.size',select_product.size)
+                    }
+                }
+            }
+        }
+
+        if (this.data.skuTable) {
+            ids = ids[0] > ids[1] ? [ids[1], ids[0]] : ids
+            ids = ids.join('-');
+            select_product = Object.assign(select_product, this.data.skuTable[ids]);
+        }
+        // console.log(ids)
+        // console.warn(this.data.skuTable)
+        // console.warn(this.data.skuTable[ids])
+            // console.log(select_product.price)
+        this.setData({
+            price: Number(select_product.price).toFixed(2),
+            select_product: select_product
+        })
+        console.log("这是select_product",this.data.select_product)
+        return false;
+    },
+     // 请求sku
+     queryCommodityStore(id, key) {
+        var that = this;
+        sandBox.get({ api: `api/store/detail/${id}/stock` })
+            .then(res => {
+                wx.hideLoading();
+                res = res.data
+                if (!res.status || !res.data || !res.data.specs) return;
+                if (res.data.specs && typeof key === 'undefined') {
+                    let specs = [];
+
+                    Object.keys(res.data.specs)
+                        .forEach((key, index) => {
+                            let value = res.data.specs[key];
+                            value.select = '';
+                            value.values = value.list
+                                .map(v => {
+                                    return Object.assign({
+                                        index: index,
+                                        active: false,
+                                        disabled: false
+                                    }, v);
+                                });
+
+                            delete value.list;
+                            specs.push(value);
+                        });
+
+                    that.setData({
+                            specs: specs
+                        })
+                         console.log(specs,"sku")
+
+                    var canBuy = this.disallow_cart()
+
+
+                    this.setData({
+                        canBuy: canBuy
+                    })
+                }
+
+
+                if (res.data.stores) {
+                    let data = {};
+                    Object.keys(res.data.stores)
+                        .forEach(key => {
+                            let value = res.data.stores[key];
+
+                            value.ids.forEach(id => {
+                                data[id] = data[id] || { count: 0, specs: {} };
+                                data[id].count += Number(value.store);
+
+                                value.ids.forEach(i => {
+                                    if (i === id) return;
+
+                                    data[id].specs[i] = {
+                                        count: Number(value.store)
+                                    };
+                                })
+                            });
+                        });
+                    // console.log(data);
+                    var result = { data, table: res.data.stores };
+
+                    this.setData({
+                        result: result
+                    })
+                    that.specStore(result, key)
+                        // this.$emit('specStore', result, key);
+                }
+
+            })
+            .catch(err => {
+
+            })
+    },
+    //关闭sku
+    closeSelect() {
+        // var animation = new Animation('show');
+        // animation.up().then(() => {
+            this.setData({
+                show_select: true
+            })
+       // })
     },
     //获取详情页信息
     getMessage(){
         let that=this
+        console.log(this.data.reduce_items_id,"this.data.reduce_items_id")
         var token = cookieStorage.get('user_token'); 
         sandBox.get({
             api:`api/reduce/showItem?reduce_items_id=${this.data.reduce_items_id}`,
@@ -66,20 +602,27 @@ Page({
 			},
         }).then(res =>{
             if (res.statusCode == 200) {
-                console.log("is_leader",res.data.data.user_is_leader)
+                console.log("获取详情res",res)
+                if(res.data.data.order&&res.data.data.order.status==0){
+                    wx.navigateTo({
+                        url:`/pages/store/order/order`
+                    })
+                }
+                else{
+
                 if(res.data.data.status_text !=="进行中" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
-                    this.setData({
+                    that.setData({
                         overTime:true,
                         overActivity:false,
                         setColor:'AAAAAA'
                     })
                 }else if(res.data.data.reduce.status_text !=="进行中"){
-                    this.setData({
+                    that.setData({
                         overActivity:true,
                         setColor:'AAAAAA'
                     })
                  }if(res.data.data.time_price=="0.00"){
-                     this.setData({
+                    that.setData({
                         over:true
                      })
                  }
@@ -87,9 +630,15 @@ Page({
                     detailsMessage:res.data.data,
                    is_leader:res.data.data.user_is_leader,
                    reduce_id:res.data.data.reduce_id,
-                   id:res.data.data.id
+                   id:res.data.data.id,
+                   goods_id:res.data.data.reduce.goods_id,
+                   name:res.data.data.reduce.goods.name,
+                   store_count:res.data.data.reduce.store_nums,
+                   market_price:res.data.data.reduce.goods.market_price,
+                   time_price:res.data.data.time_price
                    //is_leader:0
                 })
+                that.queryCommodityStore(this.data.goods_id)
                 console.log("this.data.is_leader",this.data.is_leader)
                 that.showWitch()
                 console.log("detailsMessage",this.data.detailsMessage)
@@ -107,6 +656,7 @@ Page({
                        left:0
                    })
                }
+            } 
             }else{
                 wx.showToast({
                     title:res.data.data.message,
@@ -116,26 +666,35 @@ Page({
                 })
             }
         })
-        //this.showWitch()
+        this.showWitch()
     },
     bargainAgin(){
         var token = cookieStorage.get('user_token'); 
-         var id = this.data.id;
+         var id = this.data.reduce_id;
          console.log("晕",id)
+         var data={
+            reduce_id:id,
+            restart:1
+         }
         //var goods_id = e.currentTarget.dataset.goods_id;
         //console.log(id,goods_id)
         // var  data={
         //     reduce_id:this.data.id
         // };
         sandBox.post({
-            api:  `api/reduce?reduce_id=${id}`,
+            api:  `api/reduce`,
             header: {
 				Authorization: token
             },
-            // data:data
+            data:data
         }).then(res =>{
             console.log("res发起",res.data)
             if (res.statusCode == 200) {
+                wx.showToast({
+                    title:'已重新发起砍价',
+                    duration:2000
+                })
+            //    this.getMessage()
                 wx.navigateTo({
                     url:`/pages/bargain/details/details?reduce_items_id=${res.data.data.reduce_items_id}`
                 })
@@ -389,11 +948,77 @@ Page({
     onShow: function() {
         this.getRule()       
     },
+    //选择sku
+    showSelect(e) {
+        this.setData({
+            show_select:false
+        })
+    },
+     // 立即购买
+     checkoutImmdeOrder(data) {
+        var token = cookieStorage.get('user_token');
+        sandBox.post({
+            api: 'api/shopping/order/checkout?product_id=' + data.id+`&reduce_items_id=${this.data.reduce_items_id}`,
+            header: {
+                Authorization: token
+            },
+            data: data
+        }).then(res => {
+            if (res.statusCode == 200) {
+                res = res.data;
+                if (res.status) {
+                    cookieStorage.set('local_order', res.data);
+                    this.setData({
+                        loading: false
+                    });
+                    wx.navigateTo({
+                        url: '/pages/store/order/order'
+                    })
+                } else {
+                    if (res.data && res.data.server_busy) {
+                        this.setData({
+                            show_ten: true
+                        })
+                    } else if (res.message == 'User unbind mobile') {
+                        wx.showModal({
+                            content: '请先绑定手机号',
+                            showCancel: false,
+                            success: res => {
+                                if (res.confirm || (!res.cancel && !res.confirm)) {
+                                    wx.navigateTo({
+                                        url: '/pages/user/phone/phone?url=' + getUrl()
+                                    })
+                                }
+                            }
+                        })
+                    } else {
+                        wx.showModal({
+                            content: res.message || '请求失败',
+                            showCancel: false
+                        })
+                    }
+                    this.setData({
+                        loading: false
+                    });
+                }
+            }
+        })
+    },
     //购买商品
     nowBuy(){
-        sandBox.post({
-            api:`api/shopping/order/checkout?product_id=${this.data.reduce_items_id}`
-        })
+        // var token = cookieStorage.get('user_token'); 
+        // var data={
+        //     reduce_items_id:this.data.reduce_items_id,
+        //     product_id:1655,
+
+        // }
+        // sandBox.post({
+        //     api:`api/shopping/order/checkout`,
+        //     header:{
+        //         Authorization:cookieStorage.get('user_token')
+        //     },
+        //     data:data
+        // })
     },
     //活动规则
     getRule(){

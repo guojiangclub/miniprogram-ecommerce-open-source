@@ -12,7 +12,7 @@
                     付款金额
                 </view>
                 <view class="right">
-                    ￥{{info.order.total / 100 || ''}}
+                    ￥{{info.order.total / 100 || '0'}}
                 </view>
             </view>
             <view class="info-list">

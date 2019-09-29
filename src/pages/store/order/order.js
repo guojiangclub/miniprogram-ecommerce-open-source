@@ -622,6 +622,7 @@ Page({
             // this.$refs.button.finish();
 
             var registration = this.data.block.registration_id;
+            console.log("registration",registration)
             var pay_status = data.order.pay_status;
 
             if (registration || pay_status == 1) {
@@ -632,7 +633,7 @@ Page({
 //                        this.$router.forward({name: 'user-order-online', params: {status: 0}, query: {registration}});
 
                 wx.redirectTo({
-                    url:`/pages/order/index/index?status=0`,
+                    url:`/pages/store/success/success?order_no=${data.order.order_no}`,
                     success:function (){
 
                     }
