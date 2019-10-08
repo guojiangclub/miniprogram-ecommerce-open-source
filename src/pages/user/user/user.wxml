@@ -69,7 +69,6 @@
             <view>我的拼团</view>
         </view>-->
         <view class="item" data-url="/pages/bargain/list/list" bindtap="jumpItem">
-            <view class="number"><text>{{bargain.number || 0}}</text></view>
             <view>我的砍价</view>
         </view>
     </view>

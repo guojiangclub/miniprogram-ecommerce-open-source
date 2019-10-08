@@ -64,9 +64,10 @@
             <button class="invite" open-type='share' wx:if="{{over==false}}">
                 <text>{{message}}</text>
             </button>
-            <view class="now_buy" bindtap="showSelect" wx:if="{{over==false}}">马上购买</view>
+            <view class="now_buy" bindtap="showSelect" wx:if="{{over==false }}">马上购买</view>
             <!-- 活动未结束但是用户砍价已完成-->
-            <view class="btn" bindtap="showSelect" wx:if="{{over==true}}">{{detailsMessage.reduce_surplus_amount}}元购买商品</view>
+            <view class="btn" bindtap="showSelect" wx:if="{{over==true && pay==false}}">{{detailsMessage.reduce_surplus_amount}}元购买商品</view>
+            <view class="btn" bindtap="goStore" wx:if="{{over==true && pay==true}}">订单已支付，去商城看看</view>
         </view>
         <!-- 用户时间结束-->
         <view class="btn2" wx:if="{{is_leader==1 && overTime==true && overActivity==false}}">
@@ -85,8 +86,11 @@
             <view class="child_btn1" bindtap="joinBargain">
                 {{message}}
             </view>
-            <view class="child_btn2" bindtap="helpShare">
+            <view class="child_btn2" bindtap="helpShare" wx:if="{{over==false}}">
                 帮好友分享
+            </view>
+            <view class="child_btn2" bindtap="goStore" wx:else>
+                去商城看看
             </view>
         </view>
         <view class="count_down" wx:if="{{overTime==false && overActivity==false}}">
@@ -254,10 +258,10 @@
     </view>
 
 </view>
-    <view class="share-img-box {{share_img ? 'cur' : ''}}" >
+    <view class="share-img-box {{share_img ? 'cur' : ''}}" wx:if="{{showShareImg}}">
         <view class="imgs-box">
             <view class="img">
-                <image mode="aspectFit" src="{{shareImg}}"></image>
+                <image mode="widthFit" src="{{shareImg}}"></image>
             </view>
             <view class="text">
                 保存图片后，可分享到朋友圈

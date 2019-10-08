@@ -64,7 +64,7 @@ Page({
         }).then(res =>{
             if (res.statusCode == 200) {
                 console.log("获取详情res",res)
-                if(res.data.data.order&&res.data.data.order.status==0){
+                if(res.data.data.order&&res.data.data.order.status==1){
                     wx.navigateTo({
                         url:`/pages/store/order/order`
                     })

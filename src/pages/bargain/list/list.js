@@ -19,7 +19,7 @@ Page({
         var token = cookieStorage.get('user_token'); 
         let that =this
         sandBox.get({
-            api:`api/reduce/list/me?current_page=${this.data.current_page} `,
+            api:`api/reduce/list/me?current_page=${that.data.current_page} `,
             header: {
 				Authorization: token
             },
@@ -45,6 +45,11 @@ Page({
         
     },
     onReachBottom(){
+        this.data.current_page++
+        this.setData({
+            current_page:this.data.current_page
+        })
+        console.log('this.data.current_page',this.data.current_page)
         this.getList()
     }
 })

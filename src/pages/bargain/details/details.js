@@ -26,7 +26,9 @@ Page({
         setColor:'fb5054',//进度条的颜色
         page:1,//页
         show_select: true, //选尺寸
-        heroList:[]//砍价英雄榜的数据
+        heroList:[],//砍价英雄榜的数据
+        showShareImg:false,//展示分享图片
+        pay:false//是否已经支付
     },
     onLoad(e) {
         //this.getMessage()
@@ -603,25 +605,31 @@ Page({
         }).then(res =>{
             if (res.statusCode == 200) {
                 console.log("获取详情res",res)
-                if(res.data.data.order&&res.data.data.order.status==0){
-                    wx.navigateTo({
-                        url:`/pages/store/order/order`
-                    })
-                }
-                else{
+                // if(res.data.data.order&&res.data.data.order.status==0){
+                //     wx.navigateTo({
+                //         url:`/pages/store/order/order`
+                //     })
+                // }
+                // else{
 
-                if(res.data.data.status_text !=="进行中" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
+                if(res.data.data.status_text !=="进行中" &&res.data.data.status_text!=="已下单待支付" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
                     that.setData({
                         overTime:true,
                         overActivity:false,
-                        setColor:'AAAAAA'
+                        setColor:'AAAAAA',
                     })
                 }else if(res.data.data.reduce.status_text !=="进行中"){
                     that.setData({
                         overActivity:true,
                         setColor:'AAAAAA'
                     })
-                 }if(res.data.data.time_price=="0.00"){
+                 }else if(res.data.data.status_text=="订单已支付" ){
+                        that.setData({
+                            pay:true,
+                            over:true
+                        })
+                 }
+                 if(res.data.data.reduce_surplus_amount=="0.00"){
                     that.setData({
                         over:true
                      })
@@ -629,6 +637,7 @@ Page({
                 that.setData({
                     detailsMessage:res.data.data,
                    is_leader:res.data.data.user_is_leader,
+                   // is_leader:0,
                    reduce_id:res.data.data.reduce_id,
                    id:res.data.data.id,
                    goods_id:res.data.data.reduce.goods_id,
@@ -636,10 +645,9 @@ Page({
                    store_count:res.data.data.reduce.store_nums,
                    market_price:res.data.data.reduce.goods.market_price,
                    time_price:res.data.data.time_price
-                   //is_leader:0
                 })
                 that.queryCommodityStore(this.data.goods_id)
-                console.log("this.data.is_leader",this.data.is_leader)
+                console.log("this.data.over",this.data.over)
                 that.showWitch()
                 console.log("detailsMessage",this.data.detailsMessage)
                if(this.data.detailsMessage.progress_par>0.17 && this.data.detailsMessage.progress_par<0.83){
@@ -656,7 +664,6 @@ Page({
                        left:0
                    })
                }
-            } 
             }else{
                 wx.showToast({
                     title:res.data.data.message,
@@ -754,14 +761,15 @@ Page({
 	// 	})
     //     this.changeShare()
 	// },
-    // // 弹出分享
-    // changeShare() {
-    //     this.setData({
-    //         show_share: !this.data.show_share
-    //     })
-    // },
+    // 弹出分享
+    changeShare() {
+        this.setData({
+            showShareImg: true
+        })
+    },
      // 生成海报
      createShareImg(){
+         let that =this
         wx.showLoading({
             title: "生成中",
             mask: true
@@ -780,10 +788,9 @@ Page({
            if(res.statusCode == 200){
             var res = res.data
                if(res.status){
-                   this.setData({
+                that.setData({
                     shareImg : res.data.image
                    });
-                   console.log(this.data.shareImg)
                   //this.getShearImg();
                } else {
                    wx.showModal({
@@ -797,8 +804,9 @@ Page({
                    showCancel: false
                });
            }
+           console.log(this.data.shareImg)
            wx.hideLoading();
-           //this.changeShare();
+           this.changeShare();
        })
     },
     closeAlert(){
@@ -857,13 +865,12 @@ Page({
                         }
                 }).then(res=>{
                     if (res.statusCode == 200){
+                        console.log("res",res)
                         console.log("this.data.detailsMessage.reduce_items_id",this.data.reduce_items_id)
-                        if(res.data.data.reduce_amount){
-                            console.log("res",res.data.data.reduce_amount)
-                            that.setData({
-                            reduce_amount:res.data.data.reduce_amount
+                        console.log("this.data.step",this.data.step)
+                        that.setData({
+                            step:2
                         })
-                        }
                         if(res.data.code==400){
                             wx.showToast({
                                 title:res.data.message,
@@ -882,6 +889,13 @@ Page({
                                 step:2
                             })
                         }
+                            if(res.data.data.reduce_amount){
+                            console.log("res",res)
+                            that.setData({
+                            reduce_amount:res.data.data.reduce_amount,
+                            step:2
+                        })
+                    }
                         that.showWitch();
                     }else{
                         wx.showToast({
@@ -896,11 +910,14 @@ Page({
                               that.showWitch();  
                           },2000)
                     }
+                    that.getMessage()
                 })
                 that.getMessage()
             }
         }
+        this.getMessage()
         that.showWitch();
+        console.log()
     },
     onShareAppMessage: function (res) {
         let that =this
@@ -910,7 +927,7 @@ Page({
         }
         return {
           title: '砍价帮帮忙',
-          path: `/pages/bargain/details/details?id=${this.data.id}`
+          path: `/pages/bargain/details/details?reduce_items_id=${this.data.reduce_items_id}`
         }
       },
     showRule(){
@@ -972,7 +989,7 @@ Page({
                         loading: false
                     });
                     wx.navigateTo({
-                        url: '/pages/store/order/order'
+                        url: `/pages/store/order/order?reduce_items_id=${this.data.reduce_items_id}`
                     })
                 } else {
                     if (res.data && res.data.server_busy) {
@@ -1001,6 +1018,13 @@ Page({
                         loading: false
                     });
                 }
+            }else{
+                console.log('res',res)
+                wx.showToast({
+                    title:res.data.message,
+                    icon:'none',
+                    duration:2000
+                })
             }
         })
     },
@@ -1020,6 +1044,11 @@ Page({
         //     data:data
         // })
     },
+    changeImg(){
+        this.setData({
+            showShareImg:false
+        })
+    },
     //活动规则
     getRule(){
         sandBox.get({
@@ -1034,7 +1063,7 @@ Page({
         })
     },
     onPullDownRefresh: function() {
-       console.log("刷新下数据")
+       this.getMessage()
         
     },
 //触底加载

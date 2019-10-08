@@ -112,6 +112,11 @@ Page({
                 task_id: e.task_id
             })
         }
+        if(e.reduce_items_id){
+            this.setData({
+                reduce_items_id:e.reduce_items_id
+            })
+        }
         var info = cookieStorage.get('init');
         if (info && info.pick_self == 1 && this.data.self_shop) {
             this.setData({
@@ -594,7 +599,7 @@ Page({
         var that = this;
         var oauth = this.data.is_login;
         sandBox.post({
-            api: `api/shopping/order/confirm`,
+            api: `api/shopping/order/confirm?reduce_items_id=${this.data.reduce_items_id}`,
             data:data,
             header: {Authorization:  oauth},
         }).then(res => {
