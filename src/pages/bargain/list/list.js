@@ -4,7 +4,9 @@ Page({
         list:[],
         Height:'',
         total_pages:1,
-        current_page:1
+        current_page:1,
+        reduce_items_id:'',
+        limit:10
 
     },
     onLoad: function() {
@@ -19,7 +21,7 @@ Page({
         var token = cookieStorage.get('user_token'); 
         let that =this
         sandBox.get({
-            api:`api/reduce/list/me?current_page=${that.data.current_page} `,
+            api:`api/reduce/list/me?limit=${that.data.limit} `,
             header: {
 				Authorization: token
             },
@@ -29,27 +31,46 @@ Page({
         }).then(res=>{
             console.log(res.data.data,"reslist")
             if(res.statusCode == 200){
-                    res.data.data.forEach(item=>{
-                        this.data.list.push(item)
-                    })
+                    // res.data.data.forEach(item=>{
+                    //     this.data.list.push(item)
+                    // })
                 that.setData({
-                    list:this.data.list,
+                    list:res.data.data,
+                    length:res.data.data.length,
                     total_pages:res.data.meta.total_pages,
-                    current_page:res.data.meta.current_page++
+                    current_page:res.data.meta.pagination.current_page
                 })
                 console.log("list",this.data.list)
             }
+        })
+    },
+    toDetail(e){
+        console.log('e',e)
+        this.setData({
+            reduce_items_id:e.currentTarget.dataset.reduceId
+        })
+        console.log('this.data.reduce_items_id',this.data.reduce_items_id)
+        wx.navigateTo({
+            url: `/pages/bargain/details/details?reduce_items_id=${this.data.reduce_items_id}`
         })
     },
     onPullDownRefresh: function() {
         
     },
     onReachBottom(){
-        this.data.current_page++
-        this.setData({
-            current_page:this.data.current_page
-        })
-        console.log('this.data.current_page',this.data.current_page)
-        this.getList()
+        if(this.data.length<this.data.limit){
+            var the_limit=this.data.limit+10
+            this.setData({
+                limit:the_limit
+            })
+            console.log('the_limit',the_limit)
+            this.getList()
+        }else{
+            wx.showToast({
+                title: '再拉也没有了',
+                icon: 'none',
+                duration:2000
+            })
+        }
     }
 })

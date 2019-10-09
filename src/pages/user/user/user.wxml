@@ -2,7 +2,7 @@
     <view class="banner">
         <view class="ban-item-l" wx:if="{{token}}" data-url="/pages/user/usersetting/usersetting" bindtap="jumpItem">
             <view class="user-avatar">
-                <image src="{{detail.avatar || 'http://www.qqzhi.com/uploadpic/2014-09-26/031630340.jpg'}}"></image>
+                <image src="{{detail.avatar }}"></image>
             </view>
             <view class="user-text">
                 <view class="nick-name">{{detail.nick_name || '无名氏'}}</view>
@@ -63,13 +63,13 @@
             <view>地址</view>
         </view>
     </view>
-    <view class="info-detail">
-       <!--  <view class="item" data-url="/pages/favorite/index/index" >
-            <view class="number"><text>{{group.number || 0}}</text></view>
-            <view>我的拼团</view>
-        </view>-->
-        <view class="item" data-url="/pages/bargain/list/list" bindtap="jumpItem">
-            <view>我的砍价</view>
+    <view class="section-serve">
+        <view class="title mx-1px-bottom">我的服务</view>
+        <view class="server-box mx-1px-bottom">
+            <view class="item"  data-url="/pages/bargain/list/list" bindtap="jumpItem">
+                <view class="iconfont icon-daqiaqiandao info"></view>
+                <view>我的砍价</view>
+            </view>
         </view>
     </view>
     <!-- 我的奖励 -->

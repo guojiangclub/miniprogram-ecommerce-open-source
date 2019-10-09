@@ -901,18 +901,18 @@ Page({
                         wx.showToast({
                             title: '您暂时不能帮好友砍价',
                             icon: 'none',
-                            duration: 2000
+                            duration: 3000
                           })
                           setTimeout(function(){
                             that.setData({
                                 step:2
                               })
-                              that.showWitch();  
-                          },2000)
+                              //that.showWitch();  
+                          },3000)
                     }
-                    that.getMessage()
+                    //that.getMessage()
                 })
-                that.getMessage()
+                //that.getMessage()
             }
         }
         this.getMessage()
@@ -1067,32 +1067,32 @@ Page({
         
     },
 //触底加载
-  onReachBottom: function () { 
-    var token = cookieStorage.get('user_token');
-      console.log("触底加载")     
-    let that = this;
-    wx.showLoading({
-        title: '玩命加载中',
-        duration: 1000,
-      })
-      that.setData({
-        page : this.data.page ++
-      })
-      sandBox.get({
-        api: '',
-        header: {
-            Authorization: token
-        },
-        data:{
+//   onReachBottom: function () { 
+//     var token = cookieStorage.get('user_token');
+//       console.log("触底加载")     
+//     let that = this;
+//     wx.showLoading({
+//         title: '玩命加载中',
+//         duration: 1000,
+//       })
+//       that.setData({
+//         page : this.data.page ++
+//       })
+//       sandBox.get({
+//         api: '',
+//         header: {
+//             Authorization: token
+//         },
+//         data:{
 
-        }
-      }).then(res=>{
-            if(res.statusCode == 200){
+//         }
+//       }).then(res=>{
+//             if(res.statusCode == 200){
 
-            }else{
+//             }else{
 
-            }
-      })
-    wx.hideLoading()
-  }
+//             }
+//       })
+//     wx.hideLoading()
+//   }
 })

@@ -39,7 +39,7 @@ Page({
             },
             data:data
         }).then(res =>{
-            console.log("res发起")
+            console.log("res发起",res)
             if (res.statusCode == 200) {
                 that.setData({
                     reduce_items_id: res.data.data.reduce_items_id 
@@ -66,7 +66,7 @@ Page({
                 console.log("获取详情res",res)
                 if(res.data.data.order&&res.data.data.order.status==1){
                     wx.navigateTo({
-                        url:`/pages/store/order/order`
+                        url:`/pages/order/detail/detail?no=${res.data.data.order.order_no}`
                     })
                 }
                 else{
@@ -97,7 +97,7 @@ Page({
         this.getRule()
     },
     onPullDownRefresh: function() {
-        console.log("刷新下数据")
+        this.getMessage()
         
     },
     getRule(){

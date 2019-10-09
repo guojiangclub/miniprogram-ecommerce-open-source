@@ -13,7 +13,10 @@
                         <view class="new_price">
                             砍后价￥{{item.reduce.price}}
                         </view>
-                        <view class="btn" bindtap="bargain" data-id="{{item.id}}" data-goodsId="{{item.goods_id}}">
+                        <view class="btn" bindtap="toDetail" data-reduce-id="{{item.id}}"  wx:if="{{item.status_text=='进行中'}}">
+                            查看详情
+                        </view>
+                        <view class="btn_other" bindtap="toDetail" data-reduce-id="{{item.id}}" wx:else>
                             查看详情
                         </view>
                     </view>
