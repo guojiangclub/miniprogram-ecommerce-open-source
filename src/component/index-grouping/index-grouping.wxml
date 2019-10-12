@@ -1,0 +1,32 @@
+<view class="g-main" style="margin-bottom: {{meta.margin_bottom}}px;background:{{meta.background_color}}">
+    <view class="m-lead" style="margin-bottom: 5px" wx:if="{{groupingData.length == 1}}">
+        <view class="ul-box">
+            <view class="li-box" bindtap="_changeItem" data-index="{{index}}"  wx:for="{{groupingData}}" wx:key="{{index}}" >
+                <span>{{item.name}}</span>
+            </view>
+        </view>
+    </view>
+    <view class="grouping-tap-box" wx:else>
+        <view class="tap-item {{tapIndex == index ? 'active' : ''}}"  bindtap="_changeItem" data-index="{{index}}"  wx:for="{{groupingData}}" wx:key="{{index}}" >
+            <span>{{item.name}}</span>
+        </view>
+    </view>
+    <view class="m-content {{groupingData.length != 1 ? 'g-bg' : ''}}">
+        <view class="m-main" wx:if="{{goods_arr.type && goods_arr.type == 'micro_page_componet_goods_group'}}">
+            <view class="goods_box" data-id="{{item.associate.id}}" bindtap="_jumpToDetail" wx:for="{{goods_arr.children}}" wx:key="{{index}}" >
+                <view class="goods_image">
+                    <image src="{{item.associate.img}}"></image>
+                </view>
+                <view class="title">{{item.associate.name}}</view>
+                <view class="price">￥ {{item.associate.sell_price}}</view>
+            </view>
+        </view>
+
+        <view class="m-main" wx:else>
+            <view class="img-box" data-src="{{item.link}}"  wx:for="{{goods_arr.children}}" wx:key="{{index}}" bindtap="_jumpImg">
+                <image mode="widthFix" src="{{item.image}}" />
+                <view class="description" wx:if="{{item.name}}">{{item.name}}</view>
+            </view>
+        </view>
+    </view>
+</view>

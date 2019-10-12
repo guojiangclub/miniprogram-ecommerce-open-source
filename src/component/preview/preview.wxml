@@ -1,0 +1,30 @@
+<view class="preview-box">
+    <view class="category_mask" hidden="{{!show}}" bindtap="clone"></view>
+    <view class="group-list" hidden="{{!show}}">
+        <view class="group-box">
+            <view class="group-item" data-id="{{item.goods_id}}" wx:for="{{list}}" wx:key="{{index}}" bindtap="jump">
+                <view class="group-item-content">
+                    <view class="group-img-box">
+                        <image mode="widthFix" src="{{item.goods_img}}" alt="" />
+                    </view>
+                    <view class="goods-name">
+                        {{item.goods_name}}
+                    </view>
+                    <view class="goods-money">
+                        ¥{{item.goods_sell_price}}
+                    </view>
+                </view>
+            </view>
+            <view class="group-item" wx:if="{{list.length % 2 != 0}}" bindtap="go">
+                <view class="group-item-content">
+                    <view class="more-box">
+                        查看更多
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="close">
+            <image mode="widthFix" src="../../assets/image/the-close.png" alt="" />
+        </view>
+    </view>
+</view>

@@ -1,0 +1,37 @@
+<!--优惠券-->
+<view class="coupon-warp-box" wx:if="{{indexCoupon && indexCoupon.length}}">
+    <view class="coupon-item-box" style="background: {{config.mainColor}}" wx:for="{{indexCoupon}}" wx:key="{{index}}">
+        <view class="coupon-item">
+            <view class="left">
+                <block wx:if="{{item.associate.action_type.type == 'cash'}}">
+                        <span class="money">
+                        ￥
+                    </span>
+                    <span class="num">
+                       {{ item.associate.action_type.value }}
+                    </span>
+                </block>
+
+                <block wx:if="{{item.associate.action_type.type == 'discount'}}">
+                        <span class="num">
+                        {{ item.associate.action_type.value }}
+                    </span>
+                    <span class="money">
+                        折
+                    </span>
+                </block>
+            </view>
+            <view class="right">
+                <view class="label">
+                    {{item.associate.title}}
+                </view>
+                <view class="btn" style="color: {{config.mainColor}}" data-code="{{item.associate.code}}" data-index="{{index}}" wx:if="{{!item.associate.has_get}}" bindtap="getCoupon">
+                    点击领取
+                </view>
+                <view class="btn" data-id="{{item.associate_id}}" wx:else catchtap="_jumpList">
+                    去使用
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

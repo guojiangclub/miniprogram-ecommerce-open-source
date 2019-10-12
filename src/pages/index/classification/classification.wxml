@@ -1,10 +1,69 @@
-<view id="classification">
-    <view class="menu-wrap" wx:if="{{info && info.length}}">
-        <view class="item-box">
-            <view class="item mx-1px-left-top" data-src="{{item.link}}" wx:for="{{info}}" wx:key="{{index}}" bindtap="jumpLink">
-                <image src="{{item.image}}"></image>
-                <view>{{item.name}}</view>
+<view id="classification" class="{{classData.type == 'upper_lower' ? '' : 'hiddens'}}">
+
+   <block wx:if="{{init && classData.type == 'upper_lower'}}">
+       <view class="class__banner" wx:if="{{classData.CategoryListAd && classData.CategoryListAd.length}}">
+           <swiper style="height: {{imgHeight}}px;" indicator-dots="true" autoplay="true" circular="true">
+               <swiper-item wx:for="{{classData.CategoryListAd}}">
+                   <image mode="widthFix" bindload="imgLoad" src="{{item.image}}" data-url="{{item.link}}" bindtap="jumpItem"></image>
+               </swiper-item>
+           </swiper>
+       </view>
+       <view class="class__item_box">
+           <view class="class__item" wx:for="{{classData.CategoryList}}">
+               <view class="img_item"  data-url="{{item.link}}" bindtap="jumpItem">
+                   <image src="{{item.image}}"></image>
+                   <view class="img_text">
+                       <view class="text_top">
+                           <view class="text_line"></view>
+                           <view class="text_content">
+                               {{item.name}}
+                           </view>
+                           <view class="text_line"></view>
+                       </view>
+
+                       <view class="text_btn">
+                           查看全部
+                       </view>
+                   </view>
+               </view>
+               <view class="class__tag">
+                   <view class="tag__item" wx:for="{{item.items}}" wx:for-item="items">
+                       <view class="tag_flex" data-url="{{items.link}}" bindtap="jumpItem">
+                           <view class="tag_img">
+                               <image src="{{items.image}}"></image>
+                           </view>
+                           <view class="tag_text">
+                               {{items.name}}
+                           </view>
+                       </view>
+                   </view>
+               </view>
+           </view>
+       </view>
+   </block>
+
+    <block>
+        <view class="classifical">
+            <view class="left-menu">
+                <view class="item {{activeIndex == key ? 'active' : ''}}" wx:for="{{classData}}" wx:key="{{index}}" wx:for-item="i" wx:for-index="key" bindtap="change" data-index="{{key}}">{{i.associate.name}}</view>
+            </view>
+            <view class="right-content">
+                <view class="title" bindtap="jumpItem" data-url="{{classData[activeIndex].link}}">
+                    <span>{{classData[activeIndex].associate.name}}</span>
+                    <span class="iconfont icon--xiangyoujiantou"></span>
+                </view>
+                <view wx:for="{{classData}}" wx:key="{{index}}" wx:if="{{activeIndex == index}}" wx:for-item="items" class="list" bindtap="jumpStore" data-id="{{items.associate_id}}">
+                    <view wx:for="{{items.goodsList}}" wx:for-item="item" class="list-item">
+                        <view class="list">
+                            <view class="photo">
+                                <image src="{{item.img}}" mode="widthFix"></image>
+                            </view>
+                            <view class="txt">{{item.name}}</view>
+                        </view>
+                    </view>
+                </view>
             </view>
         </view>
-    </view>
+
+    </block>
 </view>

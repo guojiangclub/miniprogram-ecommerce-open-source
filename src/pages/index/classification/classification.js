@@ -4,52 +4,84 @@
 import {config,sandBox,cookieStorage} from '../../../lib/myapp.js';
 Page({
     data: {
-        info:'',
+        classData: '',
+        screenWidth: '',
+        activeIndex:0,
+        init:false
     },
-    onLoad() {
-        this.getIndexData();
+    onLoad(){
+        this.classificationList();
+        wx.getSystemInfo({
+            success: res => {
+                this.setData({
+                    screenWidth: res.screenWidth
+                })
+            }
+        });
     },
-    jumpLink(e) {
-        var src = e.currentTarget.dataset.src
-        if (!src) return
-        wx.navigateTo({
-            url: src
+    //切换menu
+    change(e){
+        var activeIndex = e.currentTarget.dataset.index;
+        this.setData({
+            activeIndex:activeIndex
         })
     },
-    getIndexData() {
+    jumpStore(e){
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+            url:`/pages/store/list/list?id=${id}`
+        })
+    },
+    jumpItem(e){
+        var url = e.currentTarget.dataset.url;
+        wx.navigateTo({
+            url:url
+        })
+    },
+    imgLoad(e){
+        var height = e.detail.height
+        var width = e.detail.width;
+        var ratio = width / height;
+        var screenWidth = this.data.screenWidth;
+        this.setData({
+            imgHeight: screenWidth / ratio
+        })
+    },
+    classificationList() {
         wx.showLoading({
-            title: '加载中',
-            mask: true
+            title:'加载中',
+            mask:true
         })
         sandBox.get({
             api:'api/category'
         }).then(res => {
             if (res.statusCode == 200) {
-                res = res.data;
-
+                res = res.data
                 if (res.status) {
+                    console.log(res.data.pages[0].value,"6666");
                     this.setData({
-                        info: res.data
+                        init:true,
+                        classData: res.data.pages[0].value
                     })
                 } else {
                     wx.showModal({
-                        content: res.message || '请求失败',
-                        showCancel: false
+                        content: '请求失败',
+                        showCancel:false
                     })
                 }
             } else {
                 wx.showModal({
                     content: '请求失败',
-                    showCancel: false
+                    showCancel:false
                 })
             }
             wx.hideLoading();
-        }).catch(() => {
-            wx.hideLoading();
+        },err=>{
             wx.showModal({
                 content: '请求失败',
-                showCancel: false
+                showCancel:false
             })
+            wx.hideLoading();
         })
     }
 })

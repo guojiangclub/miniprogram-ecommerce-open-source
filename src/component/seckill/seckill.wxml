@@ -1,0 +1,32 @@
+<view class="marketing-time-box {{mold == 'index' ? 'index' : ''}}">
+    <view class="seckill-item" style="color: {{config.countColor}}" wx:if="{{active}}">
+        <view wx:if="{{endtype == 0}}">
+           <!-- <view class="no-starts">
+                进行中
+            </view>-->
+            <view class="time-text">
+                {{endmessage}}
+            </view>
+        </view>
+        <view class="time-out" wx:if="{{endtype == 1}}">
+            <!--<i class="iconfont icon-shijian"></i>-->
+            <view class="text">距离{{typename}}结束还剩余</view>
+            <view class="tiem"><span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{endTime.hour < 10}}">0</p>{{endTime.hour}}</span> 时 <span class="num-item" style="background: {{config.mainColor}}"><p class="zero" wx:if="{{endTime.minute < 10}}">0</p>{{endTime.minute}}</span> 分 <span class="num-item" style="background: {{config.mainColor}}"><p class="zero" wx:if="{{endTime.second < 10}}">0</p>{{endTime.second}}</span> 秒 </view>
+        </view>
+    </view>
+    <view class="seckill-item" style="color: {{config.countColor}}" wx:else>
+        <view wx:if="{{type == 0}}">
+            <!--<view class="no-starts">
+                未开始
+            </view>-->
+            <view class="time-text">
+                {{message}}
+            </view>
+        </view>
+        <view class="time-out" style="color: {{config.countColor}}" wx:if="{{type == 1}}">
+            <!--<i class="iconfont icon-shijian"></i>-->
+            <view class="text">距离{{typename}}开始还剩余</view>
+            <view class="tiem"><span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.hour < 10}}">0</p>{{startsTime.hour}}</span> 时 <span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.minute < 10}}">0</p>{{startsTime.minute}}</span> 分 <span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.second < 10}}">0</p>{{startsTime.second}}</span> 秒 </view>
+        </view>
+    </view>
+</view>

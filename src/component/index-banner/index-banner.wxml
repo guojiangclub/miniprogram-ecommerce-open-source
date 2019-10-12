@@ -1,0 +1,11 @@
+<view class="index-banner" wx:if="{{bannerData && bannerData.length}}">
+    <view class="banner">
+        <view class="top-image">
+            <swiper style="height: {{imgHeight}}px;" indicator-dots="true" autoplay="true" circular="true">
+                <swiper-item wx:for="{{bannerData}}" wx:key="{{index}}">
+                    <image mode="widthFix" src="{{item.image}}"  data-src="{{item.link}}" class="slide-image" bindload="_imgLoad" bindtap="_jumpImg"/>
+                </swiper-item>
+            </swiper>
+        </view>
+    </view>
+</view>

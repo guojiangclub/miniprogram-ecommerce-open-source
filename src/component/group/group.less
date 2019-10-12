@@ -1,0 +1,77 @@
+.seckill-time-box{
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+
+  //兼容首页样式
+  &.index{
+    font-size: 12px;
+    .seckill-item{
+      text-align: left;
+      .tiem{
+        margin-left: 4px;
+      }
+      .num-item{
+        background:#6d6d6d;
+        color: #FFFFFF;
+        border-radius: 0;
+      }
+    }
+
+  }
+  .seckill-item{
+    text-align: right;
+    .no-starts{
+      display: none;
+    }
+    .text{
+      display: inline-block;
+      margin: 2px 5px;
+    }
+    .tiem{
+      display: inline-block;
+    }
+    .num-item{
+      display: inline-block;
+      background: #FFFFFF;
+      color: #fe4545;
+      padding: 0 5px;
+      border-radius: 3px;
+    }
+    .zero{
+      display: inline-block;
+    }
+
+    .time-out{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+
+      .tiem{
+        color: #ffffff;
+        span{
+          color: #000;
+        }
+      }
+    }
+    i{
+      display: none;
+    }
+  }
+
+  .seckill {
+    &.seckill-item{
+      .tiem{
+        color: #000;
+        span{
+          background: #000000;
+          color: #ffffff;
+        }
+      }
+    }
+    .text{
+      color: #EA4448;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<!--快捷导航-->
+<view class="quick-nav">
+   <view class="nav-content">
+       <view class="nav-item" wx:for="{{navData}}" wx:key="{{index}}" bindtap="_jumpImg" data-src="{{item.link}}">
+           <view class="top-info">
+               <image  src="{{item.image}}"></image>
+           </view>
+           <view class="bottom-info">{{item.name}}</view>
+       </view>
+   </view>
+</view>

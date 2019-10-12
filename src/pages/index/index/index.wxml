@@ -1,77 +1,70 @@
-<view id="index">
-    <view class="banner">
-        <view class="search">
-            <view class="search_box">
-                <input type="text" placeholder="来点我呀" disabled confirm-type="search" bindtap="jumpSearch"/>
-                <icon type="search" size="20"/>
-            </view>
-        </view>
+<!--微页面-->
+<view id="microData">
+    <block wx:if="{{microData && microData.pages && microData.pages.length}}">
+        <view wx:for="{{microData.pages}}" wx:key="{{index}}">
+            <view wx:if="{{item.name == 'micro_page_componet_search'}}">
+                <!--搜索按钮-->
+                <view class="banner">
+                    <view class="search">
+                        <div class="menu-box" bindtap="jumpMenu">
+                            <i class="iconfont icon-fenzu">
+                                
+                            </i>
+                        </div>
+                        <view class="search_box">
+                            <input type="text" value="" bindinput="search" disabled confirm-type="search" bindtap="jumpToSearch"/>
+                            <icon type="search" size="20"/>
 
-        <view class="top-image" wx:if="{{info.carousels && info.carousels.length}}">
-            <swiper style="height: {{imgHeight}}px;" indicator-dots="true" autoplay="true" circular="true">
-                <swiper-item wx:for="{{info.carousels}}" wx:key="{{index}}">
-                    <image mode="widthFix" src="{{item.image}}"  data-src="{{item.link}}" class="slide-image" bindload="imgLoad" bindtap="jumpLink"/>
-                </swiper-item>
-            </swiper>
-        </view>
-
-
-        <view class="menu-wrap" wx:if="{{info.categories && info.categories.length}}">
-            <view class="title">
-                热门品类
-            </view>
-            <view class="item-box">
-                <view class="item mx-1px-left-top" data-src="{{item.link}}" wx:for="{{info.categories}}" wx:key="{{index}}" bindtap="jumpLink">
-                    <image src="{{item.image}}"></image>
-                    <view>{{item.name}}</view>
-                </view>
-            </view>
-        </view>
-
-        <view class="menu-wrap" wx:if="{{info.boyCategory && info.boyCategory.items.length}}">
-            <view class="title">
-                <view class="text">
-                    {{info.boyCategory.name}}
-                </view>
-                <view data-src="{{info.boyCategory.link}}" bindtap="jumpLink">
-                    更多 >
-                </view>
-            </view>
-            <view class="item-box goods-box mx-1px-top">
-                <view class="goods-item item" wx:for="{{info.boyCategory.items}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="jumpDetail">
-                    <image mode="widthFix" src="{{item.img}}"></image>
-                   <view class="name">
-                       {{item.name}}
-                   </view>
-                    <view class="price">
-                        ￥ {{item.sell_price}}
+                        </view>
                     </view>
                 </view>
             </view>
-        </view>
-
-        <view class="menu-wrap" wx:if="{{info.girlCategory && info.girlCategory.items.length}}">
-            <view class="title">
-                <view class="text">
-                    {{info.girlCategory.name}}
-                </view>
-                <view data-src="{{info.girlCategory.link}}" bindtap="jumpLink">
-                    更多 >
-                </view>
+            <!--轮播图组件-->
+            <view wx:if="{{item.name == 'micro_page_componet_slide' && item.value && item.value.length}}">
+                <indexBanner banner-data="{{item.value}}" screen-width="{{screenWidth}}"></indexBanner>
             </view>
-            <view class="item-box goods-box mx-1px-top">
-                <view class="goods-item item" wx:for="{{info.girlCategory.items}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="jumpDetail">
-                    <image mode="widthFix" src="{{item.img}}"></image>
-                    <view class="name">
-                        {{item.name}}
-                    </view>
-                    <view class="price">
-                        ￥ {{item.sell_price}}
-                    </view>
-                </view>
+            <!--优惠券组件-->
+            <view wx:if="{{item.name == 'micro_page_componet_coupon' && item.value && item.value.length}}">
+                <indexCoupon index-coupon="{{item.value}}" config="{{config}}" bindmyGetCoupon="getCoupon" data-id="{{item.value[0].associate_id}}"></indexCoupon>
             </view>
-
+            <!--套餐-->
+            <view wx:if="{{item.name == 'micro_page_componet_suit' && item.value && item.value.length}}">
+                <indexSuit suit-data="{{item.value}}" index-data="{{indexData}}"></indexSuit>
+            </view>
+            <!--拼团-->
+            <!--快捷导航-->
+            <view wx:if="{{item.name == 'micro_page_componet_nav' && item.value && item.value.length}}">
+                <indexNav nav-data="{{item.value}}"></indexNav>
+            </view>
+            <!--图片魔方-->
+            <view  wx:if="{{item.name == 'micro_page_componet_cube' && item.value && item.value.length}}">
+                <indexCube cube-data="{{item.value}}" show-type="{{item.type}}" cube-title="{{item.title}}"></indexCube>
+            </view>
+            <!--分类商品-->
+            <view  wx:if="{{item.name == 'micro_page_componet_category' && item.value && item.value.length}}">
+                <indexCategory category-data="{{item.value}}"></indexCategory>
+            </view>
+            <!--商品分组-->
+            <view  wx:if="{{item.name == 'micro_page_componet_goods_group' && item.value && item.value.length}}">
+                <indexGrouping grouping-data="{{item.value}}"></indexGrouping>
+            </view>
         </view>
+    </block>
 
+    <view class="ibrand-author" wx:if="{{author}}" bindtap="jumpAuthor">
+        <i class="iconfont icon-dibu"></i>
     </view>
+
+<!--    <view class="author" wx:if="{{author}}">
+        <image mode="widthFix" src="https://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F/mier.png"></image>
+        <view>
+            湘ICP备17006292号
+        </view>
+        <view>
+            ©️ 湖南米尔版权所有
+        </view>
+        &lt;!&ndash;iBrand社交新零售 · 提供技术支持&ndash;&gt;
+    </view>-->
+    <preview show="{{isShow}}" list="{{goodsList}}" bind:clone="isClone"></preview>
+
 </view>
