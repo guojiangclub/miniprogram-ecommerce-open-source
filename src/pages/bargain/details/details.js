@@ -28,7 +28,8 @@ Page({
         show_select: true, //选尺寸
         heroList:[],//砍价英雄榜的数据
         showShareImg:false,//展示分享图片
-        pay:false//是否已经支付
+        pay:false,//是否已经支付
+        canBuy:true
     },
     onLoad(e) {
         //this.getMessage()
@@ -407,6 +408,11 @@ Page({
         })
     },
     confirm() {
+        if(this.data.select_product.color && this.data.select_product.size){
+            console.log('this.data.select_product',this.data.select_product)
+        }else{
+            return;
+        }
         if (this.data.loading) return;
         if (this.disallow_cart()) return;
 
@@ -444,6 +450,7 @@ Page({
         this.checkoutImmdeOrder(data)
     },
     disallow_cart() {
+        let that =this
         if (!this.data.specs.length) {
             return !this.data.store_count;
         }
@@ -455,6 +462,10 @@ Page({
         // this.setData({
         //     price: Number(this.data.commodity.sell_price).toFixed(2),
         // })
+        // var select_product={
+        //     color:specs[0].spec.values[0].alias || specs[0].spec.values[0].value ,
+        //     size:specs[1].spec.values[0].alias || specs[0].spec.values[0].value 
+        // }
         for (let spec of specs) {
             // if (!spec.select) {
             //     this.setData({
@@ -505,7 +516,16 @@ Page({
             select_product: select_product
         })
         console.log("这是select_product",this.data.select_product)
-        return false;
+        if(this.data.select_product.color && this.data.select_product.size){
+            that.setData({
+                canBuy:true
+            })
+        }else{
+            that.setData({
+                canBuy:false
+            })
+        }
+        //return false;
     },
      // 请求sku
      queryCommodityStore(id, key) {
@@ -605,13 +625,6 @@ Page({
         }).then(res =>{
             if (res.statusCode == 200) {
                 console.log("获取详情res",res)
-                // if(res.data.data.order&&res.data.data.order.status==0){
-                //     wx.navigateTo({
-                //         url:`/pages/store/order/order`
-                //     })
-                // }
-                // else{
-
                 if(res.data.data.status_text !=="进行中" &&res.data.data.status_text!=="已下单待支付" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
                     that.setData({
                         overTime:true,
@@ -627,6 +640,12 @@ Page({
                         that.setData({
                             pay:true,
                             over:true
+                        })
+                 }else if(res.data.data.status_text =="进行中" && res.data.data.reduce.status_text=="进行中"){
+                        that.setData({
+                            overTime:false,
+                            overActivity:false,
+                            setColor:'fb5054',
                         })
                  }
                  if(res.data.data.reduce_surplus_amount=="0.00"){
@@ -676,6 +695,7 @@ Page({
         this.showWitch()
     },
     bargainAgin(){
+        let that =this
         var token = cookieStorage.get('user_token'); 
          var id = this.data.reduce_id;
          console.log("晕",id)
@@ -683,11 +703,6 @@ Page({
             reduce_id:id,
             restart:1
          }
-        //var goods_id = e.currentTarget.dataset.goods_id;
-        //console.log(id,goods_id)
-        // var  data={
-        //     reduce_id:this.data.id
-        // };
         sandBox.post({
             api:  `api/reduce`,
             header: {
@@ -699,12 +714,15 @@ Page({
             if (res.statusCode == 200) {
                 wx.showToast({
                     title:'已重新发起砍价',
-                    duration:2000
+                    duration:2500
                 })
-            //    this.getMessage()
-                wx.navigateTo({
-                    url:`/pages/bargain/details/details?reduce_items_id=${res.data.data.reduce_items_id}`
+                that.setData({
+                    reduce_items_id:res.data.data.reduce_items_id
                 })
+                console.log('this.data.reduce_items_id',this.data.reduce_items_id,res.data.data.reduce_items_id)
+                console.log('走了这里')
+                that.getMessage()
+                that.showWitch()
             }else{}
         })
     },
@@ -828,6 +846,7 @@ Page({
         this.setData({
             showNotice:false
         })
+        this.getMessage()
     },
     //好友也要零元拿
     joinBargain(){
@@ -901,18 +920,19 @@ Page({
                         wx.showToast({
                             title: '您暂时不能帮好友砍价',
                             icon: 'none',
-                            duration: 3000
+                            //duration: 3000
                           })
                           setTimeout(function(){
                             that.setData({
                                 step:2
                               })
+                              wx.hideToast()
                               //that.showWitch();  
                           },3000)
                     }
-                    //that.getMessage()
+                    that.getMessage()
                 })
-                //that.getMessage()
+                that.getMessage()
             }
         }
         this.getMessage()
@@ -989,7 +1009,7 @@ Page({
                         loading: false
                     });
                     wx.navigateTo({
-                        url: `/pages/store/order/order?reduce_items_id=${this.data.reduce_items_id}`
+                        url: `/pages/store/order/order?reduce_items_id=${this.data.reduce_items_id}&bargain=true`
                     })
                 } else {
                     if (res.data && res.data.server_busy) {
@@ -1028,21 +1048,12 @@ Page({
             }
         })
     },
-    //购买商品
-    nowBuy(){
-        // var token = cookieStorage.get('user_token'); 
-        // var data={
-        //     reduce_items_id:this.data.reduce_items_id,
-        //     product_id:1655,
-
-        // }
-        // sandBox.post({
-        //     api:`api/shopping/order/checkout`,
-        //     header:{
-        //         Authorization:cookieStorage.get('user_token')
-        //     },
-        //     data:data
-        // })
+    showToast(){
+        wx.showToast({
+            title:'请选择商品的规格',
+            icon:'none',
+            duration:2000
+        })
     },
     changeImg(){
         this.setData({

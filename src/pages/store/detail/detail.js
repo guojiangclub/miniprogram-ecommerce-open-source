@@ -1277,36 +1277,36 @@ Page({
         }
     },
     // 秒杀结束执行
-    isEnd() {
-        if (this.data.detailData.meta.seckill || this.data.detailData.meta.groupon) {
-            var id = this.data.id;
-            var token = cookieStorage.get('user_token') || '';
-            this.getGoodsDetail({
-                api: `api/store/detail/${id}`,
-                header: {
-                    Authorization: token
-                },
-                data: { include: 'photos,products,oneComment,guessYouLike,whoLike,point,user' }
-            })
-            this.queryCommodityStore(id);
-        }
-    },
-    isStarts() {
-        if ((this.data.detailData.meta.seckill && this.data.detailData.meta.seckill.init_status == 2) || (this.data.detailData.meta.groupon && this.data.commodity.multi_groupon_init_status == 2)) {
-            var token = cookieStorage.get('user_token') || '';
+    // isEnd() {
+    //     if (this.data.detailData.meta.seckill || this.data.detailData.meta.groupon) {
+    //         var id = this.data.id;
+    //         var token = cookieStorage.get('user_token') || '';
+    //         this.getGoodsDetail({
+    //             api: `api/store/detail/${id}`,
+    //             header: {
+    //                 Authorization: token
+    //             },
+    //             data: { include: 'photos,products,oneComment,guessYouLike,whoLike,point,user' }
+    //         })
+    //         this.queryCommodityStore(id);
+    //     }
+    // },
+    // isStarts() {
+    //     if ((this.data.detailData.meta.seckill && this.data.detailData.meta.seckill.init_status == 2) || (this.data.detailData.meta.groupon && this.data.commodity.multi_groupon_init_status == 2)) {
+    //         var token = cookieStorage.get('user_token') || '';
 
-            var id = this.data.id;
-            this.getGoodsDetail({
-                api: `api/store/detail/${id}`,
-                header: {
-                    Authorization: token
-                },
-                data: { include: 'photos,products,oneComment,guessYouLike,whoLike,point,user' },
+    //         var id = this.data.id;
+    //         this.getGoodsDetail({
+    //             api: `api/store/detail/${id}`,
+    //             header: {
+    //                 Authorization: token
+    //             },
+    //             data: { include: 'photos,products,oneComment,guessYouLike,whoLike,point,user' },
 
-            })
-            this.queryCommodityStore(id);
-        }
-    },
+    //         })
+    //         this.queryCommodityStore(id);
+    //     }
+    // },
 
     // onStateChange(nextState){
     //     console.log(nextState)
@@ -1590,10 +1590,11 @@ Page({
     },
     getCoupon(e) {
         var is_login = cookieStorage.get('user_token');
-        var code = e.currentTarget.dataset.code;
+        var discount_id = e.currentTarget.dataset.discountId;
         var index = e.currentTarget.dataset.index;
+        console.log('看看discount_id有没有',discount_id)
         if (is_login) {
-            this.goodsConvertCoupon(code, index);
+            this.goodsConvertCoupon(discount_id, index);
         } else {
             var url = getUrl();
             wx.showModal({
@@ -2049,6 +2050,7 @@ Page({
         }
     },
     disallow_cart() {
+        console.log('...')
         if (!this.data.specs.length) {
             return !this.data.store_count;
         }
@@ -2510,15 +2512,15 @@ Page({
     //    })
     // },
     // 领取优惠券
-    goodsConvertCoupon(code, index) {
+    goodsConvertCoupon(discount_id, index) {
         var token = cookieStorage.get('user_token');
         sandBox.post({
-            api: 'api/coupon/convert',
+            api: 'api/coupon/take',
             header: {
                 Authorization: token
             },
             data: {
-                coupon_code: code
+                discount_id: discount_id
             }
         }).then(res => {
             if (res.statusCode == 200) {

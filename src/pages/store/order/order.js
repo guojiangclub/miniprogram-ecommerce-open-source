@@ -127,7 +127,6 @@ Page({
             initInfo:info
         })
         this.initData();
-
     },
     //配送方式选择
     radioChange(e){
@@ -331,57 +330,7 @@ Page({
                 // Cache.set(cache_keys.order_form, form);
                 cookieStorage.set('order_form', form)
             } else {
-                /*if (form.formStates) {
-                    this.setData({
-                        [`formStates.discountsCheckIndex`]: form.formStates.discountsCheckIndex,
-                        [`formStates.pointStatus`]: form.formStates.pointStatus
-                    })
-                }
-                this.setData({
-                    [`form.isDisabled`]: form.isDisabled,
-                    [`temporary.coupon`]: form.coupon
-                })*/
             }
-
-            // 自动选择最优优惠活动
-            /*if (JSON.stringify(form.discount) == '{}' && block.best_discount_id) {
-                if (Array.isArray(block.discounts)) {
-                    block.discounts.forEach((item, index) => {
-                        if (item.id == block.best_discount_id) {
-                            var data = {
-                                detail: {
-                                    value: index
-                                }
-                            }
-                            this.changeDiscounts(data);
-                        }
-                    })
-                }
-            }*/
-
-            // 自动选择最优的优惠券
-            /*if (JSON.stringify(form.coupon) == '{}' && block.best_coupon_id) {
-                if (Array.isArray(block.coupons)) {
-                    block.coupons.forEach((item, index) => {
-                        if (item.id == block.best_coupon_id) {
-                            this.setData({
-                               'block.otherCoupon': item
-                            }, () => {
-                                this.sure();
-                            });
-                            this.setData({
-                                check: index
-                            })
-                        }
-                    })
-                }
-            }*/
-            /*this.setData({
-                [`temporary.coupons`]: block.coupons,
-                [`temporary.discounts`]: block.discounts
-            })*/
-            //this.queryOrderExtra();
-
             this.setData({
                 block: Object.assign({}, this.data.block, block),
                 form: Object.assign({}, this.data.form, form),
@@ -421,44 +370,12 @@ Page({
                     }
                 }
             }
-            // this.paymentMoney();
-
             setTimeout(() => {
                 this.calculateOrder();
             }, 300)
-            // t.next({block, form});
         } else {
-            // this.addHistory();
-            // t.to.router.forward({name: 'user-order-online', params: {status: 1}});
         }
     },
-    //这个接口后台没有，先注释掉
-    // queryOrderExtra(){
-    //     var oauth = this.data.is_login
-
-    //     sandBox.get({
-    //         api: `api/shopping/order/extraInfo`,
-    //         header: {Authorization: oauth},
-
-    //     }).then(res =>{
-    //         res = res.data
-
-    //         var data = res.data;
-
-    //         if (res.status) {
-    //             var extra = {
-    //                 point: data.userPoint,
-    //                 limit: data.pointLimit,
-    //                 factor: data.pointToMoney
-    //             };
-
-    //             this.setData({
-    //                 extra: extra
-    //             })
-    //             // dispatch(UserOrderExtra, extra);
-    //         }
-    //     })
-    // },
     changeDiscounts(e){
         let value = e.detail.value;
         let discountsList = this.data.available.discounts;
@@ -585,7 +502,6 @@ Page({
         console.log("group_info",group_info)
         if (this.data.type == 'groupon' && group_info) {
             data.multi_groupon_id = group_info.multi_groupon_id;
-            debugger
             data.multi_groupon_item_id = group_info.multi_groupon_item_id;
         }
         if (cookieStorage.get('openGId')) {
@@ -692,13 +608,18 @@ Page({
         if (currentDiscount) {
             // 促销能减掉的钱
             let discount = -(currentDiscount.adjustmentTotal);
+            console.log('促销能减掉的钱',discount)
             // 是否排优惠券
             let exclusive = currentDiscount.exclusive;
-            console.log(pay_amount);
+            console.log(pay_amount,'看看打印了什么');
             if (discount <= pay_amount) {
                 console.log(1);
-                dis.discounts = -(currentItem.discountAdjustment);
-                pay_amount = pay_amount + currentItem.discountAdjustment;  // 值为负数，所以得加
+                dis.discounts = discount;
+                // this.data.newBlock.order.total=this.data.newBlock.order.total-dis.discounts
+                // console.log('计算价格',this.data.newBlock.order.total,dis.discounts)
+                //dis.discounts = -(currentItem.discountAdjustment);
+                pay_amount = pay_amount - dis.discounts;  
+                console.log(pay_amount,'看看打印了什么');
                 discountsList.forEach((item,index) => {
 
                     if (item.id == currentDiscountID) {
@@ -741,8 +662,6 @@ Page({
                         couponList = couponArr
                     }
                 }
-
-
             } else {
                 console.log(2);
                 wx.showModal({
@@ -774,9 +693,11 @@ Page({
 
             if (discount <= pay_amount) {
                 console.log(3);
-                dis.coupon = -(currentItem.couponAdjustment);
-                pay_amount = pay_amount + currentItem.couponAdjustment;  // 值为负数，所以得加
-
+                dis.coupon=discount
+                // dis.coupon = -(currentItem.couponAdjustment);
+                console.log('优惠券折扣',dis.coupon)
+                pay_amount = pay_amount - dis.coupon;  // 
+                console.log('看下减了没',pay_amount)
                 couponList.forEach((item,index) => {
                     if (item.id == currentCouponId) {
                         item.checked = true;
@@ -889,7 +810,7 @@ Page({
         dis.total_yuan = -((dis.coupon + dis.discounts) / 100).toFixed(2)
         dis.point_yuan = (dis.point / 100).toFixed(2)
         currentItem.adjustmentTotal_yuan = (currentItem.adjustmentTotal / 100).toFixed(2)
-        console.log('看下有用没', pay_amount, currentItem, dis, this.data.newBlock.orderPoint);
+        console.log('看下有用没', dis.discounts);
         this.setData({
             discounts: dis,
             pay_amount: pay_amount,
@@ -921,6 +842,7 @@ Page({
 
     // 使用了最优组合
     bestSwitch(e) {
+        console.log('这是e',e)
         var block =cookieStorage.get('local_order');
         console.log("block",block)
         var form = cookieStorage.get('order_form');
@@ -969,217 +891,217 @@ Page({
         }, 300)
 
     },
-    paymentMoney() {
+//     paymentMoney() {
 
-        return
-        var dis = {
-            order: 0,
-            point: 0,
-            coupon: 0,
-        };
-        var total = this.data.block.order.total;
-        var fixedTotal = this.data.block.order.total;
+//         return
+//         var dis = {
+//             order: 0,
+//             point: 0,
+//             coupon: 0,
+//         };
+//         var total = this.data.block.order.total;
+//         var fixedTotal = this.data.block.order.total;
 
-        var block = cookieStorage.get('local_order');
-        var pointCanotUseAmount =  block.orderPoint.pointCanotUseAmount || 0;
-        // var pointToMoney = block.orderPoint.pointToMoney;
+//         var block = cookieStorage.get('local_order');
+//         var pointCanotUseAmount =  block.orderPoint.pointCanotUseAmount || 0;
+//         // var pointToMoney = block.orderPoint.pointToMoney;
 
-//                订单折扣
-        if (this.data.block.discounts && Array.isArray(this.data.block.discounts)) {
+// //                订单折扣
+//         if (this.data.block.discounts && Array.isArray(this.data.block.discounts)) {
 
-            let discounts = this.data.block.discounts;
-            let check = this.data.formStates.discountsCheckIndex;
-            console.warn(check)
-            if (check == -1) {
-
-
-//                        当选择不使用优惠的情况
-                dis.order = 0;
-                this.setData({
-                    [`form.discount`]: {},
-                    [`form.formStates.discountsCheckIndex`]: check,
-
-                })
-                if (this.data.temporary.coupons.length) {
-
-                    this.setData({
-                        [`block.coupons`]: this.data.temporary.coupons
-                    })
-                }
-                //                            操作积分
-                // this.data.block.orderPoint.pointCanUse = Math.min(total * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint);
-                // this.data.block.orderPoint.pointAmount = Math.max(-(total * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney));
-                //
-                // this.data.form.coupon = this.data.temporary.coupon;     // 将选择的优惠券还原
-
-                this.setData({
-                    [`block.orderPoint.pointCanUse`]: Number(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
-                    [`block.orderPoint.pointAmount`]: Number((Math.max(-((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney))).toFixed(2)),
-                    [`form.coupon`]: this.data.temporary.coupon
-                }, () => {
-                    this.setData({
-                        [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse
-                    })
-                })
-                cookieStorage.set('order_form', this.data.form)
-            } else {
-
-//                        当使用了优惠的情况
-                let discount = -(discounts[check].adjustmentTotal);
-                console.log(discount)
-                let exclusive = discounts[check].exclusive;    //是否排他(优惠券);
-
-                if (discount <= total) {
-                    if (exclusive) {
-                        this.setData({
-                            [`block.coupon`]: {},
-                            [`block.coupons`]: [],
-                            [`form.coupon`]: {}
-                        })
-                    } else {
-                        this.setData({
-                            [`block.coupons`]: this.data.temporary.coupons,
-                            [`form.coupon`]: this.data.temporary.coupon
-                        })
-                    }
-                    dis.order = discounts[check].adjustmentTotal;
-                    this.setData({
-                        [`form.discount`]: discounts[check]
-                    })
-                    total -= discount;
-                    // 操作积分
+//             let discounts = this.data.block.discounts;
+//             let check = this.data.formStates.discountsCheckIndex;
+//             console.warn(check)
+//             if (check == -1) {
 
 
-                    this.setData({
-                        [`block.orderPoint.pointCanUse`]: Number(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
-                        [`block.orderPoint.pointAmount`]: Number((Math.max(-((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney))).toFixed(2)),
-                        [`form.formStates.discountsCheckIndex`]: check
-                    }, () => {
-                        this.setData({
-                            [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse
-                        })
-                    })
-                    // Cache.set(cache_keys.order_form, this.data.form);
-                    cookieStorage.set('order_form', this.data.form)
+// //                        当选择不使用优惠的情况
+//                 dis.order = 0;
+//                 this.setData({
+//                     [`form.discount`]: {},
+//                     [`form.formStates.discountsCheckIndex`]: check,
 
-                } else {
-                    // this.$Alert('超过最大优惠折扣', () => {
-                    //     check = -1;
-                    // });
-                    wx.showModal({
-                        title: '超过最大折扣',
-                        showCancel: false,
-                        success: function (res) {
-                            if (res.confirm) check = -1
-                        }
-                    })
-                    this.setData({
-                        [`form.discount`]: {}
-                    })
-                    cookieStorage.set('order_form', this.data.form)
-                }
-            }
-        }
+//                 })
+//                 if (this.data.temporary.coupons.length) {
 
-//                优惠券折扣
-        if (this.data.block.coupon && this.data.block.coupon.adjustments && Array.isArray(this.data.block.coupon.adjustments)) {
-            let adjustments = this.data.block.coupon.adjustments;
-            let exclusive = this.data.form.coupon.discount.exclusive;
-            let discount = -(adjustments[0].amount);
-            if (discount <= total) {
-                if (exclusive) {  // 是否排他
-                    console.log('促销的钱', dis.order);
-                    if (dis.order != 0) {
-                        total -= dis.order;
-                        console.log('总价', total);
-                    }
-                    dis.order = 0;
-                    this.setData({
-                        'form.isDisabled': true,
-                        'form.discount': {},
-                        'block.discounts': [],
-                        'formStates.discountsCheckIndex': -1,
-                        'form.formStates.discountsCheckIndex': -1
-                    })
-                } else {
-                    this.setData({
-                        [`block.discounts`]: this.data.temporary.discounts,
-                        [`form.isDisabled`]: false
-                    })
-                    // console.log(32424242);
-                }
-                dis.coupon = adjustments[0].amount;
-                total -= discount;
-//                        操作积分
+//                     this.setData({
+//                         [`block.coupons`]: this.data.temporary.coupons
+//                     })
+//                 }
+//                 //                            操作积分
+//                 // this.data.block.orderPoint.pointCanUse = Math.min(total * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint);
+//                 // this.data.block.orderPoint.pointAmount = Math.max(-(total * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney));
+//                 //
+//                 // this.data.form.coupon = this.data.temporary.coupon;     // 将选择的优惠券还原
 
-                console.log(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint));
-                this.setData({
-                    [`block.orderPoint.pointCanUse`]: Number(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
-                    [`block.orderPoint.pointAmount`]: Number(Math.max(-((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney)).toFixed(2))
-                }, () => {
-                    this.setData({
-                        [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse
-                    })
-                })
-            } else {
-                wx.showModal({
-                    title: '超过最大折扣',
-                    showCancel: false,
-                })
-                this.setData({
-                    [`form.coupon`]: {},
-                    [`temporary.coupon`]: {},
-                    [`form.isDisabled`]: false
-                })
-                cookieStorage.set('order_form', this.data.form)
-            }
-        }
+//                 this.setData({
+//                     [`block.orderPoint.pointCanUse`]: Number(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
+//                     [`block.orderPoint.pointAmount`]: Number((Math.max(-((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney))).toFixed(2)),
+//                     [`form.coupon`]: this.data.temporary.coupon
+//                 }, () => {
+//                     this.setData({
+//                         [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse
+//                     })
+//                 })
+//                 cookieStorage.set('order_form', this.data.form)
+//             } else {
+
+// //                        当使用了优惠的情况
+//                 let discount = -(discounts[check].adjustmentTotal);
+//                 console.log(discount)
+//                 let exclusive = discounts[check].exclusive;    //是否排他(优惠券);
+
+//                 if (discount <= total) {
+//                     if (exclusive) {
+//                         this.setData({
+//                             [`block.coupon`]: {},
+//                             [`block.coupons`]: [],
+//                             [`form.coupon`]: {}
+//                         })
+//                     } else {
+//                         this.setData({
+//                             [`block.coupons`]: this.data.temporary.coupons,
+//                             [`form.coupon`]: this.data.temporary.coupon
+//                         })
+//                     }
+//                     dis.order = discounts[check].adjustmentTotal;
+//                     this.setData({
+//                         [`form.discount`]: discounts[check]
+//                     })
+//                     total -= discount;
+//                     // 操作积分
 
 
+//                     this.setData({
+//                         [`block.orderPoint.pointCanUse`]: Number(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
+//                         [`block.orderPoint.pointAmount`]: Number((Math.max(-((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney))).toFixed(2)),
+//                         [`form.formStates.discountsCheckIndex`]: check
+//                     }, () => {
+//                         this.setData({
+//                             [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse
+//                         })
+//                     })
+//                     // Cache.set(cache_keys.order_form, this.data.form);
+//                     cookieStorage.set('order_form', this.data.form)
 
-        //              积分折扣
-        if (this.data.form.point) {
+//                 } else {
+//                     // this.$Alert('超过最大优惠折扣', () => {
+//                     //     check = -1;
+//                     // });
+//                     wx.showModal({
+//                         title: '超过最大折扣',
+//                         showCancel: false,
+//                         success: function (res) {
+//                             if (res.confirm) check = -1
+//                         }
+//                     })
+//                     this.setData({
+//                         [`form.discount`]: {}
+//                     })
+//                     cookieStorage.set('order_form', this.data.form)
+//                 }
+//             }
+//         }
 
-            let factor = this.data.extra.factor;
+// //                优惠券折扣
+//         if (this.data.block.coupon && this.data.block.coupon.adjustments && Array.isArray(this.data.block.coupon.adjustments)) {
+//             let adjustments = this.data.block.coupon.adjustments;
+//             let exclusive = this.data.form.coupon.discount.exclusive;
+//             let discount = -(adjustments[0].amount);
+//             if (discount <= total) {
+//                 if (exclusive) {  // 是否排他
+//                     console.log('促销的钱', dis.order);
+//                     if (dis.order != 0) {
+//                         total -= dis.order;
+//                         console.log('总价', total);
+//                     }
+//                     dis.order = 0;
+//                     this.setData({
+//                         'form.isDisabled': true,
+//                         'form.discount': {},
+//                         'block.discounts': [],
+//                         'formStates.discountsCheckIndex': -1,
+//                         'form.formStates.discountsCheckIndex': -1
+//                     })
+//                 } else {
+//                     this.setData({
+//                         [`block.discounts`]: this.data.temporary.discounts,
+//                         [`form.isDisabled`]: false
+//                     })
+//                     // console.log(32424242);
+//                 }
+//                 dis.coupon = adjustments[0].amount;
+//                 total -= discount;
+// //                        操作积分
 
-            let discount = this.data.form.point * factor;
-            if (discount <= total) {
-                dis.point = -discount;
-                total -= discount;
-                if (total < 0) {
-                    total = 0;
-                    if (dis.point != 0) {
-                        dis.total = -(fixedTotal + dis.point);
-                    }
-                } else {
-                    //                除积分外的优惠
-                    dis.total = dis.order + dis.coupon;
-                }
-                cookieStorage.set('order_form', this.data.form)
-            } else {
-                this.setData({
-                    [`form.point`]: 0
-                })
-                cookieStorage.set('order_form', this.data.form)
-            }
-        }
-
-        // 除积分外的优惠
-        dis.total = dis.order + dis.coupon;
-
-        if ((this.data.form.point > this.data.block.orderPoint.pointCanUse) && this.data.block.orderPoint.pointCanUse > 0) {
-            this.setData ({
-                [`form.point`]:this.data.block.orderPoint.pointCanUse
-            })
-            dis.point = Number((this.data.block.orderPoint.pointCanUse * 10).toFixed(2))
-        }
+//                 console.log(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint));
+//                 this.setData({
+//                     [`block.orderPoint.pointCanUse`]: Number(Math.min((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit / this.data.block.orderPoint.pointToMoney, this.data.block.orderPoint.userPoint).toFixed(2)),
+//                     [`block.orderPoint.pointAmount`]: Number(Math.max(-((total - pointCanotUseAmount) * this.data.block.orderPoint.pointLimit), -(this.data.block.orderPoint.userPoint * this.data.block.orderPoint.pointToMoney)).toFixed(2))
+//                 }, () => {
+//                     this.setData({
+//                         [`available.currentPoint`]: this.data.newBlock.orderPoint.pointCanUse
+//                     })
+//                 })
+//             } else {
+//                 wx.showModal({
+//                     title: '超过最大折扣',
+//                     showCancel: false,
+//                 })
+//                 this.setData({
+//                     [`form.coupon`]: {},
+//                     [`temporary.coupon`]: {},
+//                     [`form.isDisabled`]: false
+//                 })
+//                 cookieStorage.set('order_form', this.data.form)
+//             }
+//         }
 
 
-        this.setData({
-            [`paymentMoneys.discounts`]: dis,
-            [`paymentMoneys.total`]: total
-        })
-    },
+
+//         //              积分折扣
+//         if (this.data.form.point) {
+
+//             let factor = this.data.extra.factor;
+
+//             let discount = this.data.form.point * factor;
+//             if (discount <= total) {
+//                 dis.point = -discount;
+//                 total -= discount;
+//                 if (total < 0) {
+//                     total = 0;
+//                     if (dis.point != 0) {
+//                         dis.total = -(fixedTotal + dis.point);
+//                     }
+//                 } else {
+//                     //                除积分外的优惠
+//                     dis.total = dis.order + dis.coupon;
+//                 }
+//                 cookieStorage.set('order_form', this.data.form)
+//             } else {
+//                 this.setData({
+//                     [`form.point`]: 0
+//                 })
+//                 cookieStorage.set('order_form', this.data.form)
+//             }
+//         }
+
+//         // 除积分外的优惠
+//         dis.total = dis.order + dis.coupon;
+
+//         if ((this.data.form.point > this.data.block.orderPoint.pointCanUse) && this.data.block.orderPoint.pointCanUse > 0) {
+//             this.setData ({
+//                 [`form.point`]:this.data.block.orderPoint.pointCanUse
+//             })
+//             dis.point = Number((this.data.block.orderPoint.pointCanUse * 10).toFixed(2))
+//         }
+
+
+//         this.setData({
+//             [`paymentMoneys.discounts`]: dis,
+//             [`paymentMoneys.total`]: total
+//         })
+//     },
     usePoint(e){
 
         /*if (e.detail.value) {

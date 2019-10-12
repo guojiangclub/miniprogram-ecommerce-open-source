@@ -12,7 +12,6 @@
     "indexNav": "../../../component/index-nav/index-nav",
     "indexCategory": "../../../component/index-category/index-category",
     "indexCube": "../../../component/index-cube/index-cube",
-    "indexGrouping": "../../../component/index-grouping/index-grouping",
-    "indexBargain":"../../../component/index-bargin/index-bargin"
+    "indexGrouping": "../../../component/index-grouping/index-grouping"
   }
 }

@@ -49,7 +49,7 @@
                             {{item.color}} <span wx:if="{{item.color && item.size}}">,</span> {{item.size}}
                         </view>
                         <view class="money">
-                            ￥{{item.total}}
+                            ￥{{item.newTotal}}
                         </view>
                     </view>
                     <view class="mun-box">
@@ -76,7 +76,7 @@
             <text>全选</text>
         </label>
         <view class="money-box">
-            商品总计：<text>￥{{select_products.total}}</text>
+            商品总计：<text>￥{{coustMoney}}</text>
         </view>
         <button class="num-box" bindtap="order" loading="{{loading}}">
             结算<text>{{'('+ select_products.count + ')' || 0}}</text>

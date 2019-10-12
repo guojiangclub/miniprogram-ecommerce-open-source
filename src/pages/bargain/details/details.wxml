@@ -247,8 +247,8 @@
                 </view>
             </view>
 
-            <button class="button"  wx:if="{{!canBuy}}" style="background: {{config.mainColor}}" type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
-            <button class="button disabled" wx:else type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+            <button class="button"  wx:if="{{canBuy}}" style="background: {{config.mainColor}}" type="primary" loading="{{loading}}" bindtap="confirm">确定</button>
+            <button class="button" style="background: {{config.mainColor}}" wx:else type="primary" loading="{{loading}}" bindtap="showToast">确定</button>
 
             <!--<view  class="button {{ canBuy ? 'disabled' : '' }}" bindtap="confirm">-->
 

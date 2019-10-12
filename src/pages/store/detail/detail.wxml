@@ -746,7 +746,7 @@
                                     <view class="tiem-box">
                                         <text>{{item.use_start_time}}至{{item.use_end_time}}</text>
                                     </view>
-                                    <view class="btn use" style="background: {{config.mainColor}}; border-color: {{config.mainColor}}" data-code="{{item.code}}" data-index="{{index}}" wx:if="{{!coupons[index].receive}}" bindtap="getCoupon">
+                                    <view class="btn use" style="background: {{config.mainColor}}; border-color: {{config.mainColor}}" data-discount-id="{{item.id}}" data-index="{{index}}" wx:if="{{!coupons[index].receive}}" bindtap="getCoupon">
                                         点击领取
 
                                     </view>

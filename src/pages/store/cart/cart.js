@@ -261,23 +261,33 @@ Page({
         var data = {
             count:0,
             total:0,
+            newTotal:0,
             __ids:[]
         }
-
+        console.log('看下list1',this.data.list)
         this.data.list.forEach((v) => {
             if (v.checked) {
                 data.count += parseInt(v.qty);
                 data.total += Number(v.total);
                 data.__ids.push(v.__raw_id || v.index);
+                data.newTotal = Number(v.total).toFixed(2);
+                v.newTotal=Number(v.total).toFixed(2)
             } else {
                 this.setData({
                     allCheck:false
                 })
             }
         })
+        console.log('看下list',this.data.list)
         this.setData({
-            select_products:data
+            select_products:data,
+            list:this.data.list
         })
+        var coustMoney=Number(this.data.select_products.total).toFixed(2)
+        this.setData({
+            coustMoney:coustMoney
+        })
+        console.log('coustMoney',this.data.coustMoney)
         wx.hideLoading();
     },
 
@@ -293,7 +303,8 @@ Page({
             if (val > 0 && val <= 99) {
                 var data = {
                     qty: val,
-                    total: val * Number(list[index].price)
+                    total: val * Number(list[index].price),
+                    newTotal:Number(val * Number(list[index].price)).toFixed(2)
                 };
                 this.change(list[index], data,index);
             }
@@ -301,7 +312,8 @@ Page({
             if (val > 0 && val <= store_count) {
                 var data = {
                     qty: val,
-                    total: val * Number(list[index].price)
+                    total: val * Number(list[index].price),
+                    newTotal:Number(val * Number(list[index].price)).toFixed(2)
                 };
                 this.change(list[index], data,index);
             }  else {
@@ -338,7 +350,8 @@ Page({
         }
         var data = {
             qty: val,
-            total: val * Number(item.price)
+            total: val * Number(item.price),
+            newTotal:Number(val * Number(item.price)).toFixed(2)
         };
 
         this.change(item, data);
@@ -383,9 +396,12 @@ Page({
         if (status) {
             item.qty = data.qty;
             item.total = data.total;
+            item.newTotal=Number(item.total).toFixed(2)
         } else {
             item.qty = data.qty;
             item.total = item.qty * Number(item.price);
+            item.newTotal=Number(item.total).toFixed(2)
+                console.log('data.newTotal',data.newTotal)
             wx.showToast({
                 title:'超过最大库存',
                 icon: 'none'

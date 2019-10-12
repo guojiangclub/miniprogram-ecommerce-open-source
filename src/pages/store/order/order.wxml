@@ -245,7 +245,7 @@
     </view>
     <view class="sbumit-order mx-1px-top">
         <view class="back" style="color: {{config.mainColor}}">
-            {{newBlock.order.count}}件商品, 合计 ￥{{(block.order.total/100)}}
+            {{newBlock.order.count}}件商品, 合计 ￥{{(pay_amount/100)}}
         </view>
         <button class="sbumit" style="background: {{config.mainColor}}" bindtap="submitOrder" loading="{{loading}}">
             提交订单

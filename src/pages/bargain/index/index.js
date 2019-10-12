@@ -64,10 +64,23 @@ Page({
         }).then(res =>{
             if (res.statusCode == 200) {
                 console.log("获取详情res",res)
-                if(res.data.data.order&&res.data.data.order.status==1){
-                    wx.navigateTo({
-                        url:`/pages/order/detail/detail?no=${res.data.data.order.order_no}`
-                    })
+                if(res.data.data.order !=null){
+                    if(res.data.data.order.status==1){{
+                        wx.navigateTo({
+                            url:`/pages/order/detail/detail?no=${res.data.data.order.order_no}`
+                        })
+                    }}
+                }
+                if(res.data.data.order !=null){
+                    if(res.data.data.order.status==1){
+                        wx.navigateTo({
+                            url:`/pages/order/detail/detail?no=${res.data.data.order.order_no}`
+                        })
+                    }else{
+                        wx.navigateTo({
+                            url:`/pages/bargain/details/details?reduce_items_id=${this.data.reduce_items_id}&id=${this.data.id}`
+                        })
+                    }
                 }
                 else{
                     wx.navigateTo({
