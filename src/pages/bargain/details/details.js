@@ -1077,33 +1077,4 @@ Page({
        this.getMessage()
         
     },
-//触底加载
-//   onReachBottom: function () { 
-//     var token = cookieStorage.get('user_token');
-//       console.log("触底加载")     
-//     let that = this;
-//     wx.showLoading({
-//         title: '玩命加载中',
-//         duration: 1000,
-//       })
-//       that.setData({
-//         page : this.data.page ++
-//       })
-//       sandBox.get({
-//         api: '',
-//         header: {
-//             Authorization: token
-//         },
-//         data:{
-
-//         }
-//       }).then(res=>{
-//             if(res.statusCode == 200){
-
-//             }else{
-
-//             }
-//       })
-//     wx.hideLoading()
-//   }
 })
