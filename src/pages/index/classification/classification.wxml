@@ -45,16 +45,16 @@
     <block>
         <view class="classifical">
             <view class="left-menu">
-                <view class="item {{activeIndex == key ? 'active' : ''}}" wx:for="{{classData}}" wx:key="{{index}}" wx:for-item="i" wx:for-index="key" bindtap="change" data-index="{{key}}">{{i.associate.name}}</view>
+                <view class="item {{activeIndex == key ? 'active' : ''}}" wx:for="{{classData}}" wx:key="{{index}}" wx:for-item="i" wx:for-index="key" bindtap="change" data-index="{{key}}">{{i.value[0].associate.name}}</view>
             </view>
             <view class="right-content">
                 <view class="title" bindtap="jumpItem" data-url="{{classData[activeIndex].link}}">
-                    <span>{{classData[activeIndex].associate.name}}</span>
-                    <span class="iconfont icon--xiangyoujiantou"></span>
+                    <span>{{classData[activeIndex].value[0].associate.name}}</span>
+                    <span class="iconfont icon--xiangyoujiantou"  bindtap="jumpList" data-id="{{classData[activeIndex].value[0].associate_id}}"></span>
                 </view>
-                <view wx:for="{{classData}}" wx:key="{{index}}" wx:if="{{activeIndex == index}}" wx:for-item="items" class="list" bindtap="jumpStore" data-id="{{items.associate_id}}">
-                    <view wx:for="{{items.goodsList}}" wx:for-item="item" class="list-item">
-                        <view class="list">
+                <view wx:for="{{classData}}" wx:key="{{index}}" wx:if="{{activeIndex == index}}" wx:for-item="items" class="list">
+                    <view wx:for="{{items.value[0].goodsList}}" wx:for-item="item" class="list-item">
+                        <view class="list" bindtap="jumpStore" data-id="{{item.id}}">
                             <view class="photo">
                                 <image src="{{item.img}}" mode="widthFix"></image>
                             </view>

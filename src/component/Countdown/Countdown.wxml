@@ -1,0 +1,5 @@
+<view class="Countdown">
+    <view class="time">
+        <span class="item">{{day}}</span> 天 <span class="item">{{hour}}</span> 时 <span class="item">{{minute}}</span> 分 <span class="item">{{second}}</span> 秒
+    </view>
+</view>

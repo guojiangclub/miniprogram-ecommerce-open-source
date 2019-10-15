@@ -6,7 +6,7 @@ export default  {
         // https://demo-open-admin.ibrand.cc/
         //https://admin-dev.ibrand.cc/
         //https://dev-open-admin.ibrand.cc/
-        //dev-open-admin-swoole.ibrand.cc
+        //dev-open-admin-swoole.ibrand.cc/
     },
     GLOBAL: {
         baseUrl: process.env.NODE_ENV === 'development' ? 'https://dev-open-admin-swoole.ibrand.cc/' : 'https://dev-open-admin-swoole.ibrand.cc/', // 运行时自动替换变量

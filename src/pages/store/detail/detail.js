@@ -441,7 +441,7 @@ Page({
 
                         this.getGid(shareTicketInfo);
                     } else {
-                        this.getStoreDetail();
+                        //this.getStoreDetail();
                     }
                     if (agent_code && res.data.mini_program_login_type == 'default' && !token) {
                         wx.showLoading({
@@ -533,7 +533,7 @@ Page({
                             })
                     },
                     fail: err => {
-                        this.getStoreDetail();
+                       // this.getStoreDetail();
                     }
                 })
             }

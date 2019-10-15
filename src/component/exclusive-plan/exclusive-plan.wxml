@@ -1,0 +1,13 @@
+<view class="exclusive-plan" style="margin-bottom: {{meta.margin_bottom}}px">
+    <view class="title" wx:if="{{planTitle && show}}">
+        <span>{{planTitle}}</span>
+        <span data-link="/pages/article/list/list?type=2" bindtap="_jumpImg">更多
+             <text class="iconfont icon-gengduo"></text>
+        </span>
+    </view>
+    <view class="content-plans">
+        <view class="item" wx:for="{{planData}}" wx:key="{{index}}" data-link="{{item.link}}" bindtap="_jumpImg">
+            <image src="{{item.image}}"></image>
+        </view>
+    </view>
+</view>

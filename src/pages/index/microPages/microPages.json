@@ -1,0 +1,22 @@
+{
+  "navigationBarTitleText": " ",
+  "usingComponents": {
+    "preview": "../../../component/preview/preview",
+    "seckill": "../../../component/seckill/seckill",
+    "group": "../../../component/group/group",
+    "indexBanner": "../../../component/index-banner/index-banner",
+    "indexCoupon": "../../../component/index-coupon/index-coupon",
+    "indexSuit": "../../../component/index-suit/index-suit",
+    "indexGroupon": "../../../component/index-groupon/index-groupon",
+    "indexSeckill": "../../../component/index-seckill/index-seckill",
+    "indexCall": "../../../component/index-call/index-call",
+    "indexNav": "../../../component/index-nav/index-nav",
+    "indexCategory": "../../../component/index-category/index-category",
+    "indexCube": "../../../component/index-cube/index-cube",
+    "indexGrouping": "../../../component/index-grouping/index-grouping",
+    "bigCoffee": "../../../component/big-coffee/big-coffee",
+    "healthTips": "../../../component/health-tips/health-tips",
+    "exclusivePlan": "../../../component/exclusive-plan/exclusive-plan"
+
+  }
+}

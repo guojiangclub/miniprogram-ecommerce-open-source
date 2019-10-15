@@ -29,7 +29,7 @@ Page({
     jumpStore(e){
         var id = e.currentTarget.dataset.id;
         wx.navigateTo({
-            url:`/pages/store/list/list?id=${id}`
+            url:`/pages/store/detail/detail?id=${id}`
         })
     },
     jumpItem(e){
@@ -47,6 +47,13 @@ Page({
             imgHeight: screenWidth / ratio
         })
     },
+    jumpList(e){
+        console.log(e,'e')
+        var id = e.currentTarget.dataset.id;
+        wx.navigateTo({
+            url:`/pages/store/list/list?c_id=${id}`
+        })
+    },
     classificationList() {
         wx.showLoading({
             title:'加载中',
@@ -61,8 +68,9 @@ Page({
                     console.log(res.data.pages[0].value,"6666");
                     this.setData({
                         init:true,
-                        classData: res.data.pages[0].value
+                        classData: res.data.pages
                     })
+                    console.log('classData',this.data.classData)
                 } else {
                     wx.showModal({
                         content: '请求失败',

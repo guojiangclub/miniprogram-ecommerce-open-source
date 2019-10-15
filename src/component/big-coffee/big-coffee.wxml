@@ -1,0 +1,30 @@
+<view class="big-coffee" style="margin-bottom: {{meta.margin_bottom}}px">
+    <view class="title" wx:if="{{coffeeTitle && show}}">
+        <span>{{coffeeTitle}}</span>
+        <!--<span data-link="/pages/article/coffeeList/coffeeList?type=1" bindtap="_jumpImg">
+            更多
+             <i class="iconfont icon-gengduo"></i>
+        </span>-->
+    </view>
+    <view class="ul-list">
+        <view class="li-item" wx:for="{{coffeeData}}" wx:key="{{index}}" data-link="{{item.link}}" bindtap="_jumpImg">
+            <view class="left-info">
+                <image src="{{item.image}}"></image>
+            </view>
+            <view class="right-info">
+                <view class="name">
+                    {{item.associate.title}}
+                </view>
+                <view class="referrer">
+                    <view class="avatar">
+                        <image src="{{item.associate.author_avatar}}"></image>
+                    </view>
+                    <view class="detail">
+                        <view class="nick-name">推荐者：{{item.associate.author}}</view>
+                        <view class="sub-intro">{{item.associate.author_title}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,33 @@
+<view class="seckill-box" style="margin-bottom: {{meta.margin_bottom}}px;background:{{meta.background_color}}" wx:if="{{indexData && indexData.length}}">
+    <view class="title" data-src="/pages/store/seckill/seckill" bindtap="_jumpImg">
+        <span>限时秒杀</span>
+        <span>
+            更多
+         <text class="iconfont icon-gengduo"></text>
+        </span>
+    </view>
+    <view wx:for="{{indexData}}" wx:key="{{index}}">
+        <view class="seckill-info" data-id="{{item.associate.goods.id}}" bindtap="_jumpToDetail">
+            <view class="left">
+                <image src="{{item.image}}"></image>
+            </view>
+            <view class="right">
+                <view class="goods-name">
+                    {{item.associate.goods.name}}
+                </view>
+                <view class="price-box">
+                    <text>￥{{item.associate.seckill_price}}</text>
+                    <text class="old">￥{{item.associate.goods.sell_price}}</text>
+                </view>
+                <view class="seckill-time">
+                    <view>
+                        <seckill end="{{item.associate.ends_at}}" starts="{{item.associate.starts_at}}" server="{{server}}" mold="index" bind:starts="isStarts" bind:end="isEnd" data-index="{{index}}" data-idx="{{bigIndex}}"></seckill>
+                    </view>
+                    <view style="background: {{config.mainColor}}" class="buy">
+                        去抢购
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,17 @@
+<view class="header" style="height:{{statusBarHeight+44}}px;">
+    <view class="header-container {{bganimateable?'bganimate':''}}  {{shadow?'shadow':''}}" style="background-color:{{bgColor}}; background-image:{{bgImg}};opacity:{{opacity}};padding-top:{{statusBarHeight}}px;height:44px;">
+        <view class="header-back {{backable?'':'only-home'}}" style="background:{{backBgColor}};border:{{backBgColor?'none':''}};" wx:if="{{headerBtns}}">
+            <view bindtap="back" class="back-area" data-route="back" wx:if="{{backable}}">
+                <image class="header-back-image" mode="aspectFit" src="../../assets/image/back.png"></image>
+            </view>
+            <view class="sperate" wx:if="{{backable}}"></view>
+            <view bindtap="toHome" class="home-area" data-route="index">
+                <image class="header-home" src="../../assets/image/backHome.png"></image>
+            </view>
+        </view>
+        <view class="header-image" wx:if="{{url}}">
+            <image src="{{url}}"></image>
+        </view>
+        <view class="header-title {{url ? '' : 'text-m'}}" style="color:{{color}};">{{title}}</view>
+    </view>
+</view>
