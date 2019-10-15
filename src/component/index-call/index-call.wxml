@@ -1,0 +1,41 @@
+<!--打call-->
+<view class="seckill-box" style="margin-bottom: {{meta.margin_bottom}}px">
+    <view class="title " data-src="/pages/store/callList/callList" bindtap="_jumpImg">
+        <span>打Call免费领</span>
+        <span>更多
+             <text class="iconfont icon-gengduo"></text>
+        </span>
+    </view>
+    <view wx:for="{{callData}}" wx:key="{{index}}">
+        <view class="seckill-info" data-goods="{{item.associate.goods.id}}" data-id="{{item.associate_id}}" bindtap="_jumpCall">
+            <view class="left">
+                <image src="{{item.associate.img}}"></image>
+            </view>
+            <view class="right">
+                <view class="goods-name">
+                    {{item.associate.label}}
+                </view>
+                <view class="price-box free-money">
+                    <view class="money">
+                        <text class="new">￥{{item.associate.goods.sell_price}}</text>
+                        <text class="old">￥{{item.associate.goods.market_price}}</text>
+                    </view>
+                    <view class="nun">
+                        限量{{item.associate.limit}}件
+                    </view>
+                </view>
+                <view class="seckill-time">
+                    <view wx:if="{{item.associate.activity_status == 'NoBegin'}}">
+                        <seckill end="{{item.associate.ends_at}}" typename="集call" starts="{{item.associate.starts_at}}" server="{{server}}" mold="index"></seckill>
+                    </view>
+                    <view class="free" wx:else>
+                        集满{{item.associate.per_count}}个Call即可免费领
+                    </view>
+                    <view style="background: {{config.mainColor}}" class="buy">
+                        去打Call
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -24,6 +24,7 @@
     "pages/order/evaluate/evaluate",
     "pages/favorite/index/index",
     "pages/coupon/index/index",
+    "pages/index/microPages/microPages",
     "pages/coupon/onDetail/onDetail"
   ],
   "window": {

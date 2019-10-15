@@ -1,0 +1,72 @@
+<template name="birthdayToast">
+    <view id="birthday-box" wx:if="{{isShow}}">
+        <view class="mask">
+
+        </view>
+        <view class="box">
+            <view class="title">
+                <image src="https://ibrand-miniprogram.oss-cn-hangzhou.aliyuncs.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F/X.png" bindtap="closeBirthdayTap"/>
+                <!--<i class="iconfont icon-cha-"></i>-->
+            </view>
+            <view class="name">
+                亲爱的 <span>{{data.user.nick_name}}</span> 祝你生日快乐
+            </view>
+            <view class="coupon-list">
+                <!--赠送积分-->
+                <!--v-if="data.activity.point_status"-->
+                <view class="item point" wx:if="{{data.activity.point_status}}">
+                    <view class="left">
+                        <view class="lable">
+                            <!--赠送111积分-->
+                            赠送 {{data.activity.point}} 积分
+                        </view>
+                    </view>
+                    <view class="right">
+
+                    </view>
+                </view>
+
+                <!--积分翻倍-->
+                <!--v-if="data.activity.point_double_status"-->
+                <view class="item" wx:if="{{data.activity.point_double_status}}">
+                    <view class="left">
+                        <view class="lable">
+                            <!--123-->
+                            {{data.activity.point_double_title}}
+                        </view>
+                        <view class="time">
+                            <!--456-->
+                            {{data.activity.point_double_time}}
+                        </view>
+                    </view>
+                    <div class="right">
+                        <!--X-->
+                        X {{data.activity.point_double}}
+                    </div>
+                </view>
+                <!--v-for="item in data.activity.gift" v-show="item.is_receive_coupon" -->
+                <!--优惠券-->
+                <view class="item" wx:if="{{item.is_receive_coupon}}" wx:for="{{data.activity.gift}}">
+                    <view class="left">
+                        <view class="lable">
+                            <!--123-->
+                            {{item.coupon.title}}
+                        </view>
+                        <view class="time">
+                            <!--32121-->
+                            {{item.coupon.usestart_at}} - {{item.coupon.useend_at}}
+                        </view>
+                    </view>
+                    <view class="right">
+                        <!--2323-->
+                        {{item.coupon.label}}
+                    </view>
+                </view>
+            </view>
+            <!--@click="close"-->
+            <view class="buttom" bindtap="closeBirthdayTap">
+                <span>我知道了</span>
+            </view>
+        </view>
+    </view>
+</template>

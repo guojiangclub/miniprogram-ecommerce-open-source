@@ -1,0 +1,102 @@
+.big-coffee{
+  background-color: #FFFFFF;
+  padding: 0 15px;
+  .title{
+    padding: 10px 0px 0px 0;
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    align-items: center;
+
+    span:nth-child(1) {
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 33px;
+      display: inline-block;
+      //padding-left: 6px;
+      //border-left: 4px solid #E7031C;
+    }
+    i{
+      margin-left: 5px;
+    }
+
+    span:nth-child(2) {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      text{
+        font-size: 15px;
+        font-weight: 700;
+        margin-top: -8px;
+        margin-left: 5px;
+      }
+    }
+  }
+  .ul-list{
+   .li-item{
+     padding: 9px 0px;
+     display: flex;
+     align-items: center;
+     .left-info{
+       width:122px;
+       height:122px;
+       image{
+         width: 100%;
+         height: 100%;
+         vertical-align:middle;
+       }
+     }
+     .right-info{
+       flex: 1;
+       overflow: hidden;
+       padding-left: 18px;
+       .name{
+         height: 48px;
+         color:#111111;
+         font-size: 16px;
+         line-height: 24px;
+         margin-bottom:29px;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 2;
+         overflow: hidden;
+       }
+       .referrer{
+         display: flex;
+         align-items: center;
+         .avatar{
+           width: 34px;
+           height: 34px;
+           border-radius: 50%;
+           image{
+             width: 100%;
+             height: 100%;
+             border-radius: 50%;
+           }
+         }
+         .detail{
+           flex: 1;
+           overflow: hidden;
+           padding-left: 7px;
+           .nick-name{
+             color:#666666;
+             font-size: 12px;
+             line-height: 17px;
+             overflow: hidden;
+             text-overflow: ellipsis;
+             white-space: nowrap;
+           }
+           .sub-intro{
+             color: #999999;
+             font-size: 10px;
+             line-height: 14px;
+             overflow: hidden;
+             text-overflow: ellipsis;
+             white-space: nowrap;
+           }
+         }
+       }
+     }
+   }
+ }
+}

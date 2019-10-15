@@ -1,0 +1,84 @@
+<!--新数据循环-->
+<view id="microPages">
+    <!--<view>
+        <customNavbar navbar-data="{{nvabarData}}"></customNavbar>
+    </view>-->
+    <block wx:if="{{microData && microData.pages && microData.pages.length}}">
+        <view wx:for="{{microData.pages}}" wx:key="{{index}}">
+            <view wx:if="{{item.name == 'micro_page_componet_search'}}">
+                <!--搜索按钮-->
+                <view class="banner">
+                    <view class="search">
+                        <div class="menu-box" bindtap="jumpMenu"> 
+                            <i class="iconfont icon-fenzu">
+
+                            </i>
+                        </div>
+                        <view class="search_box">
+                            <input type="text" value="" bindinput="search" disabled confirm-type="search" bindtap="jumpToSearch"/>
+                            <icon type="search" size="20"/>
+
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!--轮播图组件-->
+            <view wx:if="{{item.name == 'micro_page_componet_slide' && item.value && item.value.length}}">
+                <indexBanner banner-data="{{item.value}}" banner-title="{{item.title}}" screen-width="{{screenWidth}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></indexBanner>
+            </view>
+            <!--优惠券组件-->
+            <view wx:if="{{item.name == 'micro_page_componet_coupon' && item.value && item.value.length}}">
+                <indexCoupon index-coupon="{{item.value}}" config="{{config}}" bindmyGetCoupon="getCoupon" show="{{item.is_show_title}}" meta="{{item.meta}}"></indexCoupon>
+            </view>
+            <!--套餐-->
+            <view wx:if="{{item.name == 'micro_page_componet_suit' && item.value && item.value.length}}">
+                <indexSuit suit-data="{{item.value}}" index-data="{{indexData}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></indexSuit>
+            </view>
+            <!--大咖推荐-->
+            <view wx:if="{{item.name == 'micro_page_componet_article_-' && item.value && item.value.length}}">
+                <bigCoffee coffee-data="{{item.value}}" coffee-title="{{item.title}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></bigCoffee>
+            </view>
+            <!--专属方案-->
+            <view wx:if="{{item.name == 'micro_page_componet_article_|' && item.value && item.value.length}}">
+                <exclusivePlan plan-data="{{item.value}}" plan-title="{{item.title}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></exclusivePlan>
+            </view>
+            <!--健康美丽Tips-->
+            <view wx:if="{{item.name == 'micro_page_componet_goods_group_change' && item.value && item.value.length}}">
+                <healthTips data="{{item.value}}" title="{{item.title}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></healthTips>
+            </view>
+            <!--猜你喜欢-->
+            <view wx:if="{{item.name == 'micro_page_componet_guess_like' && item.value && item.value.length}}">
+                <waterfallsFlow data="{{item.value}}" title="{{item.title}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></waterfallsFlow>
+            </view>
+            <!--拼团-->
+            <view wx:if="{{item.name == 'micro_page_componet_groupon' && item.value && item.value.length}}">
+                <indexGroupon index-data="{{item.value}}" config="{{config}}" server="{{microData.server_time}}" typename="拼团" meta="{{item.meta}}"></indexGroupon>
+            </view>
+            <!--秒杀-->
+            <view wx:if="{{item.name == 'micro_page_componet_seckill' && item.value && item.value.length}}">
+                <indexSeckill index-data="{{item.value}}" config="{{config}}" server="{{microData.server_time}}" big-index="{{index}}" bind:startevent="isStarts" bind:endevent="isEnd" meta="{{item.meta}}"></indexSeckill>
+            </view>
+
+            <!--打call indexCall-->
+            <view wx:if="{{item.name == 'micro_page_componet_free_event' && item.value && item.value.length}}">
+                <indexCall call-data="{{item.value}}" config="{{config}}" is-login="{{isLogin}}" server="{{microData.server_time}}" meta="{{item.meta}}"></indexCall>
+            </view>
+            <!--快捷导航-->
+            <view wx:if="{{item.name == 'micro_page_componet_nav' && item.value && item.value.length}}">
+                <indexNav nav-data="{{item.value}}" meta="{{item.meta}}"></indexNav>
+            </view>
+            <!--图片魔方-->
+            <view  wx:if="{{item.name == 'micro_page_componet_cube' && item.value && item.value.length}}">
+                <indexCube cube-data="{{item.value}}" show-type="{{item.type}}" cube-title="{{item.title}}" show="{{item.is_show_title}}" meta="{{item.meta}}"></indexCube>
+            </view>
+            <!--分类商品-->
+            <view  wx:if="{{item.name == 'micro_page_componet_category' && item.value && item.value.length}}">
+                <indexCategory category-data="{{item.value}}" meta="{{item.meta}}"></indexCategory>
+            </view>
+            <!--商品分组-->
+            <view  wx:if="{{item.name == 'micro_page_componet_goods_group' && item.value && item.value.length}}">
+                <indexGrouping grouping-data="{{item.value}}" meta="{{item.meta}}"></indexGrouping>
+            </view>
+        </view>
+    </block>
+</view>

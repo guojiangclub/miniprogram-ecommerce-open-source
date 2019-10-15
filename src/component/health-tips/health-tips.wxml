@@ -1,0 +1,36 @@
+<view class="health-tips" style="margin-bottom: {{meta.margin_bottom}}px">
+    <view class="title" wx:if="{{title && show}}">
+        <span>{{title}}</span>
+    </view>
+    <view class="ul-content">
+        <view class="li-item" wx:if="{{tipsData}}">
+            <view class="top-box">
+                <view class="topic">
+                    {{tipsData.name}}
+                </view>
+                <view class="change" bindtap="_changeItem">
+                    换一换
+                </view>
+            </view>
+            <view class="center-box">
+                {{tipsData.meta.subtitle}}
+            </view>
+            <view class="bottom-box">
+                <view class="item" data-id="{{item.associate.id}}" wx:for="{{tipsData.children}}" wx:key="{{index}}" bindtap="_jumpToDetail">
+                    <view class="info">
+                        <view class="img-box">
+                            <image src="{{item.associate.img}}"></image>
+                        </view>
+                        <view class="name">
+                            {{item.associate.name}}
+                        </view>
+                        <view class="money">
+                            ￥{{item.associate.sell_price}}
+                            <span>￥{{item.associate.market_price}}</span>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
