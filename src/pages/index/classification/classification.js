@@ -65,12 +65,10 @@ Page({
             if (res.statusCode == 200) {
                 res = res.data
                 if (res.status) {
-                    console.log(res.data.pages[0].value,"6666");
                     this.setData({
                         init:true,
                         classData: res.data.pages
                     })
-                    console.log('classData',this.data.classData)
                 } else {
                     wx.showModal({
                         content: '请求失败',

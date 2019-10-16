@@ -54,9 +54,9 @@
                 </view>
                 <view wx:for="{{classData}}" wx:key="{{index}}" wx:if="{{activeIndex == index}}" wx:for-item="itemList" class="list">
                     <view wx:for="{{itemList.value}}" wx:for-item="items" class="">
-                        <view class="name">
+                        <!--<view class="name">
                             {{items.meta.name}}
-                        </view>
+                        </view>-->
                         <view class="f_l">
                             <view wx:for="{{items.goodsList}}"  class="list-item">
                                 <view class="list" bindtap="jumpStore" data-id="{{item.id}}">

@@ -20,7 +20,7 @@ Page({
             author: initInfo && initInfo.other_technical_support ? initInfo.other_technical_support : ''
         })
         if(token){
-            this.gitUserInfo();
+            this.getUserInfo();
             this.getCenter();
         }
     },
@@ -59,8 +59,6 @@ Page({
                 Authorization: cookieStorage.get('user_token')
             },
         }).then(res => {
-            console.log(res.data, '这个是list数据');
-
             if (res.data.data.status) {
                 // 此处控制我的奖励部分的显示与隐藏
                 let agent = res.data.data.is_agent;
@@ -68,6 +66,7 @@ Page({
                     this.port()
                     this.setData({
                         userAgent: true,
+                        detail:res.data.data
                     })
                    
                 } else {
@@ -85,7 +84,6 @@ Page({
                     detail: res.data.data,
                     init: true
                 })
-                console.log(this.data.detail,"这是detail")
                 cookieStorage.set('userInfoImg', res.data.data.avatar)
                 cookieStorage.set('userInfoName', res.data.data.nick_name) 
             }
@@ -140,7 +138,6 @@ Page({
                 avatar:e.avatarUrl,
             },
         }).then(res =>{
-            console.log(res);
             if(res.statusCode==200){
                 res = res.data;
                 if (res.status) {
@@ -149,7 +146,7 @@ Page({
                         duration: 1500,
                         success:()=>{
                             setTimeout(()=>{
-                                this.gitUserInfo();
+                                this.getUserInfo();
                             },1500);
                         }
                     })
@@ -171,7 +168,7 @@ Page({
         })
     },
     // 获取用户信息
-    gitUserInfo() {
+    /*gitUserInfo() {
         let that=this
         sandBox.get({
             api: 'api/me',
@@ -190,7 +187,7 @@ Page({
                 }
             }
         })
-    },
+    },*/
     //获取页面信息
     getCenter(){
         var token=cookieStorage.get('user_token');
