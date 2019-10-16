@@ -52,7 +52,6 @@ Page({
             if (res.statusCode == 200) {
                 res = res.data
                 if (res.status) {
-                    console.log(res.data);
                     this.setData({
                         init:true,
                         classData: res.data

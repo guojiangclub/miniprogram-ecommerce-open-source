@@ -149,8 +149,6 @@ Page({
     },
 
     onLoad(e) {
-        console.log(e,"加载时候的e")
-        console.warn('这个是详情获取到的参数', e); 
         // 第三方平台配置颜色
         var gbConfig = cookieStorage.get('globalConfig') || '';
         var init = cookieStorage.get('init');
@@ -312,9 +310,7 @@ Page({
         var agent_code = '';
         if (e.agent_code) {
             agent_code = e.agent_code
-            console.log('分享有agen_code',agent_code)
         }
-        console.log('这是分享的code',agent_code)
         if (e.scene) {
             var scene = decodeURIComponent(e.scene);
             var sceneArr = scene.split(',');
@@ -324,8 +320,6 @@ Page({
         }
         // 获取agent_code存缓存里
         if (agent_code) { 
-
-            console.log("缓存里的agent_code",agent_code)
             // 如果有agent_code并且有coupon_agent_code就将coupon_agent_code清除，保证agent_code为第一位
             if (cookieStorage.get('coupon_agent_code')) {
                 cookieStorage.clear('coupon_agent_code')
@@ -350,13 +344,11 @@ Page({
 
             let timeStamp = new Date().getTime();
             timeStamp += timeMap.n * valid_time;
-            console.log('这个是时间', valid_time);
             // 如果有agent_code就讲这次进入的时间缓存
             cookieStorage.set('agent_code_time', timeStamp, valid_time + 'n');
 
             // 如果缓存中没有agent_code
             if (!cookieStorage.get('agent_code')) {
-                console.log(1);
                 var data = [];
                 data.push({
                     id: this.data.id,
@@ -365,11 +357,8 @@ Page({
                 cookieStorage.set('agent_code', agent_code, valid_time + 'n');
                 cookieStorage.set('agent_goods_id', data);
             } else {
-                console.log(2);
-                console.log(cookieStorage.get('agent_code'));
                 // 判断缓存的code和从url的code相等
                 if (agent_code == cookieStorage.get('agent_code')) {
-                    console.log(3);
                     var data = cookieStorage.get('agent_goods_id') ? cookieStorage.get('agent_goods_id') : [];
                     var flag = false;
                     for (var i = 0; i < data.length; i++) {
@@ -388,7 +377,6 @@ Page({
                     cookieStorage.set('agent_code', agent_code, valid_time + 'n');
                     cookieStorage.set('agent_goods_id', data);
                 } else {
-                    console.log(4);
                     var data = [];;
                     data.push({
                         id: this.data.id,
@@ -527,7 +515,6 @@ Page({
                                     }
                                     wx.hideLoading();
                                 }
-                                console.log(res);
                             }, err => {
                                 this.getStoreDetail();
                             })
@@ -543,7 +530,6 @@ Page({
     getStoreDetail(wechat_group_id) {
         var token = cookieStorage.get('user_token') || '';
         var wechat_group_id = wechat_group_id || cookieStorage.get('openGId') || '';
-        console.log("this.data.id",this.data.id)
         this.getGoodsDetail({
             api: `api/store/detail/${this.data.id}`,
             header: {
@@ -646,63 +632,6 @@ Page({
             lock: false
         })
     },
-    //商品加入购物车
-//     addCar(){ 
-//         console.log
-//     var data=cookieStorage.get('cart') || [];
-//     // var oauth = Cache.get(cache_keys.token);
-//     var oauth = this.data.is_login
-
-//     if (!oauth) {
-//         this.setData({
-//             list:data
-//         })
-
-//         this.select_product()
-//         this.groupList()
-
-//         return
-//     }
-//     var that = this;
-//     sandBox.get({
-//         api:`api/shopping/cart`,
-//         header: {Authorization: oauth},
-
-//     }).then(res => {
-
-//         res = res.data
-//         var data = []
-//         if (res.status && res.data) {
-//             data = Object.keys(res.data).map(key => {
-//                 res.data[key].checked = true;
-//                 return res.data[key];
-//             }).concat(data);
-
-//             // 购物车领券
-//             if (data.length) {
-//                 var list = [];
-//                 data.forEach(v => {
-//                     if (that.data.goodsList.indexOf(v.com_id) == -1) {
-//                         list.push(v.com_id)
-//                     };
-//                 });
-//                 this.setData({
-//                     goodsList: list
-//                 });
-//                 this.cardDiscount(list);
-
-//             }
-//         }
-//         that.setData ({
-//             list:data
-//         })
-//         that.select_product()
-
-//         that.groupList()
-//     }).catch(()=>{
-//         this.addCart(false)
-//     })
-// },
     // 网络繁忙倒计时
     HideTen() {
         this.setData({
@@ -711,7 +640,6 @@ Page({
     },
     //跳转购物车页面
     shopCar(){
-        console.log(1)
         wx.navigateTo({
             url:'/pages/store/cart/cart'
         })
@@ -1042,7 +970,6 @@ Page({
                 message: '原价购买'
             }
         } else if (group && commodity.multi_groupon_init_status == 1) {
-            // console.log(this.data.groupon_item_id);
             if (this.data.detailData.data.multi_groupon_join_status == 1) {
                 ret = {
                     group: true,
@@ -1128,7 +1055,6 @@ Page({
                 message: '原价购买'
             }
         } else if (group && commodity.multi_groupon_init_status == 1) {
-            // console.log(this.data.groupon_item_id);
             if (this.data.detailData.data.multi_groupon_join_status == 1) {
                 ret = {
                     status: true,
@@ -1273,70 +1199,8 @@ Page({
             this.setData({
                     message: `${arr[1]} 月 ${arr[2]} 日，${arr[3]} : ${arr[4]} 开始`
                 })
-                // this.message = `${arr[1] - 1} 月 ${arr[2]} 日，${arr[3]} : ${arr[4]} 开始`
         }
     },
-    // 秒杀结束执行
-    // isEnd() {
-    //     if (this.data.detailData.meta.seckill || this.data.detailData.meta.groupon) {
-    //         var id = this.data.id;
-    //         var token = cookieStorage.get('user_token') || '';
-    //         this.getGoodsDetail({
-    //             api: `api/store/detail/${id}`,
-    //             header: {
-    //                 Authorization: token
-    //             },
-    //             data: { include: 'photos,products,oneComment,guessYouLike,whoLike,point,user' }
-    //         })
-    //         this.queryCommodityStore(id);
-    //     }
-    // },
-    // isStarts() {
-    //     if ((this.data.detailData.meta.seckill && this.data.detailData.meta.seckill.init_status == 2) || (this.data.detailData.meta.groupon && this.data.commodity.multi_groupon_init_status == 2)) {
-    //         var token = cookieStorage.get('user_token') || '';
-
-    //         var id = this.data.id;
-    //         this.getGoodsDetail({
-    //             api: `api/store/detail/${id}`,
-    //             header: {
-    //                 Authorization: token
-    //             },
-    //             data: { include: 'photos,products,oneComment,guessYouLike,whoLike,point,user' },
-
-    //         })
-    //         this.queryCommodityStore(id);
-    //     }
-    // },
-
-    // onStateChange(nextState){
-    //     console.log(nextState)
-    //     if (!app.isEmptyObject(nextState.detailData)) {
-    //         Wxparse.wxParse('detailI', 'html', nextState.detailData.data.content, this, 0);
-    //         this.attributesList(nextState.detailData.meta);
-    //         wx.setNavigationBarTitle({
-    //             title: nextState.detailData.data.name
-    //         })
-    //         this.setData({
-    //             detailData: nextState.detailData,
-    //             commodity: nextState.detailData.data
-    //         })
-    //         wx.hideLoading()
-    //     }
-    //
-    //     // if (nextState.commoditySpec.length > 0 ) {
-    //     //
-    //     //     this.setData({
-    //     //         specs:nextState.commoditySpec
-    //     //     })
-    //     // }
-    //     //
-    //     // if (!app.isEmptyObject(nextState.resultStore)) {
-    //     //     this.specStore(nextState.resultStore,nextState.resultStore.key)
-    //     //
-    //
-    //     // }
-    //
-    // },
 
     change(e) {
         var expands = this.data.expands[e.currentTarget.dataset.type];
@@ -1347,7 +1211,6 @@ Page({
     },
     jumpCollage() {
         var multi_groupon_item_id = this.data.groupon_userlist.multi_groupon_item_id;
-        console.log("multi_groupon_item_id",multi_groupon_item_id)
         wx.navigateTo({
             url: `/pages/store/collage/collage?multi_groupon_item_id=${multi_groupon_item_id}`
         })
@@ -1592,7 +1455,6 @@ Page({
         var is_login = cookieStorage.get('user_token');
         var discount_id = e.currentTarget.dataset.discountId;
         var index = e.currentTarget.dataset.index;
-        console.log('看看discount_id有没有',discount_id)
         if (is_login) {
             this.goodsConvertCoupon(discount_id, index);
         } else {
@@ -1795,8 +1657,6 @@ Page({
                     specs: specs
                 })
 
-                // console.log(specs)
-
             }
 
         }
@@ -1832,7 +1692,6 @@ Page({
             loading: true
         })
         var select_product = this.data.select_product;
-        console.log(select_product,'select_product')
         var select_count = Number(this.data.select_count)
         var data = this.data.specs.length ? {
             id: select_product.id,
@@ -2015,7 +1874,6 @@ Page({
 
                     }
                 });
-                // console.log(skus, save)
 
                 cookieStorage.set('cart', save);
 
@@ -2050,7 +1908,6 @@ Page({
         }
     },
     disallow_cart() {
-        console.log('...')
         if (!this.data.specs.length) {
             return !this.data.store_count;
         }
@@ -2058,7 +1915,6 @@ Page({
         var ids = [],
             select_product = {},
             specs = this.data.specs;
-        // console.log(this.data.commodity.sell_price)
         this.setData({
             price: Number(this.data.commodity.sell_price).toFixed(2),
         })
@@ -2094,10 +1950,6 @@ Page({
             ids = ids.join('-');
             select_product = Object.assign(select_product, this.data.skuTable[ids]);
         }
-        // console.log(ids)
-        console.warn(this.data.skuTable)
-        console.warn(this.data.skuTable[ids])
-            // console.log(select_product.price)
         this.setData({
             price: Number(select_product.price).toFixed(2),
             select_product: select_product
@@ -2218,28 +2070,8 @@ Page({
                 });
             }
         }).catch(rej => {
-            // console.log(rej)
         })
     },
-    // 打call
-    // getFree(id) {
-    //     var oauth = this.data.is_login || ''
-    //     sandBox.get({
-    //         api: 'api/free_event/getFree/' + id,
-    //         header: { Authorization: oauth }
-    //     }).then(res => {
-    //         res = res.data;
-    //         if (res.status) {
-    //             this.setData({
-    //                 freeInfo: res.data
-    //             })
-    //         } else {
-
-    //         }
-    //     }).catch(rej => {
-
-    //     })
-    // },
     call(e) {
         var token = cookieStorage.get('user_token');
         var id = this.data.freeInfo.id;
@@ -2288,7 +2120,6 @@ Page({
                     that.setData({
                             specs: specs
                         })
-                         console.log(specs,"sku")
 
                     var canBuy = this.disallow_cart()
 
@@ -2318,7 +2149,6 @@ Page({
                                 })
                             });
                         });
-                    // console.log(data);
                     var result = { data, table: res.data.stores };
 
                     this.setData({
@@ -2430,20 +2260,11 @@ Page({
 
                     if (res.statusCode == 200) {
                         res = res.data;
-                        console.log(res, '88888888888888888888888888888888888')
                         if (res.status) {
                             that.setData({
                                 detailData: res,
                                 commodity: res.data,
                             })
-                            console.log('commodity',this.data.commodity)
-                            /*if (res.meta.seckill) {
-                                var interval = setInterval(this.countStartsTime, 1000);
-
-                                that.setData({
-                                    'startsTime.interval': interval
-                                })
-                            }*/
                             if (res.meta.discounts) {
                                 res.meta.discounts.coupons.forEach(v => v.receive = false);
                                 that.setData({
@@ -2485,32 +2306,11 @@ Page({
                         showCancel: false
                     })
                     wx.hideLoading();
-                    // console.log(err);
                     reject()
                 })
         })
 
     },
-
-
-    // 查询商品详情页优惠折扣信息
-    // queryDiscounts(id) {
-    //    wx.request({
-    //        url: config.GLOBAL.baseUrl + 'api/store/detail/' + id + '/discount',
-    //        success: res => {
-    //            if (res.statusCode == 200) {
-    //                res = res.data;
-    //                if (res.status) {
-    //                    res.data.coupons.forEach(v => v.receive = false);
-    //                    this.setData({
-    //                         coupons: res.data.coupons,
-    //                         discounts: res.data.discounts
-    //                    })
-    //                }
-    //            }
-    //        }
-    //    })
-    // },
     // 领取优惠券
     goodsConvertCoupon(discount_id, index) {
         var token = cookieStorage.get('user_token');

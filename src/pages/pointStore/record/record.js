@@ -16,7 +16,6 @@ Page({
         this.recordList(this.data.page);
     },
     jump(e){
-        console.log(e);
         wx.navigateTo({
             url: '/pages/pointStore/orderdetail/orderdetail?no=' + e.currentTarget.dataset.no
         })

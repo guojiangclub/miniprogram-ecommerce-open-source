@@ -33,7 +33,6 @@ Page({
         })
     },
     change(e){
-        console.log(e);
         this.setData({
             selectedIndex:e.detail.value,
             bank_name: this.data.bankList[e.detail.value].bank.bank_name,

@@ -35,7 +35,6 @@ Page({
         this.queryOrderDetail(this.data.order_no);
 	},
 	onLoad(e) {
-        console.log('e',e)
 		this.setData({
             order_no: e.no
 		})

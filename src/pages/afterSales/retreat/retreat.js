@@ -8,7 +8,6 @@ Page({
         refundNo:""
     },
     change:function(e){
-        // console.log(e);
         // 修改选中项文案
         this.setData({
             selectedIndex:e.detail.value
@@ -74,7 +73,6 @@ Page({
             shipping_tracking:this.data.codeNumber,
             shipping_code:this.data.codeList[this.data.selectedIndex].code
         }
-        // console.log(applyItem);
         this.returnData(applyItem);
     },
     returnData(data){

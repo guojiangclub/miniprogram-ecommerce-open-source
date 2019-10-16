@@ -11,7 +11,6 @@ Page({
     },
     onLoad: function() {
         var windowHeight = wx.getSystemInfoSync().windowHeight//获取设备的高度
-        console.log("windowHeight",windowHeight)
         this.setData({
             Height:windowHeight
         })
@@ -29,7 +28,6 @@ Page({
             //     current_page:this.data.current_page
             // }
         }).then(res=>{
-            console.log(res.data.data,"reslist")
             if(res.statusCode == 200){
                     // res.data.data.forEach(item=>{
                     //     this.data.list.push(item)
@@ -40,16 +38,13 @@ Page({
                     total_pages:res.data.meta.total_pages,
                     current_page:res.data.meta.pagination.current_page
                 })
-                console.log("list",this.data.list)
             }
         })
     },
     toDetail(e){
-        console.log('e',e)
         this.setData({
             reduce_items_id:e.currentTarget.dataset.reduceId
         })
-        console.log('this.data.reduce_items_id',this.data.reduce_items_id)
         wx.navigateTo({
             url: `/pages/bargain/details/details?reduce_items_id=${this.data.reduce_items_id}`
         })
@@ -63,7 +58,6 @@ Page({
             this.setData({
                 limit:the_limit
             })
-            console.log('the_limit',the_limit)
             this.getList()
         }else{
             wx.showToast({

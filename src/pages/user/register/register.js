@@ -30,7 +30,6 @@ Page({
     },
     // 利用code登录
     autoLogin(code) {
-        console.log(code);
         sandBox.post({
             api: 'api/oauth/MiniProgramLogin',
             data: {

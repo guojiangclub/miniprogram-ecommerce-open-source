@@ -75,7 +75,6 @@ Page({
                     bank_card_number: this.data.mobilePhone,
                     owner_name: this.data.name
                 }
-                console.log(1);
                 this.updateBankCard(this.data.id,data)
             } else {
                 var data = {

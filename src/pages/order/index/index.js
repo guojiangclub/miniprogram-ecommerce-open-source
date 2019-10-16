@@ -147,7 +147,6 @@ Page({
         var status = this.data.activeIndex
         var page = this.data.tabList[status].page + 1;
         var tabList = `tabList[${status}]`;
-        console.log(tabList);
         if (this.data.tabList[status].more) {
         	this.setData({
                 [`${tabList}.show`]: true

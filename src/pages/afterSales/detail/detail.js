@@ -137,6 +137,5 @@ Page({
         })
     },
     onReady(){
-        console.log(this.data.detail);
     }
 })

@@ -245,7 +245,6 @@ Page({
 		})
 	},
 	onReachBottom(e) {
-		// debugger
 		var status = this.data.activeIndex;
 		var statusPage = this.data.status[status];
         var page = this.data.tabList[status].statusNum[statusPage].page + 1;
@@ -304,7 +303,6 @@ Page({
                         [`${tabList}.statusNum.${dataStatus}.more`]: current_page < total_pages,
                         [`${tabList}.show`]: false
                     })
-                    /*console.log(this.data.tabList[status].statusNum[dataStatus]);*/
                 } else {
                     wx.showToast({
                         title: res.message,

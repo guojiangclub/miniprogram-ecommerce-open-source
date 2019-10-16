@@ -46,9 +46,7 @@ Page({
         }).then(res=>{
             if (res.statusCode==200){
                 res = res.data;
-                console.log(res);
                 if (res.status){
-                    console.log(1);
                     this.setData({
                         [`dataList.${page - 1}`] : res.data,
                         meta:res.meta,

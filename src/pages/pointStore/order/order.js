@@ -142,7 +142,6 @@ import {
             show: false
         })
 
-        console.log(this.data.form.coupon)
 
         this.paymentMoney()
     },
@@ -226,7 +225,6 @@ import {
                 block: Object.assign({}, this.data.block, block),
                 form: Object.assign({}, this.data.form, form)
             })
-            console.log(this.data.form)
             this.paymentMoney()
             // t.next({block, form});
         } else {
@@ -324,7 +322,6 @@ import {
             header: {Authorization:  oauth},
         }).then(res => {
             res = res.data;
-            console.log(res)
             if (res.status) {
                 cookieStorage.clear('point_order')
                 // this.$emit('confirm', true, res.data);
@@ -396,7 +393,6 @@ import {
 
             let discounts = this.data.block.discounts;
             let check = this.data.formStates.discountsCheckIndex;
-            console.warn(check)
             if (check == -1) {
 
 
@@ -429,7 +425,6 @@ import {
 
 //                        当使用了优惠的情况
                 let discount = -(discounts[check].adjustmentTotal);
-                console.log(discount)
                 let exclusive = discounts[check].exclusive;    //是否排他(优惠券);
 
                 if (discount <= total) {
@@ -505,8 +500,6 @@ import {
                 cookieStorage.set('order_form', this.data.form)
             }
         }
-
-        console.log(this.data.form, this.data.block)
 
 
         //              积分折扣

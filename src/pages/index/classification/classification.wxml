@@ -52,11 +52,11 @@
                     <span>{{classData[activeIndex].value[0].meta.name|| classData[activeIndex].value[0].associate.name}}</span>
                     <span class="iconfont icon--xiangyoujiantou"  bindtap="jumpList" data-id="{{classData[activeIndex].value[0].associate_id}}"></span>
                 </view>
-                <view wx:for="{{classData}}" wx:key="{{index}}" wx:if="{{activeIndex == index}}" wx:for-item="itemList" class="list">
-                    <view wx:for="{{itemList.value}}" wx:for-item="items" class="">
-                        <!--<view class="name">
+                <view wx:for="{{classData}}"  wx:if="{{activeIndex == index}}" wx:for-item="itemList" class="list">
+                    <view wx:for="{{itemList.value}}" wx:for-item="items" class="" wx:key="{{index}}">
+                        <view class="name" wx:if="{{index!=0}}">
                             {{items.meta.name}}
-                        </view>-->
+                        </view>
                         <view class="f_l">
                             <view wx:for="{{items.goodsList}}"  class="list-item">
                                 <view class="list" bindtap="jumpStore" data-id="{{item.id}}">

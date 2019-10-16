@@ -146,7 +146,6 @@ Page({
         })
     },
     onReachBottom() {
-        // debugger
         var hasMore = this.data.meta.pagination.total_pages > this.data.meta.pagination.current_page;
         if (hasMore) {
             var page = this.data.meta.pagination.current_page + 1;
@@ -160,7 +159,6 @@ Page({
     },
 	// 获取订单列表
 	orderList(status, page = 1) {
-        console.log(status);
         var token = cookieStorage.get('user_token');
 		var params = {
             criteria: status,

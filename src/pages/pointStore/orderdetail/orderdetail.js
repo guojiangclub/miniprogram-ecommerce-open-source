@@ -42,7 +42,6 @@ Page({
         // });
 	},
 	onLoad(e) {
-        console.log(e,'00000000');
         this.setData({
 			order_no: e.no
 		})

@@ -46,7 +46,6 @@ Page({
                     this.setData({
                         list: res.data
                     })
-                    console.log(this.data.list,'这是list');
                     
                 }
             }
@@ -114,7 +113,6 @@ Page({
         })
     },
     bindgetuserinfo(e) {
-        console.log(e,"e");
         // 说明用户同意授权
         if (e.detail.userInfo) {
             this.updateUserInfo(e.detail.userInfo)
@@ -167,27 +165,6 @@ Page({
             }
         })
     },
-    // 获取用户信息
-    /*gitUserInfo() {
-        let that=this
-        sandBox.get({
-            api: 'api/me',
-            header:{
-                Authorization:cookieStorage.get('user_token')
-            },
-        }).then(res =>{
-            console.log(res,"res返回")
-            if(res.data.status){
-                this.setData({
-                    detail:res.data.data
-                })
-                console.log("this.data.detail",this.data.detail)
-                if(this.data.detail.status==1){
-                    that.port();
-                }
-            }
-        })
-    },*/
     //获取页面信息
     getCenter(){
         var token=cookieStorage.get('user_token');

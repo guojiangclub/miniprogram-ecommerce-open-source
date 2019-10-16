@@ -29,7 +29,6 @@ Page({
     },
     select(e) {
         var value = e.detail.value;
-        console.log(e);
         var newList = [];
         if (value.length == this.data.total) {
             this.setData({
@@ -92,7 +91,6 @@ Page({
     cancel() {
         var data = this.data.checkList;
         data.forEach((v) => {
-            console.log(v);
             this.setData({
                 id: v
             })
@@ -106,7 +104,6 @@ Page({
             wx.showModal({
                 content: '是否删除账号',
                 success: res=>{
-                    console.log(res);
                     if (res.confirm) {
                         this.removeBankCard(this.data.id);
                     }

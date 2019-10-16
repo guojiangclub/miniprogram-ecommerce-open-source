@@ -10,7 +10,6 @@ Page({
         length: ''
     },
     onLoad(e) {
-        console.log(e);
         var order_no = e.order_no;
         this.initOrderComment(order_no);
         this.setData({
@@ -18,7 +17,6 @@ Page({
         })
     },
     upload(e){
-        console.log(e);
         var index = e.currentTarget.dataset.index;
         var that = this
         wx.chooseImage({
@@ -66,7 +64,6 @@ Page({
         });
     },
     deleteImg(e) {
-        console.log(e);
         var index = e.currentTarget.dataset.index;
         var idx = e.currentTarget.dataset.idx;
         var images = e.currentTarget.dataset.images;
@@ -74,7 +71,6 @@ Page({
         this.setData({
             [`orderData.items[${index}].upload_images` ]: images
         })
-        console.log(images);
     },
     allowComment() {
         if (this.data.orderData.items && this.data.orderData.items.length) {

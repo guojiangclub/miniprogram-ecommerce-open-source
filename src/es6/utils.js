@@ -137,7 +137,6 @@ export const cookieStorage={
 		// 缓存时间设置
 		if(time){
 			var last=time.charAt(time.length-1);
-			console.log(last);
 			if(!is.isNum(last)){
                 timestamp=(time.slice(0,time.length-1))*(timeMap[last])+new Date().getTime();
 			}
@@ -150,7 +149,6 @@ export const cookieStorage={
 		}
 		data.expire=timestamp;
         wx.setStorageSync(key,data);
-		console.log(timestamp);
 	},
 	get:function(key){
         if(!wx.getStorageSync(key)){

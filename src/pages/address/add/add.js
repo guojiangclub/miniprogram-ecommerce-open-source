@@ -41,7 +41,6 @@ Page({
                 'detail.address_name': address_name
 
             })
-            console.log(address);
         }
 	},
 	bindRegionChange(e) {

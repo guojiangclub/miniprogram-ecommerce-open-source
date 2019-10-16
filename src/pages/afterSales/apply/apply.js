@@ -34,7 +34,6 @@ Page({
         // });
     },
     changeValue(e){
-        console.log(e.detail.value);
         let amount = e.detail.value;
         if (!amount) {
             amount = ''
@@ -67,7 +66,6 @@ Page({
         })
     },
     change: function (e) {
-        // console.log(e);
         // 修改选中项文案
         this.setData({
             selectedIndex: e.detail.value
@@ -79,7 +77,6 @@ Page({
         })
     },
     getValue: function (e) {
-        console.log(e.detail.value)
     },
     onLoad(e){
         // 第三方平台配置颜色
@@ -286,7 +283,6 @@ Page({
             }
         }).then(res=>{
             res = res.data;
-            console.log(res);
             var list=[];
             res.data.forEach((v)=>{
                 if(v.is_enabled!=0){

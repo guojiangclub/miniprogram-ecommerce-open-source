@@ -49,7 +49,7 @@
             </view>
         </view>
     </view>
-    <view class="detail-item user-info" wx:if="{{detail.intro}}">
+    <view class="detail-item user-info" wx:if="{{detail.intro!=''}}">
         <view class="title">
             使用说明
         </view>

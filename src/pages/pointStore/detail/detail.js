@@ -113,7 +113,6 @@ Page({
     
             wx.login({
                 success: res => {
-                    console.log(res.code)
                 }
             })
             wx.showLoading({
@@ -136,7 +135,6 @@ Page({
                 api: `api/store/detail/${e.id}`,
                 data: {include: 'photos,oneComment,guessYouLike,point'}
             }).then(() => {
-                console.log(this.data.commodity)
                 this.attributesList(this.data.detailData.meta);
                 wx.setNavigationBarTitle({
                     title: this.data.detailData.data.name
@@ -680,8 +678,6 @@ Page({
                         specs: specs
                     })
     
-                    console.log(specs)
-    
                 }
     
             }
@@ -807,7 +803,6 @@ Page({
             }
     
             var ids = [], select_product = {}, specs = this.data.specs;
-            console.log(this.data.commodity.sell_price)
             this.setData({
                 price: Number(this.data.commodity.sell_price).toFixed(2),
             })
@@ -957,7 +952,6 @@ Page({
                     });
                 }
             }).catch(rej => {
-                console.log(rej)
             })
         },
         queryCommodityStore(id, key){
@@ -990,7 +984,6 @@ Page({
                         that.setData({
                             specs: specs
                         })
-                        console.log(specs)
     
                         var canBuy = this.disallow_cart()
     
@@ -1020,7 +1013,6 @@ Page({
                                     })
                                 });
                             });
-                        // console.log(data);
                         var result = {data, table: res.data.stores};
     
                         this.setData({
@@ -1084,42 +1076,6 @@ Page({
     
                 this.closeSelect();
                 this.changeCart();
-    
-                // wx.showModal({
-                //     content: '商品成功加入购物车！',
-                //     cancelText: '进购物车',
-                //     confirmText: '继续购物',
-                //     success: function (res) {
-                //         if (res.confirm) {
-                //            console.log('用户点击取消')
-                //         } else if (res.cancel) {
-                //            wx.navigateTo({
-                //                url: '/pages/store/cart/cart'
-                //            })
-                //         }
-                //     },
-                //     fail: function () {
-                //         wx.showToast({
-                //             title: '添加失败',
-                //             image: '../../../assets/image/error.png',
-                //         })
-                //     }
-                // })
-    
-                // if (typeof window.__analytics == 'function') {
-                //     console.log('11212132323')
-                //     var cart = {
-                //         action :'add to cart',
-                //         product:{
-                //             sku: this.$brand.name == 'JackWolfskin' ? this.select_product.id :this.select_product.sku,
-                //             title: this.commodity.name,
-                //             category: this.commodity.tags,
-                //             quantity: this.store_count
-                //         }
-                //     }
-                //
-                //     window.__analytics({cart})
-                // }
             } else {
                 if (message) {
                     wx.showToast({
@@ -1212,7 +1168,6 @@ Page({
             return new Promise((resolve, reject) => {
                 sandBox.get(obj)
                     .then(res => {
-                        console.log(res)
                         res = res.data;
                         that.setData({
                             detailData: res,
@@ -1236,7 +1191,6 @@ Page({
                         resolve()
                     })
                     .catch(err => {
-                        console.log(err);
                         reject()
                     })
             })

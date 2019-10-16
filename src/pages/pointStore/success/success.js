@@ -16,7 +16,6 @@ Page({
         this.setData({
             config: gbConfig
         })
-        console.log(e);
         var data = {
             order_no : e.order_no
         }

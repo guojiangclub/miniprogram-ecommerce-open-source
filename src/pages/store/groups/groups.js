@@ -24,7 +24,6 @@ Page({
         this.querySeckillList(1)
     },
     jump(e) {
-        console.log("e",e)
         wx.navigateTo({
             url: '/pages/store/detail/detail?id=' + e.currentTarget.dataset.id
         })

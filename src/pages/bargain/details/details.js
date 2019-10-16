@@ -35,7 +35,6 @@ Page({
         //this.getMessage()
         var  that =this
         this.getServer()
-        console.log("e",e)
         if(e.reduce_items_id){
             that.setData({
                 reduce_items_id:e.reduce_items_id
@@ -43,19 +42,12 @@ Page({
         that.getMessage()
 
         }
-        // if(e.id){
-        //     that.setData({
-        //         id:e.id
-        //     })
-        // }
-        // console.log("这是id",that.data.id)
         if(this.data.overTime==true || this.data.overActivity==true){
             that.setData({
                 setColor:'AAAAAA'
             })
         }    
         var windowHeight = wx.getSystemInfoSync().windowHeight//获取设备的高度
-        console.log("windowHeight",windowHeight)
         this.setData({
             Height:windowHeight
         })
@@ -104,7 +96,6 @@ Page({
     getStoreDetail(wechat_group_id) {
         var token = cookieStorage.get('user_token') || '';
         var wechat_group_id = wechat_group_id || cookieStorage.get('openGId') || '';
-        console.log("this.data.id",this.data.id)
         this.getGoodsDetail({
             api: `api/store/detail/${this.data.goods_id}`,
             header: {
@@ -170,7 +161,6 @@ Page({
 
                     if (res.statusCode == 200) {
                         res = res.data;
-                        console.log(res, '88888888888888888888888888888888888')
                         if (res.status) {
                             that.setData({
                                 detailData: res,
@@ -225,7 +215,6 @@ Page({
                         showCancel: false
                     })
                     wx.hideLoading();
-                    // console.log(err);
                     reject()
                 })
         })
@@ -379,7 +368,6 @@ Page({
                     specs: specs
                 })
 
-                // console.log(specs)
 
             }
 
@@ -409,7 +397,6 @@ Page({
     },
     confirm() {
         if(this.data.select_product.color && this.data.select_product.size){
-            console.log('this.data.select_product',this.data.select_product)
         }else{
             return;
         }
@@ -458,45 +445,16 @@ Page({
         var ids = [],
             select_product = {},
             specs = this.data.specs;
-        // console.log(this.data.commodity.sell_price)
-        // this.setData({
-        //     price: Number(this.data.commodity.sell_price).toFixed(2),
-        // })
-        // var select_product={
-        //     color:specs[0].spec.values[0].alias || specs[0].spec.values[0].value ,
-        //     size:specs[1].spec.values[0].alias || specs[0].spec.values[0].value 
-        // }
         for (let spec of specs) {
-            // if (!spec.select) {
-            //     this.setData({
-            //         price: Number(this.data.commodity.sell_price).toFixed(2),
-            //         select_product: null
-            //     })
-            //     return true;
-            // }
 
             ids.push(spec.select);
-            // console.log("这是spec.values",spec.values)
             for (let v of spec.values) {
                 if (v.id === spec.select) {
-                    // switch (spec.label_key) {
-                    //     case 'color':
-                    //         select_product.img = v.img;
-                    //         select_product.color = v.alias || v.value;
-                    //         select_product.bac = v.color
-                    //        // break;
-                    //     case 'Size':
-                    //         select_product.size = v.alias || v.value;
-                    // }
-
-                    // break;
                     if(spec.label_key=='Color'){
                         select_product.color = v.alias || v.value;
-                        console.log('select_product.color',select_product.color)
                     }
                     else if(spec.label_key=='Size'){
                         select_product.size = v.alias || v.value;
-                        console.log('select_product.size',select_product.size)
                     }
                 }
             }
@@ -507,15 +465,10 @@ Page({
             ids = ids.join('-');
             select_product = Object.assign(select_product, this.data.skuTable[ids]);
         }
-        // console.log(ids)
-        // console.warn(this.data.skuTable)
-        // console.warn(this.data.skuTable[ids])
-            // console.log(select_product.price)
         this.setData({
             price: Number(select_product.price).toFixed(2),
             select_product: select_product
         })
-        console.log("这是select_product",this.data.select_product)
         if(this.data.select_product.color && this.data.select_product.size){
             that.setData({
                 canBuy:true
@@ -558,7 +511,6 @@ Page({
                     that.setData({
                             specs: specs
                         })
-                         console.log(specs,"sku")
 
                     var canBuy = this.disallow_cart()
 
@@ -588,7 +540,6 @@ Page({
                                 })
                             });
                         });
-                    // console.log(data);
                     var result = { data, table: res.data.stores };
 
                     this.setData({
@@ -615,7 +566,6 @@ Page({
     //获取详情页信息
     getMessage(){
         let that=this
-        console.log(this.data.reduce_items_id,"this.data.reduce_items_id")
         var token = cookieStorage.get('user_token'); 
         sandBox.get({
             api:`api/reduce/showItem?reduce_items_id=${this.data.reduce_items_id}`,
@@ -624,7 +574,6 @@ Page({
 			},
         }).then(res =>{
             if (res.statusCode == 200) {
-                console.log("获取详情res",res)
                 if(res.data.data.status_text !=="进行中" &&res.data.data.status_text!=="已下单待支付" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
                     that.setData({
                         overTime:true,
@@ -666,9 +615,7 @@ Page({
                    time_price:res.data.data.time_price
                 })
                 that.queryCommodityStore(this.data.goods_id)
-                console.log("this.data.over",this.data.over)
                 that.showWitch()
-                console.log("detailsMessage",this.data.detailsMessage)
                if(this.data.detailsMessage.progress_par>0.17 && this.data.detailsMessage.progress_par<0.83){
                 let percent=parseInt(this.data.detailsMessage.progress_par*100)-17
                 that.setData({
@@ -698,7 +645,6 @@ Page({
         let that =this
         var token = cookieStorage.get('user_token'); 
          var id = this.data.reduce_id;
-         console.log("晕",id)
          var data={
             reduce_id:id,
             restart:1
@@ -710,7 +656,6 @@ Page({
             },
             data:data
         }).then(res =>{
-            console.log("res发起",res.data)
             if (res.statusCode == 200) {
                 wx.showToast({
                     title:'已重新发起砍价',
@@ -719,8 +664,6 @@ Page({
                 that.setData({
                     reduce_items_id:res.data.data.reduce_items_id
                 })
-                console.log('this.data.reduce_items_id',this.data.reduce_items_id,res.data.data.reduce_items_id)
-                console.log('走了这里')
                 that.getMessage()
                 that.showWitch()
             }else{}
@@ -752,7 +695,6 @@ Page({
 	var server = date.getFullYear() + seperator1  + month  + seperator1  + strDate
 			+ " "  + date.getHours()  + seperator2  + date.getMinutes()
 			+ seperator2 + date.getSeconds();
-    console.log(server,"server")
     this.setData({
         server:server
     })
@@ -802,7 +744,6 @@ Page({
         //        goods_id: this.data.showItemDate.multi_groupon_goods_id,
         //    }
        }).then(res => {
-        console.log('res',res)
            if(res.statusCode == 200){
             var res = res.data
                if(res.status){
@@ -822,7 +763,6 @@ Page({
                    showCancel: false
                });
            }
-           console.log(this.data.shareImg)
            wx.hideLoading();
            this.changeShare();
        })
@@ -868,12 +808,10 @@ Page({
 
     //帮好友砍价
     bargain(){
-        console.log("kanjia ")
         let that =this
         var token = cookieStorage.get('user_token'); 
         if(this.data.is_leader==0){
             if(this.data.success){
-                console.log("这里请求砍价的接口,并且计算进度条")
                 sandBox.post({
                     api:`api/reduce/help?reduce_items_id=${this.data.reduce_items_id}`,
                     header: {
@@ -884,9 +822,6 @@ Page({
                         }
                 }).then(res=>{
                     if (res.statusCode == 200){
-                        console.log("res",res)
-                        console.log("this.data.detailsMessage.reduce_items_id",this.data.reduce_items_id)
-                        console.log("this.data.step",this.data.step)
                         that.setData({
                             step:2
                         })
@@ -909,7 +844,6 @@ Page({
                             })
                         }
                             if(res.data.data.reduce_amount){
-                            console.log("res",res)
                             that.setData({
                             reduce_amount:res.data.data.reduce_amount,
                             step:2
@@ -937,13 +871,11 @@ Page({
         }
         this.getMessage()
         that.showWitch();
-        console.log()
     },
     onShareAppMessage: function (res) {
         let that =this
         if (res.from === 'button') {
           // 来自页面内转发按钮
-          console.log(res.target)
         }
         return {
           title: '砍价帮帮忙',
@@ -951,7 +883,6 @@ Page({
         }
       },
     showRule(){
-        console.log("show")
         this.setData({
             show:true
         })
@@ -1039,7 +970,6 @@ Page({
                     });
                 }
             }else{
-                console.log('res',res)
                 wx.showToast({
                     title:res.data.message,
                     icon:'none',
@@ -1066,7 +996,6 @@ Page({
             api:'api/reduce/help/text'
         }).then(res=>{
             if(res.statusCode == 200){
-                console.log("规则",res.data.data.reduce_help_text)
                 this.setData({
                     rule:res.data.data.reduce_help_text
                 })

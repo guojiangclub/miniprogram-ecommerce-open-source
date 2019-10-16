@@ -109,15 +109,11 @@ function html2json(html, bindName) {
                     var name = attr.name;
                     var value = attr.value;
                     if (name == 'class') {
-                        // console.dir(value);
-                        //  value = value.join("")
                         node.classStr = value;
                     }
                     // has multi attibutes
                     // make it array of attribute
                     if (name == 'style') {
-                        // console.dir(value);
-                        //  value = value.join("")
                         node.styleStr = value;
                     }
                     if (value.match(/ /)) {

@@ -104,7 +104,6 @@ Page({
         }).then(res => {
             if (res.statusCode == 200) {
                 res = res.data;
-
                 if (res.status) {
                     var pages = res.meta.pagination;
                     var current_page = pages.current_page;
@@ -116,6 +115,7 @@ Page({
                         [`${tabList}.page`]: current_page,
                         [`${tabList}.more`]: current_page < total_pages,
                     })
+                    console.log('dataList',this.data.dataList)
                 } else {
                     wx.showModal({
                         content: res.message || '请求失败',

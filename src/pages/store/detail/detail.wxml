@@ -707,8 +707,8 @@
                                 <view class="text-box" >
                                     <view class="text">
                                         <span class="money" wx:if="{{item.action_type.type == 'cash'}}">￥</span>
-                                        <span class="num">{{ item.action_type.value }}</span>
-
+                                        <span class="num" wx:if="{{item.action_type.value>1}}">{{ item.action_type.value }}</span>
+                                        <span class="num" wx:if="{{item.action_type.value<1}}">{{ item.action_type.value*10 }}折</span>
                                         <span class="money" wx:if="{{item.action_type.type == 'discount'}}">折</span>
                                     </view>
                                     <span class="label text">{{ item.label }}</span>

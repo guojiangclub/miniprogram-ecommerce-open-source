@@ -57,7 +57,6 @@ Page({
         this.queryData(this.data.id);
     },
     onLoad(e){
-        console.log(this.data.height)
         // 第三方平台配置颜色
         var gbConfig = cookieStorage.get('globalConfig') || '';
         this.setData({
@@ -88,32 +87,11 @@ Page({
         this.setData({
             isLogin:!!cookieStorage.get('user_token'),
         });
-
-        // 万有的接口
-        // this.getStoreData();
-
-
-        // !!cookieStorage.get('user_token')
          let app =getApp();
-        // app.isBirthday().then(()=>{
-        //     if(cookieStorage.get("birthday_gift")){
-        //         var giftData=cookieStorage.get("birthday_gift").data;
-        //         new app.ToastPannel().__page.showText(giftData);
-        //     }
-        // },()=>{
-        //     console.log("已改");
-        // });
-        // console.log(app.globalData.giftLogin)
-        // this.setData({
-        //     is_newGiftLogin:app.globalData.giftLogin
-        // });
         let is_info=cookieStorage.get('gift_info');
         if(!this.data.isLogin){
             this.newPeopleGift();
         }
-        // if(this.data.isLogin && !is_info){
-        //    // this.getPeopleGift();
-        // }
     },
     // 获取初始化数据
     init(e) {
@@ -173,7 +151,6 @@ Page({
         } else {
             valid_time = cookieStorage.get('distribution_valid_time');
         }
-        console.log('这个是时间', valid_time);
 
         let timeStamp = new Date().getTime();
         timeStamp += timeMap.n * valid_time;
@@ -280,7 +257,6 @@ Page({
         })
     },
     jumpMeal(e){
-        // console.log(e);
         var id = e.currentTarget.dataset.suitid;
         wx.navigateTo({
             url:`/pages/store/meal/meal?id=${id}`
@@ -300,7 +276,6 @@ Page({
             res=res.data;
             if(res.status &&　res.data){
                 var cache_no_gift = cookieStorage.get('new_gift');
-                console.log(res.data);
                 res.data.gift.forEach(function(val){
                     val.coupon.usestart_at=val.coupon.usestart_at.replace(/\s.+$/, '')
                     val.coupon.useend_at=val.coupon.useend_at.replace(/\s.+$/, '');
@@ -314,61 +289,9 @@ Page({
                     })
                 }
             }
-            // else{
-            //     wx.showModal({
-            //         title: '提示',
-            //         content: '请求失败',
-            //         success: res=>{
-            //             if (res.confirm) {
-            //
-            //             }
-            //         }
-            //     })
-            // }
         });
     },
-    // 新人进店有礼(已登录)
-    // getPeopleGift(){
-    //     sandBox.post({
-    //         api:'api/home/gift_new_user',没有这个接口
-    //         header:{
-    //             Authorization:cookieStorage.get('user_token')
-    //         }
-    //     }).then(res=>{
-    //         res=res.data;
-    //         var cache_info = cookieStorage.get('gift_info');
-    //         if(res.status && res.data && !cache_info){
-    //             // 判断是不是老用户
-    //             if(!res.data.activity.is_new_user){
-    //                 console.log(res.data);
-    //                 if(this.data.is_newGiftLogin){
-    //                     res.data.activity.gift.forEach(function(val){
-    //                         val.coupon.usestart_at=val.coupon.usestart_at.replace(/\s.+$/, '');
-    //                         val.coupon.useend_at=val.coupon.useend_at.replace(/\s.+$/, '');
-    //                     });
-    //                     this.setData({
-    //                         showGift:true,
-    //                         loginGift:res.data
-    //                     });
-    //                 }else{
-    //                     this.closeGift();
-    //                 }
-    //             }
-    //             else{
-    //                 res.data.activity.gift.forEach(function(val){
-    //                     val.coupon.usestart_at=val.coupon.usestart_at.replace(/\s.+$/, '');
-    //                     val.coupon.useend_at=val.coupon.useend_at.replace(/\s.+$/, '');
-    //                 });
-    //                 this.setData({
-    //                     showGift:true,
-    //                     loginGift:res.data
-    //                 })
-    //             }
-    //         }
-    //         else{
-    //         }
-    //     })
-    // },
+   
     // 秒杀开始
     isStarts(e) {
         var idx = e.detail.idx;
@@ -436,12 +359,6 @@ Page({
 
     },
     jumpImg(e) {
-        /*wx.scanCode({
-         success: res => {
-         console.log(res);
-         }
-         })
-         return*/
 
         var src = e.currentTarget.dataset.src;
         if (!src || src == 'uto_miniprogram') return

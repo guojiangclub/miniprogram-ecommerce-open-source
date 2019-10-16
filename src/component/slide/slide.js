@@ -67,8 +67,6 @@ export default  {
 
 
                 if (vm.isEmptyObject(list.data)) {
-
-                    console.warn('property data is undefined')
                 }
             }
 

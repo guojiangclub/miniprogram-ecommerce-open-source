@@ -1,9 +1,9 @@
 <view class="bargain_contanier" style="height:{{Height}}px">
     <view class="bargain_head">
-        <image mode="widthFix"  src="../../../assets/image/heads.png" />
-        <view class="rule" bindtap="showRule">
+         <image mode="widthFix" src="../../../assets/image/heads.png" />
+    </view>
+    <view class="rule" bindtap="showRule">
             活动规则
-        </view>
     </view>
     <view class="body_box">
         <view class="bargain_body" wx:for="{{list}}" wx:for-item="item" :key="{{index}}">

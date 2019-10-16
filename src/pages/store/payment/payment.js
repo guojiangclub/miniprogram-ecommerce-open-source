@@ -160,7 +160,6 @@ Page({
                     this.setData({
                         loading: false
                     })
-                    console.log(err);
                     if (err.errMsg == 'requestPayment:fail cancel') {
                         wx.redirectTo({
                             url: `/pages/order/detail/detail?no=${that.data.order_no}`

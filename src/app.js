@@ -72,15 +72,11 @@ App({
         })
     },
     onShow(e) {
-
-
-        console.log(e);
         var url = [
             'pages/store/detail/detail',
             'pages/index/index/index',
             'pages/user/personal/personal'
         ]
-        console.log(url.indexOf(e.path));
         // 获取第三方平台配置
         if (wx.getExtConfig) {
             wx.getExtConfig({
@@ -112,16 +108,11 @@ App({
 
 
         if (e.shareTicket) {
-
-            console.log('是通过群进来的1');
-            console.log(1);
             cookieStorage.set('shareTicketInfo', e.shareTicket);
         }
-        // console.log(2);
     },
     autoLogin(code, agent_code) {
         return new Promise((resolve, reject) => {
-            console.log('这个是code', code);
             sandBox.post({
                 api: 'api/v2/oauth/miniprogram/login',
                 data: {
@@ -134,7 +125,6 @@ App({
                     shop_id_time: cookieStorage.get('shop_id_time') || '',
                 },
             }).then(res => {
-                console.log('接口返回的', res);
                 if (res.statusCode == 200) {
                     res = res.data;
                     if (res.status) {
@@ -214,7 +204,6 @@ App({
             if (res.statusCode == 200) {
                 res = res.data;
                 if (res.status) {
-                    console.log('设置群id成功');
                 } else {
                     wx.showModal({
                         content: res.message || '设置openGId失败',
@@ -246,7 +235,6 @@ App({
                     data: {}
                 }).then(res => {
                     res = res.data;
-                    console.log(res);
                     if (res.status && res.data) {
                         var data = {};
                         data.flag = false;
@@ -256,7 +244,6 @@ App({
                     } else {
                         reject();
                     }
-                    // console.log(res);
                 })
             } else {
                 reject();

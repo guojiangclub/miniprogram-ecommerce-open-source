@@ -106,9 +106,7 @@ Page({
                     filePath: tempFilePaths[0],
                     name: 'avatar_file',
                     success: (res)=>{
-                        console.log(res);
                         var result = JSON.parse(res.data);
-                        console.log(result);
                         this.setData({
                             'detail.avatar':result.data.url
                         });
@@ -145,7 +143,6 @@ Page({
                  email:this.data.emailSet
              },
          }).then(res =>{
-             console.log(res);
              if(res.statusCode==200){
                  wx.showToast({
                      title:'修改成功',

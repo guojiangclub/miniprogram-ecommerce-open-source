@@ -35,7 +35,6 @@ Page({
     onShareAppMessage(res){
         var info = cookieStorage.get('init_info');
         let path = this.data.userInfo && this.data.userInfo.agent_code ? `/${this.route}?agent_code=${this.data.userInfo.agent_code}` : `${this.route}`;
-        console.log('这个是分享出去的链接', path);
         return {
             title: info.title,
             path: path,
@@ -108,7 +107,6 @@ Page({
         } else {
             valid_time = cookieStorage.get('distribution_valid_time');
         }
-        console.log('这个是时间', valid_time);
 
         let timeStamp = new Date().getTime();
         timeStamp += timeMap.n * valid_time;
@@ -152,7 +150,6 @@ Page({
     },
      // 获取初始化数据
      init(e) {
-        console.log('获取到的e', e);
         var token = cookieStorage.get('user_token');
         var agent_code = '';
         if (e.agent_code) {
@@ -270,8 +267,7 @@ Page({
     },
     jumpAuthor() {
         wx.scanCode({
-            success: res => {
-                console.log(res);
+            success: res => {;
             }
         })
         return
@@ -323,7 +319,6 @@ Page({
         })
     },
     jumpMeal(e){
-        // console.log(e);
         var id = e.currentTarget.dataset.suitid;
         wx.navigateTo({
             url:`/pages/store/meal/meal?id=${id}`
@@ -402,12 +397,6 @@ Page({
 
     },
 	jumpImg(e) {
-        /*wx.scanCode({
-            success: res => {
-                console.log(res);
-            }
-        })
-        return*/
 
         var src = e.currentTarget.dataset.src;
         if (!src || src == 'uto_miniprogram') return

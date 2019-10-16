@@ -2,7 +2,8 @@
     <view class="banner">
         <view class="ban-item-l" wx:if="{{token}}" data-url="/pages/user/usersetting/usersetting" bindtap="jumpItem">
             <view class="user-avatar">
-                <image src="{{detail.avatar }}"></image>
+                <image src="{{detail.avatar}}" wx:if="{{detail.avatar}}"></image>
+                <image src="https://cdn.ibrand.cc/%E6%9E%9C%E9%85%B1.jpg"  wx:else></image>
             </view>
             <view class="user-text">
                 <view class="nick-name">{{detail.nick_name || '无名氏'}}</view>
@@ -42,10 +43,6 @@
                 <view class="iconfont icon--daipingjia"></view>
                 <view>待评价</view>
                 <view class="position-num" wx:if="{{orderInfo.receiveCount}}">{{orderInfo.receiveCount}}</view>
-            </view>
-            <view class="item"  bindtap="jumpAfterSales">
-                <view class="iconfont icon-shouhou"></view>
-                <view>售后</view>
             </view>
         </view>
     </view>

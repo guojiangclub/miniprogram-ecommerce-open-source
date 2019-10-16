@@ -36,7 +36,6 @@ Page({
         })
         return
 
-        console.log(1);
         if (this.data.info.type == 'customer_wechat') {
 
         } else {
@@ -105,7 +104,6 @@ Page({
                 Authorization: token
             }
         }).then(res => {
-            console.log(res, '123');
 
             if (res.statusCode == 200) {
                 var res = res.data;

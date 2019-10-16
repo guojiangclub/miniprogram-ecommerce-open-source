@@ -264,7 +264,6 @@ Page({
             newTotal:0,
             __ids:[]
         }
-        console.log('看下list1',this.data.list)
         this.data.list.forEach((v) => {
             if (v.checked) {
                 data.count += parseInt(v.qty);
@@ -278,7 +277,6 @@ Page({
                 })
             }
         })
-        console.log('看下list',this.data.list)
         this.setData({
             select_products:data,
             list:this.data.list
@@ -287,7 +285,6 @@ Page({
         this.setData({
             coustMoney:coustMoney
         })
-        console.log('coustMoney',this.data.coustMoney)
         wx.hideLoading();
     },
 
@@ -401,7 +398,6 @@ Page({
             item.qty = data.qty;
             item.total = item.qty * Number(item.price);
             item.newTotal=Number(item.total).toFixed(2)
-                console.log('data.newTotal',data.newTotal)
             wx.showToast({
                 title:'超过最大库存',
                 icon: 'none'

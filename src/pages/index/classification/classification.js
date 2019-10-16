@@ -48,7 +48,6 @@ Page({
         })
     },
     jumpList(e){
-        console.log(e,'e')
         var id = e.currentTarget.dataset.id;
         wx.navigateTo({
             url:`/pages/store/list/list?c_id=${id}`
