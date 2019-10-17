@@ -12,9 +12,9 @@
                     </span>
                 </block>
 
-                <block wx:if="{{item.associate.action_type.type == 'discount'}}">
+                <block wx:if="{{item.associate.action_type.type == 'discount' || item.associate.action_type.type=='percentage'}}">
                         <span class="num">
-                        {{ item.associate.action_type.value }}
+                        {{ item.associate.action_type.value *10}}
                     </span>
                     <span class="money">
                         折

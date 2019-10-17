@@ -109,6 +109,7 @@ Page({
                     var current_page = pages.current_page;
                     var total_pages = pages.total_pages;
                     var tabList = `tabList[${type}]`;
+                    console.log('tabList',tabList)
                     this.setData({
                         [`dataList.${type}[${page - 1}]`] : res.data,
                         [`${tabList}.init`]: true,
