@@ -2,7 +2,7 @@ export default  {
 
     BRAND: {
         name: 'IBRAND',
-        logo: 'https://wx.qlogo.cn/mmhead/Q3auHgzwzM6OM5hb6yiap47BtficrcdCy0qviaOvpeYALPVBIdRzsgLxQ/0',
+        logo: 'https://cdn.ibrand.cc/%E6%9E%9C%E9%85%B1.jpg',
         // https://demo-open-admin.ibrand.cc/
         //https://dev-open-admin.ibrand.cc/
     },
