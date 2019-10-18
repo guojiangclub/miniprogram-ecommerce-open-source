@@ -1,6 +1,6 @@
 <view class="bargain_contanier" style="height:{{Height}}px">
     <view class="bargain_head">
-         <image mode="widthFix" src="../../../assets/image/heads.png" />
+         <image mode="widthFix" src="../../../assets/image/heads (1).png" />
     </view>
     <view class="rule" bindtap="showRule">
             活动规则

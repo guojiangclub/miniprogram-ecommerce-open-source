@@ -1,0 +1,44 @@
+<view id="point-about">
+
+    <view class="about__title">
+        <text class="globalColor">ibrand商城</text> · 如何获得积分
+    </view>
+
+    <view class="about__explain">
+        <view class="explain__item mx-1px-right-bottom">
+            <i class="iconfont icon-shuangbeijifen globalColor"></i>
+            <view class="item__title">双倍积分</view>
+            <view class="item__explain">
+                会员生日当天购物可获得双倍积分
+            </view>
+        </view>
+        <view class="explain__item mx-1px-right-bottom">
+            <i class="iconfont icon-jifendikou globalColor"></i>
+            <view class="item__title">积分抵扣</view>
+            <view class="item__explain">
+                10积分=1元可直接抵现
+            </view>
+        </view>
+        <view class="explain__item mx-1px-bottom">
+            <i class="iconfont icon-wanshanziliao globalColor"></i>
+            <view class="item__title">完善资料</view>
+            <view class="item__explain">
+                完善会员信息可获得20积分
+            </view>
+        </view>
+        <view class="explain__item mx-1px-right">
+            <i class="iconfont icon-pingjiashangpin globalColor"></i>
+            <view class="item__title">评价商品</view>
+            <view class="item__explain">
+                发表商品评价可额外获得10积分
+            </view>
+        </view>
+        <view class="explain__item mx-1px-right">
+
+        </view>
+        <view class="explain__item ">
+
+        </view>
+    </view>
+
+</view>

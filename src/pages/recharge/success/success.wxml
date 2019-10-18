@@ -1,0 +1,24 @@
+<view id="recharge-success">
+
+    <view class="contents">
+        <view class="is-ok" wx:if="{{isOK}}">
+            <view class="text">
+                <i class="iconfont icon-chenggong"></i>  充值成功
+            </view>
+            <view class="info">
+                本次充值 <span>{{amount / 100}}</span> 元 当前可用 <i>{{sum / 100}}</i> 元
+            </view>
+        </view>
+        <view class="is-ok" wx:if="{{!isOK}}">
+            <view class="no-text">
+                <i class="iconfont icon-shibai"></i>  充值失败
+            </view>
+        </view>
+        <view class="point-box" wx:if="{{isOK && text}}">
+            {{text}}
+        </view>
+        <div class="button-box" bindtap="jump">
+            查看余额
+        </div>
+    </view>
+</view>

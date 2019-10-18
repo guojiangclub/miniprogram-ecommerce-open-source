@@ -2,6 +2,10 @@
   "pages": [
     "pages/index/index/index",
     "pages/index/classification/classification",
+    "pages/recharge/balance/balance",
+    "pages/recharge/index/index",
+    "pages/recharge/free/free",
+    "pages/recharge/success/success",
     "pages/store/search/search",
     "pages/store/list/list",
     "pages/store/detail/detail",
@@ -28,15 +32,17 @@
     "pages/order/search/search",
     "pages/order/evaluate/evaluate",
     "pages/favorite/index/index",
+    "pages/point/index/index",
+    "pages/point/about/about",
     "pages/coupon/index/index",
     "pages/coupon/onDetail/onDetail",
     "pages/afterSales/index/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#ff2741",
+    "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "商城首页",
-    "navigationBarTextStyle": "white",
+    "navigationBarTextStyle": "black",
     "backgroundColor": "#F3F3F3"
   },
   "plugins": {
@@ -62,6 +68,12 @@
         "text": "分类",
         "iconPath": "assets/image/class.png",
         "selectedIconPath": "assets/image/class-r.png"
+      },
+      {
+        "pagePath":"pages/store/cart/cart",
+        "text":"购物车",
+        "iconPath":"assets/image/card.png",
+        "selectedIconPath":"assets/image/card-r.png"
       },
       {
         "pagePath": "pages/user/user/user",

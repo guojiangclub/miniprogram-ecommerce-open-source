@@ -1,0 +1,65 @@
+#recharge-index{
+  .contents{
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+
+    .title{
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      padding: 10px 15px;
+      i{
+        font-size: 20px;
+        color: #000;
+        margin-right: 10px;
+      }
+    }
+    .item{
+      color:#666666;
+      background: #FFFFFF;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      .left{
+        flex: 1;
+        font-size: 14px;
+      }
+    }
+    .tips{
+      padding: 15px 10px;
+      font-size: 14px;
+      color:#b2b2b2;
+    }
+    .money-box{
+      font-size: 0;
+      padding: 0 7px;
+      .money-item{
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        width: 33%;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        padding: 0 7px;
+        .order{
+          border:1px solid #1AAD19;
+          border-radius:6px;
+          padding: 5px 6px;
+          color: #1AAD19;
+
+          .price{
+            min-height: 20px;
+            font-size: 10px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}

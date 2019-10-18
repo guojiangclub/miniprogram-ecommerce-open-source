@@ -126,42 +126,6 @@
                 <switch checked="{{bestDiscount}}" bindchange="bestSwitch"/>
             </view>
         </view>
-
-        <view class="order-item">
-            <view class="mx-1px-bottom title__point" wx:if="{{newBlock.orderPoint.pointCanUse && newBlock.orderPoint.pointCanUse > 0}}">
-                <view class="intnote">积分抵扣</view>
-                <view>
-                    <!--<switch checked />-->
-                    <switch bindchange="usePoint" />
-                </view>
-            </view>
-            <view class="info title__point" wx:if="{{!newBlock.orderPoint.pointCanUse || newBlock.orderPoint.pointCanUse <= 0}}">
-                <text>积分抵扣</text>
-
-                <view class="no-dis" wx:if="{{newBlock.orderPoint.length === 0}}">
-                    此商品不支持积分
-                </view>
-                <view class="no-dis" wx:else>
-                    您暂无可用积分
-                </view>
-            </view>
-            <view class="point info" wx:else>
-                <view class="input-box mx-1px-bottom">
-                    <view style="overflow: hidden">
-                        <view class="input__text">共有{{newBlock.orderPoint.userPoint}}积分， 可使用积分{{newBlock.orderPoint.pointCanUse || 0}}  抵扣￥{{-pointAmount || 0}}</view>
-                        <!--<input placeholder="可使用积分{{block.orderPoint.pointCanUse || 0}}" type="number" bindinput="modifyPoint" bindchange="saveForm" value="{{form.point !== 0 ? form.point : ''}}"/>-->
-                    </view>
-                    <!--<view class="use-all" bindtap="usePoint">
-                        全部使用
-                    </view>-->
-                    <!--<view class="offset">
-
-                    </view>-->
-                </view>
-
-            </view>
-        </view>
-
         <view class="order-item" wx:if="{{block.invoice_status == 1}}">
 
             <view class="invoice info" bindtap="addInvoice">

@@ -712,68 +712,6 @@ Page({
             }
         });
     },
-    // 获取新人免单数据
-    // getCustomModel() {
-    //     sandBox.get({
-    //         api: 'api/store/getCustomModel',
-    //     }).then(res => {
-    //         if (res.statusCode == 200) {
-    //             res = res.data;
-    //             if (res.status) {
-    //                 this.setData({
-    //                     freeGoodsInfo: res.data
-    //                 })
-    //             } else {
-    //                 wx.showModal({
-    //                     content: res.message || '请求失败',
-    //                     showCancel: false
-    //                 })
-    //             }
-    //         } else {
-    //             wx.showModal({
-    //                 content: '请求失败',
-    //                 showCancel: false
-    //             })
-    //         }
-    //     }).catch(rej => {
-    //         wx.showModal({
-    //             content: '内部错误',
-    //             showCancel: false
-    //         })
-    //         this.changeShare();
-    //     })
-    // },
-    // 获取门店数据
-    // getShopInfo() {
-    //     sandBox.get({
-    //         api: 'api/pick/self/store',
-    //     }).then(res => {
-    //         if (res.statusCode == 200) {
-    //             res = res.data;
-    //             if (res.status) {
-    //                 this.setData({
-    //                     shopInfo: res.data
-    //                 })
-    //             } else {
-    //                 wx.showModal({
-    //                     content: res.message || '请求失败',
-    //                     showCancel: false
-    //                 })
-    //             }
-    //         } else {
-    //             wx.showModal({
-    //                 content: '请求失败',
-    //                 showCancel: false
-    //             })
-    //         }
-    //     }).catch(rej => {
-    //         wx.showModal({
-    //             content: '内部错误',
-    //             showCancel: false
-    //         })
-    //         this.changeShare();
-    //     })
-    // },
     // 获取分享图片
     getShearImg() {
         wx.showLoading({
@@ -1908,6 +1846,7 @@ Page({
         }
     },
     disallow_cart() {
+        console.log('1')
         if (!this.data.specs.length) {
             return !this.data.store_count;
         }
@@ -1930,17 +1869,19 @@ Page({
             ids.push(spec.select);
             for (let v of spec.values) {
                 if (v.id === spec.select) {
-                    switch (spec.label_key) {
-                        case 'color':
+                    console.log('spec.label_key',spec.label_key)
+                    if (spec.label_key=='Color') {
+                        // case 'color':
                             select_product.img = v.img;
                             select_product.color = v.alias || v.value;
                             select_product.bac = v.color
-                            break;
-                        default:
-                            select_product.size = v.alias || v.value;
+                            // break;
+                        // default:
+                            // select_product.size = v.alias || v.value;
+                    }else if(spec.label_key=='Size'){
+                        select_product.size = v.alias || v.value;
                     }
-
-                    break;
+                    // break;
                 }
             }
         }
@@ -1954,7 +1895,8 @@ Page({
             price: Number(select_product.price).toFixed(2),
             select_product: select_product
         })
-
+        console.log('select_product',select_product)
+        console.log("select_product.color,select_product.size",select_product.color,select_product.size)
         return false;
     },
 

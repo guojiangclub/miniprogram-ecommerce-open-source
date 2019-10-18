@@ -1,0 +1,59 @@
+<view id="recharge-balance">
+    <view class="content">
+        <view class="balance-top" style="background: {{config.mainColor}}">
+            <view class="title">
+                账户余额（元）
+            </view>
+            <view class="recharge-box">
+                <view class="money">
+                    {{num/100}}
+                </view>
+                <view class="recharge" bindtap="jump">
+                    充值 >
+                </view>
+            </view>
+        </view>
+        <view class="tab-panel">
+            <block wx:for="{{tabList}}">
+                <view id="{{index}}" hidden="{{activeIndex != index}}" style="color: {{config.mainColor}}; border-color: {{config.mainColor}} " class="tab-title active" bindtap="tabClick">{{item.name}}</view>
+                <view id="{{index}}" hidden="{{activeIndex == index}}" class="tab-title" bindtap="tabClick">{{item.name}}</view>
+            </block>
+        </view>
+        <view class="tab-content">
+            <view class="tab-item" hidden="{{activeIndex!=0}}">
+                <block wx:for="{{dataList[0]}}" wx:for-index="idx">
+                    <view class="tab-item-content" wx:for="{{dataList[0][idx]}}">
+                        <view class="text">
+                            <view style="font-size: 14px; text-overflow:ellipsis;overflow:hidden;">{{item.note}}</view>
+                            <view style="font-size: 10px;color: #A3A3A3">{{item.updated_at}}</view>
+                        </view>
+                        <view class="num">
+                            +{{item.value/100}}
+                        </view>
+                    </view>
+                </block>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+            </view>
+            <view class="tab-item" hidden="{{activeIndex!=1}}">
+                <block wx:for="{{dataList[1]}}" wx:for-index="idx">
+                    <view class="tab-item-content" wx:for="{{dataList[1][idx]}}">
+                        <view class="text">
+                            <view style="font-size: 14px; text-overflow:ellipsis;overflow:hidden;">{{item.note}}</view>
+                            <view style="font-size: 10px;color: #A3A3A3">{{item.updated_at}}</view>
+                        </view>
+                        <view class="num">
+                            {{item.value/100}}
+                        </view>
+                    </view>
+                </block>
+                <view class="loadingbox" hidden="{{!tabList[1].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

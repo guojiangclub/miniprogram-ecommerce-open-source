@@ -1,4 +1,4 @@
-<view class="g-main" style="margin-bottom: {{meta.margin_bottom}}px;background:{{meta.background_color}}">
+<view class="g-main" style="margin-bottom: {{meta.margin_bottom}}px;background: #ffffff;">
     <view class="m-lead" style="margin-bottom: 5px" wx:if="{{groupingData.length == 1}}">
         <view class="ul-box">
             <view class="li-box" bindtap="_changeItem" data-index="{{index}}"  wx:for="{{groupingData}}" wx:key="{{index}}" >

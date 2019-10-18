@@ -165,6 +165,14 @@ Page({
             }
         })
     },
+    jumpBalance() {
+        if (!this.data.token) {
+            return this.jumpLogin();
+        }
+        wx.navigateTo({
+            url: '/pages/recharge/balance/balance'
+        })
+    },
     //获取页面信息
     getCenter(){
         var token=cookieStorage.get('user_token');

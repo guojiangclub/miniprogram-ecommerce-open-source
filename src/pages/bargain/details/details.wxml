@@ -8,7 +8,7 @@
                 {{detailsMessage.user.meta.nick_name}}
             </view>
             <view class="notice">
-                在米尔优选发现好物，一起来砍价拿
+                在果酱小店发现好物，一起来砍价拿
             </view>
         </view>
         <view class="rule" bindtap="showRule">
@@ -61,9 +61,9 @@
         <view class="btn" bindtap="goStore" wx:if="{{is_leader==0 && overTime==true }}">去商城看看</view>
         <!-- 后台设置了可提前购买-->
         <view class="can_buy"  wx:if="{{is_leader==1 && buy && overTime==false && overActivity==false}}"> 
-            <button class="invite" open-type='share' wx:if="{{over==false}}">
+            <view class="invite"  wx:if="{{over==false}}" bindtap="helpShare">
                 <text>{{message}}</text>
-            </button>
+            </view>
             <view class="now_buy" bindtap="showSelect" wx:if="{{over==false }}">马上购买</view>
             <!-- 活动未结束但是用户砍价已完成-->
             <view class="btn" bindtap="showSelect" wx:if="{{over==true && pay==false}}">{{detailsMessage.reduce_surplus_amount}}元购买商品</view>

@@ -412,15 +412,15 @@ Page({
         })
     },
 	jumpMenu(e) {
-        if (config.PACKAGES.isTab) {
+        // if (config.PACKAGES.isTab) {
             wx.switchTab({
                 url: '/pages/index/classification/classification'
             })
-        } else {
-            wx.navigateTo({
-                url: '/pages/index/classify/classify'
-            })
-        }
+        // } else {
+        //     wx.navigateTo({
+        //         url: '/pages/index/classify/classify'
+        //     })
+        // }
     },
     jumpStore(e) {
         var id = e.currentTarget.dataset.id

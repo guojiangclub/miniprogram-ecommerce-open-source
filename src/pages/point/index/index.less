@@ -1,0 +1,117 @@
+@import "../../../assets/css/global";
+#point_index{
+.point-top{
+  background-color: @mainColor;
+  color: #ffffff;
+  padding: 19px 15px 15px 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  .point-current{
+    text-align: center;
+    .point-num{
+      font-size:35px;
+      line-height: 49px;
+    }
+  }
+  .point-frozen{
+    .point-mall{
+      text-align: center;
+      width: 63px;
+      line-height: 20px;
+      margin: auto;
+      font-size: 12px;
+      margin-top:15px ;
+      border:1px solid #ffffff ;
+      border-radius: 2px;
+    }
+  }
+}
+  .point-content{
+    margin-top: 15px;
+
+    .navbar {
+      width: 100%;
+      display: flex;
+      z-index: 20;
+      height: 50px;
+      line-height: 50px;
+      background: #FFFFFF;
+      font-size: 14px;
+      color: #9B9B9B;
+
+      .navbar-item {
+        flex: 1;
+        width: 0%;
+        text-align: center;
+
+        &.activity {
+          color: @mainColor;
+        }
+      }
+      .navbar-slider {
+        position: absolute;
+        content: " ";
+        left: 0;
+        bottom: 0;
+        width: 4em;
+        height: 3px;
+        background-color: @mainColor;
+        transition: transform .3s;
+      }
+    }
+    .tab-panel{
+      padding-top: 15px;
+    }
+
+    .point-list{
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      margin-bottom:10px ;
+      view{
+        width: 50%;
+        text-align: center;
+        padding: 10px 0;
+      }
+    }
+    .point-item{
+      .point-info{
+        background-color: #ffffff;
+        color: #888888;
+        font-size: 12px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .info-left{
+          flex: 1;
+        }
+        .info-right{
+          display: flex;
+          flex-direction: column;
+          text-align: right;
+
+        }
+        .store-title{
+          font-size: 16px;
+          color: #666666;
+          line-height: 25px;
+        }
+        .up-time{
+          line-height:16px ;
+        }
+        .up-money{
+          color:#14C532;
+          font-size: 15px;
+        }
+        .slow-money{
+          color:#E73237 ;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}

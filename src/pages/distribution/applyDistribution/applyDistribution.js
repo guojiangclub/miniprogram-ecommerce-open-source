@@ -73,13 +73,12 @@ Page({
                             content: res.message,
                             showCancel: false,
                             success: res=>{
-                                if (res.confirm || (!res.cancel && !res.confirm)) {
+                                if (res.status) {
                                     wx.switchTab({
                                         url: '/pages/user/personal/personal'
                                     })
                                 }
                             }
-
                         })
                     } else {
                         wx.showModal({

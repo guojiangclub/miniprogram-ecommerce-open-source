@@ -1,0 +1,70 @@
+<view id="point_index">
+    <!--point-top开始-->
+    <view class="point-top" style="background: {{config.mainColor}}">
+        <view class="point-current">
+            <view>当前可用积分</view>
+            <view class="point-num">{{point.pointValid}}</view>
+        </view>
+        <view class="point-frozen">
+            <view>冻结积分 {{point.pointFrozen}}</view>
+            <view class="point-mall" bindtap="jump">积分商城</view>
+        </view>
+    </view>
+
+    <!--point-top结束-->
+
+    <!--point-content开始-->
+    <view class="point-content">
+        <view class="navbar mx-1px-bottom">
+            <block wx:for="{{tabList}}" wx:key="*this">
+                <view id="{{index}}" class="navbar-item activity" hidden="{{activeIndex != index}}" style="color: {{config.mainColor}}" bindtap="tabClick">
+                    <view class="navbar-title">{{item.title}}</view>
+                </view>
+
+                <view id="{{index}}" hidden="{{activeIndex == index}}" class="navbar-item" bindtap="tabClick">
+                    <view class="navbar-title">{{item.title}}</view>
+                </view>
+            </block>
+            <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px); background: {{config.mainColor}}"></view>
+        </view>
+
+
+        <view class="tab-panel">
+            <view class="tab-content" hidden="{{activeIndex != 0}}">
+                <view class="point-item mx-1px-top">
+                    <view wx:for="{{dataList[0]}}" wx:for-index="idx">
+                        <view class="point-info mx-1px-bottom" wx:for="{{dataList[0][idx]}}" wx:for-item="point">
+                            <view class="info-left">
+                                <view class="store-title">{{point.note}}</view>
+                                <view class="up-time">{{point.updated_at}}</view>
+                            </view>
+
+                            <view class="info-right">
+                                <view class="up-money">{{point.value}}</view>
+                                <view class="point-status">{{point.status_text}}</view>
+                            </view>
+                        </view>
+                    </view>
+
+                </view>
+            </view>
+
+            <view class="tab-content" hidden="{{activeIndex != 1}}">
+                <view class="point-item mx-1px-top">
+                    <view wx:for="{{dataList[1]}}" wx:for-index="idx">
+                        <view class="point-info mx-1px-bottom" wx:for="{{dataList[1][idx]}}" wx:for-item="point">
+                            <view class="info-left">
+                                <view class="store-title">{{point.note}}</view>
+                                <view class="up-time">{{point.updated_at}}</view>
+                            </view>
+                            <view class="slow-money">{{point.value}}</view>
+                        </view>
+                    </view>
+
+                </view>
+            </view>
+        </view>
+    </view>
+    <!--point-content结束-->
+
+</view>

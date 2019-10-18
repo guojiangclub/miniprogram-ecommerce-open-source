@@ -407,13 +407,13 @@
         <view class="js__comment" bindtap="viewComment" hidden="{{detailData.data.shop_hidden_more_info}}">
             <view class="title mx-1px-bottom">
                 <view class="title_content">
-                    商品评论（{{detailData.data.comments}}）
+                    商品评论（{{detailData.data.comments || 0}}）
                 </view>
                 <view class="praise-of" wx:if="{{detailData.data.comment_rate}}">好评度 {{detailData.data.comment_rate}}% <span class="iconfont icon--xiangyoujiantou"></span></view>
             </view>
 <!--            标签列表-->
-            <view class="tags-content">
-                <view class="item" wx:for="{{detailData.data.tags}}" wx:key="{{index}}">{{item}}</view>
+           <view wx:if="{{!detailData.data.comments}}" class="notice">
+                    当前商品暂无评论
             </view>
             <view class="content" wx:if="{{detailData.data.oneComment && detailData.data.oneComment.length}}">
                 <view class="comment_list" wx:for="{{detailData.data.oneComment}}" wx:key="{{index}}">
@@ -452,14 +452,7 @@
             </view>
         </view>
         <!--套餐详情-->
-        <view wx:if="{{detailData.meta.suit.length!=0}}">
-            <view class="title mx-1px-bottom" data-type="meal" bindtap="change">
-                <view class="title-text">
-                    搭配套餐
-                </view>
-                <view class="{{!expands.meal ? 'arrow-up' : 'arrow-down'}}">
-                </view>
-            </view>
+        <view wx:if="{{detailData.meta.suit  && detailData.meta.suit.length!=0}}">
             <view class="content meals" wx:if="{{!expands.meal}}">
                 <view class="commodity_description" wx:for="{{detailData.meta.suit}}" wx:for-item="detail" wx:key="{{index}}">
                     <view class="meal_list">
@@ -831,7 +824,7 @@
     </view>
 </view>
 <!--弹出拼团规则部分-->
-<view class="maks {{show_rule ? 'cur' : ''}}">
+<view class="maks {{show_rule ? 'cur' : ''}}" bindtap="closeRule">
 
 </view>
 <view class="rule-box {{show_rule ? 'cur' :''}}">

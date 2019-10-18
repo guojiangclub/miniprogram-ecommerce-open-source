@@ -1,0 +1,77 @@
+<view id="recharge-index">
+
+    <view class="contents">
+        <view class="title">
+            <i class="iconfont icon-recharge"></i>
+            <span>
+                <block wx:if="{{initInfo && initInfo.vip_plan_status}}">
+                    会员账号
+                </block>
+                <block wx:else>
+                    会员余额充值
+                </block>
+            </span>
+        </view>
+        <view class="item mx-1px-bottom">
+            <view class="left">
+                会员名：
+            </view>
+            <view class="right">
+                {{user.nick_name}}
+            </view>
+        </view>
+        <view class="item mx-1px-bottom">
+            <view class="left">
+                手机号：
+            </view>
+            <view class="right">
+                {{user.mobile}}
+            </view>
+        </view>
+        <view class="item mx-1px-bottom">
+            <view class="left">
+                当前余额：
+            </view>
+            <view class="right">
+                {{num/100}}
+            </view>
+        </view>
+        <view class="tips">
+            <block wx:if="{{initInfo && !initInfo.vip_plan_status}}">
+                * 会员充值概不退款
+            </block>
+        </view>
+        <view class="money-box">
+            <view class="money-item" wx:for="{{schemes}}" data-amount="{{item.amount}}" data-id="{{item.id}}" data-payment="{{item.payment_amount}}" bindtap="submitPay">
+                <view class="order">
+                    <view class="old-Price" wx:if="{{initInfo && initInfo.vip_plan_status}}">
+                        {{item.title}}
+                    </view>
+                    <view class="old-Price" wx:else>
+                        {{item.amount/100}} 元
+                    </view>
+                    <view class="price">
+                        售价：{{item.payment_amount/100}}元
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="tips" wx:if="{{initInfo && initInfo.vip_plan_status}}">
+            <view>
+                * VIP享全场购物95折，299元享全场购物88折
+            </view>
+            <view>
+                * 多次购买会员余额累积到账，VIP等级以最高等级权益为准
+            </view>
+            <view>
+                * 会员账户余额可在平台购物时无限制使用
+            </view>
+            <view>
+                * 会员账户余额不提现、不退款
+            </view>
+        </view>
+    </view>
+
+</view>
+<!--<import src="../../../component/birthday/birthday.wxml" />-->
+<!--<template is="birthdayToast" data="{{...birthdayToast}}"></template>-->

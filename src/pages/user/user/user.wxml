@@ -59,14 +59,13 @@
             <view class="number"><text>{{orderInfo.addressCount || 0}}</text></view>
             <view>地址</view>
         </view>
-    </view>
-    <view class="section-serve">
-        <view class="title mx-1px-bottom">我的服务</view>
-        <view class="server-box mx-1px-bottom">
-            <view class="item"  data-url="/pages/bargain/list/list" bindtap="jumpItem">
-                <view class="iconfont icon-daqiaqiandao info"></view>
-                <view>我的砍价</view>
-            </view>
+        <view class="item" bindtap="jumpBalance">
+            <view class="number"><text>{{newdetail.balance || 0}}</text></view>
+            <view>余额</view>
+        </view>
+        <view class="item" data-url="/pages/point/index/index" bindtap="jumpItem">
+            <view class="number"><text>{{newdetail.point || 0}}</text></view>
+            <view>积分</view>
         </view>
     </view>
     <!-- 我的奖励 -->
@@ -90,4 +89,17 @@
             </view>
         </view>
     </view> 
+    <view class="section-serve">
+        <view class="title mx-1px-bottom">我的服务</view>
+        <view class="server-box mx-1px-bottom">
+            <view class="item"  data-url="/pages/bargain/list/list" bindtap="jumpItem">
+                <view class="iconfont icon-daqiaqiandao info"></view>
+                <view>我的砍价</view>
+            </view>
+            <view class="item" wx:if="{{detail.distribution_status == 1 && detail.distribution_recruit_status == 1 && detail.is_agent == 0}}" data-url="/pages/distribution/applyDistribution/applyDistribution" bindtap="jumpItem">
+                <view class="iconfont icon--fenxiaozhongxin info"></view>
+                <view>加入分销</view>
+            </view>
+        </view>
+    </view>
 </view>
