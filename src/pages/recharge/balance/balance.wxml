@@ -8,9 +8,6 @@
                 <view class="money">
                     {{num/100}}
                 </view>
-                <view class="recharge" bindtap="jump">
-                    充值 >
-                </view>
             </view>
         </view>
         <view class="tab-panel">

@@ -5,10 +5,6 @@
             <view>当前可用积分</view>
             <view class="point-num">{{point.pointValid}}</view>
         </view>
-        <view class="point-frozen">
-            <view>冻结积分 {{point.pointFrozen}}</view>
-            <view class="point-mall" bindtap="jump">积分商城</view>
-        </view>
     </view>
 
     <!--point-top结束-->

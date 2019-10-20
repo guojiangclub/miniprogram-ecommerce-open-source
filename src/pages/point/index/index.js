@@ -84,63 +84,6 @@ Page({
             });
         }
     },
-    // 查询积分列表
-    queryPointListBalance(status = 0, page = 1) {
-        var token = cookieStorage.get('user_token');
-
-        wx.showLoading({
-            title: "加载中",
-            mask: true
-        });
-
-        var balance = status ? 'out' : 'in';
-        var params = balance ? { balance } : {};
-
-        params.page = page;
-        params.type = 'default';
-
-        sandBox.get({
-            api: 'api/users/point/list',
-            header: {
-                Authorization: token
-            },
-            data: params
-        }).then(res => {
-            if (res.statusCode == 200) {
-                res = res.data;
-                if (res.status) {
-                    var pages = res.meta.pagination;
-                    var current_page = pages.current_page;
-                    var total_pages = pages.total_pages;
-                    var tabList = `tabList[${status}]`;
-                    this.setData({
-                        [`dataList.${status}[${page - 1}]`] : res.data,
-                        [`${tabList}.init`]: true,
-                        [`${tabList}.page`]: current_page,
-                        [`${tabList}.more`]: current_page < total_pages,
-                        [`${tabList}.show`]: false
-                    })
-                } else {
-                    wx.showModal({
-                        content: res.message || '请求失败',
-                        showCancel: false
-                    })
-                }
-            } else {
-                wx.showModal({
-                    content: '请求失败',
-                    showCancel: false
-                })
-            }
-            wx.hideLoading()
-        }).catch(rej => {
-            wx.hideLoading();
-            wx.showModal({
-                content: '请求失败',
-                showCancel: false
-            })
-        })
-    },
     // 查询用户积分
     queryUserPoint(type) {
         var token = cookieStorage.get('user_token');
