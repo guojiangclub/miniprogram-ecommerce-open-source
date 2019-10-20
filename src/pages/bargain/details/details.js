@@ -684,8 +684,36 @@ Page({
             })
         } 
     },
-    //获取当前时间
-    
+    downImg(){
+        wx.downloadFile({
+            url: `${this.data.shareImg}`,
+            success (res) {
+              if (res.statusCode === 200) {
+                wx.playVoice({
+                  tempFilePath: res.tempFilePath,
+                })
+                wx.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: res => {
+                        wx.showToast({
+                            title: '保存图片成功',
+                            icon: 'none'
+                        })
+                        wx.hideLoading();
+                    },
+                    fail: rej => {
+                        wx.hideLoading();
+                        wx.showToast({
+                            title: '保存图片失败',
+                            icon: 'none'
+                        })
+                    }
+                })
+              }
+            }
+          })
+    },
+      //获取当前时间
     getServer () {
 	var date = new Date();
 	var seperator1 = "-";

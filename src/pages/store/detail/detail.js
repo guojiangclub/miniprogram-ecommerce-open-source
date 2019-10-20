@@ -760,50 +760,80 @@ Page({
         })
     },
     // 下载图片
-    downImg() {
-        if (this.data.shareImg) {
-            wx.showLoading({
-                title: '正在下载',
-                mask: true
-            });
-            sandBox.dowloadFile({
-                api: this.data.shareImg
-            }).then(res => {
-                if (res.statusCode == 200) {
-                    wx.getSetting({
-                        success: ret => {
-                            // 如果之前没有授权
-                            if (!ret.authSetting['scope.writePhotosAlbum']) {
-                                wx.authorize({
-                                    scope: 'scope.writePhotosAlbum',
-                                    success: rej => {
-                                        this.saveImg(res.tempFilePath);
-                                    },
-                                    // 用户拒绝授权
-                                    fail: ret => {
-                                        this.setData({
-                                            is_refused: true
-                                        })
-                                        wx.hideLoading();
-                                    }
-                                })
-                            } else {
-                                this.saveImg(res.tempFilePath);
-                            }
-                        }
-                    })
-                } else {
-                    wx.hideLoading();
-                    wx.showToast({
-                        title: '下载图片失败',
-                        icon: 'none'
-                    })
-                }
-            }, err => {
-
-            })
-        }
+    downImg(){
+        wx.downloadFile({
+            url: `${this.data.shareImg}`, 
+            success (res) {
+              if (res.statusCode === 200) {
+                wx.playVoice({
+                  tempFilePath: res.tempFilePath,
+                })
+                wx.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: function () {
+                        wx.showToast({
+                            title: '保存图片成功',
+                            icon: 'none'
+                        })
+                        wx.hideLoading();
+                    },
+                    fail: rej => {
+                        wx.hideLoading();
+                        wx.showToast({
+                            title: '保存图片失败',
+                            icon: 'none'
+                        })
+                    }
+                })
+              }
+            }
+          })
     },
+    // downImg() {
+    //     if (this.data.shareImg) {
+    //         console.log('this.data.shareImg',this.data.shareImg)
+    //         wx.showLoading({
+    //             title: '正在下载',
+    //             mask: true
+    //         });
+    //         sandBox.dowloadFile({
+    //             api: this.data.shareImg
+    //         }).then(res => {
+    //             if (res.statusCode == 200) {
+    //                 wx.getSetting({
+    //                     success: ret => {
+    //                         // 如果之前没有授权
+    //                         if (!ret.authSetting['scope.writePhotosAlbum']) {
+    //                             wx.authorize({
+    //                                 scope: 'scope.writePhotosAlbum',
+    //                                 success: rej => {
+    //                                     this.saveImg(res.tempFilePath);
+    //                                 },
+    //                                 // 用户拒绝授权
+    //                                 fail: ret => {
+    //                                     this.setData({
+    //                                         is_refused: true
+    //                                     })
+    //                                     wx.hideLoading();
+    //                                 }
+    //                             })
+    //                         } else {
+    //                             this.saveImg(res.tempFilePath);
+    //                         }
+    //                     }
+    //                 })
+    //             } else {
+    //                 wx.hideLoading();
+    //                 wx.showToast({
+    //                     title: '下载图片失败',
+    //                     icon: 'none'
+    //                 })
+    //             }
+    //         }, err => {
+
+    //         })
+    //     }
+    // },
     // 保存图片
     saveImg(path) {
         wx.saveImageToPhotosAlbum({
