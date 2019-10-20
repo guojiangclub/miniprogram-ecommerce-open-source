@@ -72,10 +72,11 @@ Page({
                         wx.showModal({
                             content: res.message,
                             showCancel: false,
-                            success: res=>{
-                                if (res.status) {
+                            success (res){
+                                if(res.confirm){
+                                    console.log('用户点击确定')
                                     wx.switchTab({
-                                        url: '/pages/user/personal/personal'
+                                        url: '/pages/user/user/user'
                                     })
                                 }
                             }

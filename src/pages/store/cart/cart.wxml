@@ -32,7 +32,7 @@
     <view class="goods-box">
         <checkbox-group bindchange="changeCheck">
             <view wx:if="{{list==''}}" class="image_box">
-                <image mode="widthFill" src="../../../assets/image/car.png"/>
+                <image mode="widthFill" src="../../../assets/image/new_cart.png"/>
             </view>
             <view class="goods-item mx-1px-bottom" wx:for="{{list}}" wx:key="index">
                 <view class="input">

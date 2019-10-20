@@ -34,6 +34,7 @@
     "pages/favorite/index/index",
     "pages/point/index/index",
     "pages/point/about/about",
+    "pages/distribution/applyDistribution/applyDistribution",
     "pages/coupon/index/index",
     "pages/coupon/onDetail/onDetail",
     "pages/afterSales/index/index"
