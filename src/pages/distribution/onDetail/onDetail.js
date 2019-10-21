@@ -67,23 +67,23 @@ Page({
 	                    init: true
                     })
 
-					if (!res.data.agent_code) {
-                        wx.showModal({
-                            content: '当前用户非分销员',
-                            showCancel: false,
-                            success: res => {
-                                if (res.confirm || (!res.cancel && !res.confirm)) {
-                                    wx.navigateBack({
-                                        delta: 1
-									})
-                                }
-                            }
-                        })
-						this.setData({
-                            init: false
-						})
-                        wx.hideShareMenu();
-					}
+					// if (!res.data.agent_code) {
+                    //     wx.showModal({
+                    //         content: '当前用户非分销员',
+                    //         showCancel: false,
+                    //         success: res => {
+                    //             if (res.confirm || (!res.cancel && !res.confirm)) {
+                    //                 wx.navigateBack({
+                    //                     delta: 1
+					// 				})
+                    //             }
+                    //         }
+                    //     })
+					// 	this.setData({
+                    //         init: false
+					// 	})
+                    //     wx.hideShareMenu();
+					// }
                 } else {
                     wx.hideShareMenu();
                     wx.showModal({

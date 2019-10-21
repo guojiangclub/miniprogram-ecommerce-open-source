@@ -11,12 +11,12 @@ Page({
                 page: 0,
                 more: true
             },
-            {
-                title: '线下',
-                init: false,
-                page: 0,
-                more: true
-            }
+            // {
+            //     title: '线下',
+            //     init: false,
+            //     page: 0,
+            //     more: true
+            // }
         ],
         dataList: {
             0: [],

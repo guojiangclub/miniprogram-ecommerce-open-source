@@ -41,7 +41,6 @@ Page({
                 activeIndex: e.type
             })
         }
-        this.queryPointListBalance(this.data.activeIndex);
         this.queryUserPoint('default');
     },
     onShow(e) {
@@ -67,7 +66,6 @@ Page({
             //     mask: true
             // });
 
-            this.queryPointListBalance(status);
         }
 
     },
@@ -76,7 +74,6 @@ Page({
         var page = this.data.tabList[status].page + 1;
         var tabList = `tabList[${status}]`;
         if (this.data.tabList[status].more) {
-            this.queryPointListBalance(status,page);
         } else {
             wx.showToast({
                 image: '../../../assets/image/error.png',

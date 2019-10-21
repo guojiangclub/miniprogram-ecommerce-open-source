@@ -1956,7 +1956,7 @@ Page({
                 url: '/pages/index/index/index'
             })
         } else if (e.currentTarget.dataset.type == 'cart') {
-            wx.navigateTo({
+            wx.switchTab({
                 url: '/pages/store/cart/cart'
             })
         } else {
@@ -2004,7 +2004,8 @@ Page({
     },
 
     goCart() {
-        wx.navigateTo({
+        console.log('???')
+        wx.switchTab({
             url: '/pages/store/cart/cart'
         });
         this.changeCart();

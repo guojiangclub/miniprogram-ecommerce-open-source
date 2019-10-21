@@ -3,7 +3,7 @@
     <view class="point-top" style="background: {{config.mainColor}}">
         <view class="point-current">
             <view>当前可用积分</view>
-            <view class="point-num">{{point.pointValid}}</view>
+            <view class="point-num">{{point.pointValid || 0}}</view>
         </view>
     </view>
 
