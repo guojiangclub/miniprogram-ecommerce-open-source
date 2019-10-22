@@ -20,11 +20,20 @@ Component({
     methods:{
         _jumpImg(e){
             var src = e.currentTarget.dataset.src;
+            var index=e.currentTarget.dataset.index;
+            var link=e.currentTarget.dataset.link;
+            console.log('index',index)
             if (!src || src == 'uto_miniprogram') return
 
-            wx.navigateTo({
-                url: src
-            })
+            if(index==3){
+                wx.navigateTo({
+                    url:`/pages/link/link/link?link=${link}`
+                })
+            }else{
+                wx.navigateTo({
+                    url: src
+                })
+            }
         },
 
     },

@@ -51,6 +51,7 @@
     "pages/distribution/vipManage/vipManage",
     "pages/coupon/index/index",
     "pages/coupon/onDetail/onDetail",
+    "pages/link/link/link",
     "pages/afterSales/index/index"
   ],
   "window": {

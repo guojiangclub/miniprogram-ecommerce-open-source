@@ -26,7 +26,12 @@
         <view class="time-out" style="color: {{config.countColor}}" wx:if="{{type == 1}}">
             <!--<i class="iconfont icon-shijian"></i>-->
             <view class="text">距离{{typename}}开始还剩余</view>
-            <view class="tiem"><span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.hour < 10}}">0</p>{{startsTime.hour}}</span> 时 <span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.minute < 10}}">0</p>{{startsTime.minute}}</span> 分 <span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.second < 10}}">0</p>{{startsTime.second}}</span> 秒 </view>
+            <view class="tiem">
+                <span class="num-item" style="background: {{config.mainColor}}">
+                 <p class="zero" wx:if="{{startsTime.hour < 10}}">0</p>
+                  {{startsTime.hour}}</span> 时 
+                <span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.minute < 10}}">0</p>{{startsTime.minute}}</span> 分 <span class="num-item" style="background: {{config.mainColor}}"> <p class="zero" wx:if="{{startsTime.second < 10}}">0</p>{{startsTime.second}}</span> 秒 
+            </view>
         </view>
     </view>
 </view>

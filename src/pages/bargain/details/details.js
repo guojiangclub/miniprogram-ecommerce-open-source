@@ -6,7 +6,7 @@ Page({
         left:0,
         select_count: 1,
         show:false,//控制活动规则的显示
-        rule:'的叫法是看到了福建省的<br/><br/>打梵蒂冈飞机速度快放假',//活动规则
+        rule:'',//活动规则
         number:17,
         skuTable: {},
         is_leader:0,//1为自己，0为好友
@@ -16,7 +16,6 @@ Page({
         theReduce:10,//
         step:1,//控制好友按钮显示,1为还未助力；2为助力成功；3为助力失败
         showTell:false,//控制活动结束，好友新开零元拿显示的弹层
-        success:true,//模拟好友点击砍价接口是否成功
         buy:true,//系统是否设置了可提前购买
         over:false,//砍价是否完成
         overTime:false,//用户时间是否超时
@@ -32,28 +31,31 @@ Page({
         canBuy:true
     },
     onLoad(e) {
-        //this.getMessage()
-        var  that =this
+        var reduce_items_id = decodeURIComponent(e.scene)
+        if(reduce_items_id){
+            this.setData({
+                reduce_items_id:reduce_items_id
+            })
+            this.getMessage()
+        }
         this.getServer()
         if(e.reduce_items_id){
-            that.setData({
+            this.setData({
                 reduce_items_id:e.reduce_items_id
             })
-        that.getMessage()
+        this.getMessage()
 
         }
         if(this.data.overTime==true || this.data.overActivity==true){
-            that.setData({
+            this.setData({
                 setColor:'AAAAAA'
             })
         }    
         var windowHeight = wx.getSystemInfoSync().windowHeight//获取设备的高度
         this.setData({
             Height:windowHeight
-        })
-        //this.getUserInfo();  
-        that.showWitch();
-       // that.getStoreDetail()
+        })  
+        this.showWitch();
     },
     selectSpec(e) {
 
@@ -574,6 +576,7 @@ Page({
 			},
         }).then(res =>{
             if (res.statusCode == 200) {
+                console.log('???',res.data.data.status_text)
                 if(res.data.data.status_text !=="进行中" &&res.data.data.status_text!=="已下单待支付" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
                     that.setData({
                         overTime:true,
@@ -639,7 +642,7 @@ Page({
                 })
             }
         })
-        this.showWitch()
+        that.showWitch()
     },
     bargainAgin(){
         let that =this
