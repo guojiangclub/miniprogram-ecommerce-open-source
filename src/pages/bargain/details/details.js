@@ -32,7 +32,8 @@ Page({
     },
     onLoad(e) {
         var reduce_items_id = decodeURIComponent(e.scene)
-        if(reduce_items_id){
+        if(reduce_items_id>0){
+            console.log('reduce_items_id',reduce_items_id)
             this.setData({
                 reduce_items_id:reduce_items_id
             })
@@ -576,7 +577,6 @@ Page({
 			},
         }).then(res =>{
             if (res.statusCode == 200) {
-                console.log('???',res.data.data.status_text)
                 if(res.data.data.status_text !=="进行中" &&res.data.data.status_text!=="已下单待支付" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
                     that.setData({
                         overTime:true,
@@ -842,7 +842,6 @@ Page({
         let that =this
         var token = cookieStorage.get('user_token'); 
         if(this.data.is_leader==0){
-            if(this.data.success){
                 sandBox.post({
                     api:`api/reduce/help?reduce_items_id=${this.data.reduce_items_id}`,
                     header: {
@@ -898,7 +897,7 @@ Page({
                     that.getMessage()
                 })
                 that.getMessage()
-            }
+
         }
         this.getMessage()
         that.showWitch();
