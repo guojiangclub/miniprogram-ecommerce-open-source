@@ -87,8 +87,8 @@ Page({
         });
         var types = [
             'valid',
-            'invalid',
-            'used'
+            'used',
+            'invalid'
         ][type]
 
         var token = cookieStorage.get('user_token') || '';

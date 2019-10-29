@@ -562,7 +562,7 @@ Page({
             let exclusive = currentDiscount.exclusive;
             if (discount <= pay_amount) {
                 dis.discounts = discount;
-                pay_amount = pay_amount - dis.discounts;  
+                // pay_amount = pay_amount - dis.discounts;  
                 discountsList.forEach((item,index) => {
 
                     if (item.id == currentDiscountID) {
@@ -587,7 +587,7 @@ Page({
 
                     pay_amount =  amount;
                     dis.discounts = -(currentItem.discountAdjustment);
-                    pay_amount = pay_amount + currentItem.discountAdjustment;  // 值为负数，所以得加
+                   // pay_amount = pay_amount + currentItem.discountAdjustment;  // 值为负数，所以得加
                 } else {
                     // 开始筛选优惠券
                     let couponArr = [];
@@ -633,7 +633,7 @@ Page({
             if (discount <= pay_amount) {
                 dis.coupon=discount
                 // dis.coupon = -(currentItem.couponAdjustment);
-                pay_amount = pay_amount - dis.coupon;  // 
+                // pay_amount = pay_amount - dis.coupon;  // 
                 couponList.forEach((item,index) => {
                     if (item.id == currentCouponId) {
                         item.checked = true;
@@ -660,7 +660,8 @@ Page({
                     currentItem = this.currentItem(0, currentCouponId); // 拿到当前的组合方式
                     pay_amount =  amount;
                     dis.coupon = -(currentItem.couponAdjustment);
-                    pay_amount = pay_amount + currentItem.couponAdjustment;  // 值为负数，所以得加
+                  //  pay_amount = pay_amount + currentItem.couponAdjustment;  // 值为负数，所以得加
+                    console.log('这是什么呀',dis.coupon,pay_amount)
                 } else {
                     // 筛选促销
                     if (!currentDiscount) {
@@ -704,11 +705,17 @@ Page({
             bestDiscount = true
         }
 
-        dis.coupon_yuan = -(dis.coupon / 100).toFixed(2);
+        dis.coupon_yuan = -(currentItem.couponAdjustment/ 100).toFixed(2);
         dis.discounts_yuan = -(dis.discounts / 100).toFixed(2)
-        dis.total_yuan = -((dis.coupon + dis.discounts) / 100).toFixed(2)
+        dis.total_yuan = -((dis.coupon_yuan - dis.discounts_yuan)).toFixed(2)
+        console.log('优惠券抵扣的钱',dis.coupon_yuan)
+        console.log('优惠活动抵扣的钱',dis.discounts_yuan)
+        console.log('优惠抵扣的钱',dis.total_yuan)
         dis.point_yuan = (dis.point / 100).toFixed(2)
         currentItem.adjustmentTotal_yuan = (currentItem.adjustmentTotal / 100).toFixed(2)
+        console.log('pay_amount',pay_amount)
+        pay_amount=((pay_amount/100)+dis.total_yuan).toFixed(2)
+        console.log('pay_amount',pay_amount)
         this.setData({
             discounts: dis,
             pay_amount: pay_amount,

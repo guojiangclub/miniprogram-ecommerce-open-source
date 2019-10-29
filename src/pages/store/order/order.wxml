@@ -209,7 +209,7 @@
     </view>
     <view class="sbumit-order mx-1px-top">
         <view class="back" style="color: {{config.mainColor}}">
-            {{newBlock.order.count}}件商品, 合计 ￥{{(pay_amount/100)}}
+            {{newBlock.order.count}}件商品, 合计 ￥{{(pay_amount)}}
         </view>
         <button class="sbumit" style="background: {{config.mainColor}}" bindtap="submitOrder" loading="{{loading}}">
             提交订单
@@ -229,9 +229,9 @@
                                 <view class="text-box">
                                     <view class="text">
                                         <text class="money" wx:if="{{item.discount.action_type.type == 'cash'}}">￥</text>
-                                        <sapn>{{ item.discount.action_type.value }}</sapn>
-
-                                        <text class="money" wx:if="{{item.discount.action_type.type == 'discount'}}">折</text>
+                                        <sapn wx:if="{{item.discount.action_type.type == 'cash'}}">{{ item.discount.action_type.value }}</sapn>
+                                        <sapn wx:if="{{item.discount.action_type.value<1}}">{{ item.discount.action_type.value*10 }}</sapn>
+                                        <text class="money" wx:if="{{item.discount.action_type.value<1}}">折</text>
                                     </view>
                                     <text class="label text">{{ item.discount.label }}</text>
                                 </view>
