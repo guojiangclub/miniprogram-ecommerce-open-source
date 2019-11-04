@@ -30,20 +30,43 @@ Page({
         that.setData({
             id:id
         })
-        sandBox.post({
-            api:`api/reduce`,
-            header: {
-				Authorization: token
-            },
-            data:data
-        }).then(res =>{
-            if (res.statusCode == 200) {
-                that.setData({
-                    reduce_items_id: res.data.data.reduce_items_id 
-                })
-                that.listgetMessage();
-            }else{}
-        })
+        if(token){
+            sandBox.post({
+                api:`api/reduce`,
+                header: {
+                    Authorization: token
+                },
+                data:data
+            }).then(res =>{
+                if (res.statusCode == 200) {
+                    that.setData({
+                        reduce_items_id: res.data.data.reduce_items_id 
+                    })
+                    that.listgetMessage();
+                }else{}
+            })
+        }else{
+            let url="/pages/bargain/index/index"
+            wx.showModal({
+                content:'请重新登录',
+                duration:1500,
+                showCancel: false,
+                success:(res)=>{
+                    if (res.confirm) {
+                        wx.navigateTo({
+                            url:`/pages/user/register/register?url=${url}`
+                        })
+                        return;
+                    }
+                },
+                cancel:()=>{
+                    wx.navigateTo({
+                        url:`/pages/user/register/register?url=${url}`
+                    })
+                    return;
+                }
+            })
+        }
     },
     //获取详情页信息
     listgetMessage(){
