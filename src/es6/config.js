@@ -2,11 +2,7 @@ export default  {
 
     BRAND: {
         name: 'IBRAND',
-        logo: 'https://cdn.ibrand.cc/%E6%9E%9C%E9%85%B1.jpg',
-        // https://demo-open-admin.ibrand.cc/
-        //https://admin-dev.ibrand.cc/
-        //https://dev-open-admin.ibrand.cc/
-        //dev-open-admin-swoole.ibrand.cc/
+        logo: 'https://cdn.guojiang.club/%E6%9E%9C%E9%85%B1.jpg',
     },
     GLOBAL: {
         baseUrl: process.env.NODE_ENV === 'development' ? 'https://demo-open-admin.ibrand.cc/' : 'https://demo-open-admin.ibrand.cc/', // 运行时自动替换变量
