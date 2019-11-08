@@ -6,7 +6,7 @@
                 <image src="https://cdn.ibrand.cc/%E6%9E%9C%E9%85%B1.jpg"  wx:else></image>
             </view>
             <view class="user-text">
-                <view class="nick-name">{{detail.nick_name || '无名氏'}}</view>
+                <view class="nick-name">{{detail.nick_name || '果酱会员'}}</view>
             </view>
         </view>
 

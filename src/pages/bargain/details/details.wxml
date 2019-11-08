@@ -109,11 +109,11 @@
                 <view class="hero_box" wx:for="{{detailsMessage.users}}" wx:for-item="item">
                     <view class="hero_message">
                         <view class="head_img">
-                            <image src="{{item.meta.avatar}}" />
+                            <image src="{{item.meta.avatar ||'https://cdn.ibrand.cc/%E6%9E%9C%E9%85%B1.jpg'}}" />
                         </view>
                         <view class="message_box">
                             <view class="message_name">
-                                {{item.meta.nick_name}}
+                                {{item.meta.nick_name || '果酱会员'}}
                             </view>
                             <view class="message_share">
                                 分享给好友，免费拿好货

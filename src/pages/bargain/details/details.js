@@ -634,10 +634,9 @@ Page({
                    })
                }
             }else{
-                wx.showToast({
-                    title:res.data.data.message,
-                    icon:none,
-                    duration: 2000,
+                wx.showModal({
+                    content:res.data.data.message,
+                    showCancel: false,
                     
                 })
             }
@@ -660,7 +659,7 @@ Page({
             data:data
         }).then(res =>{
             if (res.statusCode == 200) {
-                wx.showToast({
+                wx.showModal({
                     title:'已重新发起砍价',
                     duration:2500
                 })
@@ -698,17 +697,17 @@ Page({
                 wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,
                     success: res => {
-                        wx.showToast({
+                        wx.showModal({
                             title: '保存图片成功',
-                            icon: 'none'
+                            showCancel: false
                         })
                         wx.hideLoading();
                     },
                     fail: rej => {
                         wx.hideLoading();
-                        wx.showToast({
+                        wx.showModal({
                             title: '保存图片失败',
-                            icon: 'none'
+                            showCancel: false
                         })
                     }
                 })
@@ -856,10 +855,9 @@ Page({
                             step:2
                         })
                         if(res.data.code==400){
-                            wx.showToast({
-                                title:res.data.message,
-                                icon: 'none',
-                                duration: 2000
+                            wx.showModal({
+                                content:res.data.message,
+                                showCancel: false
                               })
                               setTimeout(function(){
                             that.setData({
@@ -881,16 +879,15 @@ Page({
                     }
                         that.showWitch();
                     }else{
-                        wx.showToast({
-                            title: '您暂时不能帮好友砍价',
-                            icon: 'none',
-                            //duration: 3000
+                        wx.showModal({
+                            content: '您暂时不能帮好友砍价',
+                            showCancel: false
                           })
                           setTimeout(function(){
                             that.setData({
                                 step:2
                               })
-                              wx.hideToast()
+                            //   wx.hideToast()
                               //that.showWitch();  
                           },3000)
                     }
@@ -1000,19 +997,17 @@ Page({
                     });
                 }
             }else{
-                wx.showToast({
-                    title:res.data.message,
-                    icon:'none',
-                    duration:2000
+                wx.showModal({
+                    content:res.data.message,
+                    showCancel: false,
                 })
             }
         })
     },
     showToast(){
-        wx.showToast({
+        wx.showModal({
             title:'请选择商品的规格',
-            icon:'none',
-            duration:2000
+            showCancel: false,
         })
     },
     changeImg(){
