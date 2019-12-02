@@ -3,7 +3,6 @@
  */
 import {config,pageLogin,getUrl,sandBox,cookieStorage} from '../../../lib/myapp.js';
 import Rater from '../../../component/rater/rater';
-
 Page({
     data: {
         status: {
@@ -16,7 +15,7 @@ Page({
         sliderOffset: 0,
         sliderLeft: 0,
         width: 0,
-        
+
         tabList: [
             {
                 title: "待评价",
