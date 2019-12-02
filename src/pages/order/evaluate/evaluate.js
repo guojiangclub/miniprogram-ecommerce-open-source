@@ -101,7 +101,7 @@ Page({
             this.postSubmit(comments);
         } else {
             wx.showModal({
-                content:"所有订单请填写完",
+                content:"最少填写五个字",
                 showCancel:false
             });
         }
@@ -126,11 +126,13 @@ Page({
             if (res.statusCode == 200) {
                 res = res.data
                 if(res.status && comments.length){
+                    wx.hideLoading()
                     wx.showModal({
                         content: '评价成功',
                         showCancel: false,
                         success: res=>{
-                            if (res.confirm || (!res.cancel && !res.confirm)) {
+                            debugger
+                            if (res.confirm) {
                                 wx.redirectTo({
                                     url: '/pages/order/comment/comment'
                                 })

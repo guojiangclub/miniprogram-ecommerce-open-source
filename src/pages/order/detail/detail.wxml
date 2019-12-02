@@ -10,7 +10,28 @@
                 </view>
             </view>
             <view class="goods-item">
-                <view class="item-middle">
+                <view class="item-middle" wx:for="{{order.group_order_item}}">
+                 <view class="express-info mx-1px-bottom" wx:if="{{item.shipping}}">
+                        <view class="left">
+                            <view>
+                                {{item.shipping_title}}
+                            </view>
+                            <div class="info" data-no="{{item.shipping.tracking}}" data-name="{{item.shipping.name}}" bindtap="jumpExpress">
+                                查看物流详情 >
+                            </div>
+                        </view>
+                        <view class="right">
+                            <view>
+                                物流公司 : {{item.shipping.name}}
+                            </view>
+                            <view>
+                                物流编号 : {{item.shipping.tracking}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="express-info mx-1px-bottom" wx:else>
+                        等待商家发货
+                    </view>
                     <view class="middle-item mx-1px-bottom" data-id="{{item.item_meta.detail_id}}" wx:for="{{order.items}}" bindtap="jumpDetail">
                         <image src="{{item.item_meta.image}}" />
                         <view class="text">
@@ -185,6 +206,27 @@
             </view>
             <view class="order-info">
                 {{order.note || order.message || '暂无备注'}}
+            </view>
+        </view>
+        <view class="order-item" wx:if="{{(order.status==3 ||order.status==4 ||order.status==5) && order.group_item_count == 1}}">
+            <view class="title mx-1px-bottom">
+                运单信息
+            </view>
+            <view class="order-info">
+                <view class="info-item">
+                    <view class="name">
+                        物流公司 :
+                    </view>
+                    <view class="text">{{order.shippings[0]?order.shippings[0].name:"暂无运单信息"}}</view>
+                </view>
+                <view class="info-item">
+                    <view class="name">
+                        运单编号 :
+                    </view>
+                    <view class="text">{{order.shippings[0]?order.shippings[0].tracking:"暂无运单信息"}}
+                        <span class="express-order" bindtap="jumpExpress" data-name="{{order.shippings[0].name}}" data-no="{{order.shippings[0].tracking}}" wx:if="{{order.shippings[0] && order.shippings[0].tracking}}">查看物流</span>
+                    </view>
+                </view>
             </view>
         </view>
         <view class="order-detail-info">

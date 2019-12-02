@@ -29,8 +29,10 @@
     "pages/bargain/list/list",
     "pages/coupon/goods/goods",
     "pages/order/index/index",
+    "pages/order/comment/comment",
     "pages/order/search/search",
     "pages/order/evaluate/evaluate",
+    "pages/order/express/express",
     "pages/favorite/index/index",
     "pages/point/index/index",
     "pages/point/about/about",
@@ -52,7 +54,10 @@
     "pages/coupon/index/index",
     "pages/coupon/onDetail/onDetail",
     "pages/link/link/link",
-    "pages/afterSales/index/index"
+    "pages/afterSales/index/index",
+    "pages/afterSales/detail/detail",
+    "pages/afterSales/apply/apply",
+    "pages/afterSales/retreat/retreat"
   ],
   "window": {
     "backgroundTextStyle": "dark",

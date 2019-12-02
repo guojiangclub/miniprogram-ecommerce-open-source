@@ -107,6 +107,14 @@ Page({
             url: url
         })
     },
+    jumpAfterSales() {
+        if (!this.data.token) {
+            return this.jumpLogin();
+        }
+        wx.navigateTo({
+            url: '/pages/afterSales/index/index'
+        })
+    },
     jumpLogin(){
         wx.navigateTo({
             url: '/pages/user/register/register'

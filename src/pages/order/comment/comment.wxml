@@ -1,0 +1,138 @@
+<import src="../../../component/rater/rater.wxml"></import>
+
+<view id="order-index">
+    <view class="navbar mx-1px-bottom">
+        <block wx:for="{{tabList}}" wx:key="*this">
+            <view id="{{index}}" class="navbar-item {{activeIndex == index ? 'activity' : ''}}" bindtap="tabClick">
+                <view class="navbar-title">{{item.title}}</view>
+            </view>
+        </block>
+        <view class="navbar-slider" style="width: {{width}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+
+    </view>
+    <view class="tab-panel">
+        <view class="tab-content" hidden="{{activeIndex != 0}}">
+
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{dataList[0] == '' && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="dataList[0]" wx:for-index="idx">
+                    <view class="order-item" data-no="{{order.order_no}}" wx:for="{{dataList[0][idx]}}" wx:for-item="order" bindtap="jumps">
+                        <view class="item-top">
+                            <view class="indent mx-1px-bottom">
+                                <view class="order-num">
+                                    <span>线上门店</span> | 订单编号：{{order.order_no}}
+                                </view>
+                                <view class="order-type">
+                                    {{typeList[0]}}
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-item mx-1px-bottom" wx:for="{{order.items}}" wx:for-item="good">
+                                <image src="{{good.item_meta.image}}" />
+                                <view class="commodity_detail">
+                                    <view class="detail_name">
+                                        {{good.item_name}}
+                                    </view>
+                                    <view class="detail_num">
+                                        <view class="num_css">
+                                            <span>{{good.quantity}}件</span>
+                                            <span>{{good.item_meta.specs_text}}</span>
+                                        </view>
+                                        <view class="num_money">
+                                            ￥{{good.total_yuan}}
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="item-bottom" bindtap="">
+                            <view class="all-money">
+                                {{order.count}}件, 共计 ￥{{order.total_yuan}}
+                            </view>
+                            <view class="button-box">
+                                立即评价
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+
+            </view>
+
+        </view>
+        <view class="tab-content" hidden="{{activeIndex != 1}}">
+            <view class="order-box">
+                <view class="order-item__none" wx:if="{{dataList[1] == '' && tabList[activeIndex].init}}">
+                    暂无数据
+                </view>
+                <view wx:for="{{dataList[1]}}" wx:for-index="indexs">
+                    <view class="evaluate-item" wx:for="{{dataList[1][indexs]}}" wx:for-item="comment">
+                        <view class="adapter mx-1px-bottom">
+                            <view class="adapter_item">
+                                <view class="item_title">
+                                    <view class="adapter-img">
+                                        <image src="{{comment.user.avatar}}"></image>
+                                        <view class="justify globalColor">V{{comment.user.grade}}</view>
+                                    </view>
+                                    <view class="text">{{comment.user.nick_name}}</view>
+                                </view>
+                                <view class="rater">
+                                    <template is="rater" data="{{ ...$vlc.rater.store }}"/>
+                                </view>
+                            </view>
+
+                            <view class="adapter_type">
+                                <span>{{comment.created_at}}</span>
+                                <span>颜色分类：{{comment.item_meta.specs_text}}</span>
+                            </view>
+                            <view class="adapter_content">
+                                <view class="content_item">
+                                    <view class="content_text">
+                                        {{comment.contents}}
+                                    </view>
+                                    <view class="content_img">
+                                        <view class="img_item" wx:for="{{comment.pic_list}}" wx:for-item="imgList">
+                                            <view class="img">
+                                                <image mode="widthFix" src="{{imgList}}" />
+                                            </view>
+                                        </view>
+                                    </view>
+                                </view>
+
+                            </view>
+                        </view>
+                        <view class="commodity" hidden="{{order_item == ''}}">
+                            <view class="commodity_item" data-id="{{comment.order_item.product.goods_id}}" bindtap="jumpDetail">
+                                <view class="commodity_img">
+                                    <image src="{{comment.item_meta.image}}"></image>
+                                </view>
+                                <view class="commodity_detail">
+                                    <view class="detail_name">
+                                        {{comment.order_item.item_name}}
+                                    </view>
+                                    <view class="detail_num">
+                                        <view class="num_css">
+                                            <span>{{comment.order_item.quantity}}件</span>
+                                            <span>{{comment.item_meta.specs_text}}</span>
+                                        </view>
+                                        <view class="num_money">
+                                            ￥{{comment.order_item.total_yuan}}
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="loadingbox" hidden="{{!tabList[0].show}}">
+                    {{showText}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
