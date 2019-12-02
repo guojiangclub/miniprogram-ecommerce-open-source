@@ -16,6 +16,7 @@ Page({
         sliderOffset: 0,
         sliderLeft: 0,
         width: 0,
+        
         tabList: [
             {
                 title: "待评价",
