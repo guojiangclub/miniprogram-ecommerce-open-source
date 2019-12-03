@@ -229,7 +229,7 @@ Page({
     },
     queryRefundBaseInfo(id){
         sandBox.get({
-            api: "api/refund/base_info",
+            api: "api/refund/base_info",//服务类型接口
             header: {
                 Authorization: cookieStorage.get('user_token')
             },
@@ -274,7 +274,7 @@ Page({
     },
     queryCauseList(type = 'order_refund_reason') {
         sandBox.get({
-            api:'api/system/settings',
+            api:'api/system/settings',//退换原因接口
             header: {
                 Authorization: cookieStorage.get('user_token')
             },

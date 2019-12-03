@@ -106,14 +106,12 @@ Page({
             },
             data: {
                 include: 'photos,oneComment,guessYouLike,point,user',
-                //...
                 multi_groupon_item_id: this.data.groupon_item_id,
                 wechat_group_id: wechat_group_id
             }
         }).then(() => {
             if (this.data.detailData.data.shop_hidden_more_info == 0) {
                 this.getDomInfo('.js__top', 'shop');
-                // this.getDomInfo('.js__like', 'like');
                 this.getDomInfo('.js__comment', 'comment');
             }
 
@@ -577,65 +575,69 @@ Page({
 			},
         }).then(res =>{
             if (res.statusCode == 200) {
-                if(res.data.data.status_text !=="进行中" &&res.data.data.status_text!=="已下单待支付" && res.data.data.reduce.status_text=="进行中" && res.data.data.time_price !=="0.00"){
-                    that.setData({
-                        overTime:true,
-                        overActivity:false,
-                        setColor:'AAAAAA',
-                    })
-                }else if(res.data.data.reduce.status_text !=="进行中"){
-                    that.setData({
-                        overActivity:true,
-                        setColor:'AAAAAA'
-                    })
-                 }else if(res.data.data.status_text=="订单已支付" ){
+                res=res.data
+                if(res.status){
+                    if(res.data.status_text !=="进行中" &&res.data.status_text!=="已下单待支付" && res.data.reduce.status_text=="进行中" && res.data.time_price !=="0.00"){
                         that.setData({
-                            pay:true,
-                            over:true
-                        })
-                 }else if(res.data.data.status_text =="进行中" && res.data.data.reduce.status_text=="进行中"){
-                        that.setData({
-                            overTime:false,
+                            overTime:true,
                             overActivity:false,
-                            setColor:'fb5054',
+                            setColor:'AAAAAA',
                         })
-                 }
-                 if(res.data.data.reduce_surplus_amount=="0.00"){
+                    }else if(res.data.reduce.status_text !=="进行中"){
+                        that.setData({
+                            overActivity:true,
+                            setColor:'AAAAAA'
+                        })
+                     }else if(res.data.status_text=="订单已支付" ){
+                            that.setData({
+                                pay:true,
+                                over:true
+                            })
+                     }else if(res.data.status_text =="进行中" && res.data.reduce.status_text=="进行中"){
+                            that.setData({
+                                overTime:false,
+                                overActivity:false,
+                                setColor:'fb5054',
+                            })
+                     }
+                     if(res.data.reduce_surplus_amount=="0.00"){
+                        that.setData({
+                            over:true
+                         })
+                     }
                     that.setData({
-                        over:true
-                     })
-                 }
-                that.setData({
-                    detailsMessage:res.data.data,
-                   is_leader:res.data.data.user_is_leader,
-                   // is_leader:0,
-                   reduce_id:res.data.data.reduce_id,
-                   id:res.data.data.id,
-                   goods_id:res.data.data.reduce.goods_id,
-                   name:res.data.data.reduce.goods.name,
-                   store_count:res.data.data.reduce.store_nums,
-                   market_price:res.data.data.reduce.goods.market_price,
-                   time_price:res.data.data.time_price
-                })
-                that.queryCommodityStore(this.data.goods_id)
-                that.showWitch()
-               if(this.data.detailsMessage.progress_par>0.17 && this.data.detailsMessage.progress_par<0.83){
-                let percent=parseInt(this.data.detailsMessage.progress_par*100)-17
-                that.setData({
-                    left:percent
-                })
-               }else if(this.data.detailsMessage.progress_par==0.83 ||this.data.detailsMessage.progress_par>0.83){
-                    that.setData({
-                        left:67
+                        detailsMessage:res.data,
+                       is_leader:res.data.user_is_leader,
+                       // is_leader:0,
+                       reduce_id:res.data.reduce_id,
+                       id:res.data.id,
+                       goods_id:res.data.reduce.goods_id,
+                       name:res.data.reduce.goods.name,
+                       store_count:res.data.reduce.store_nums,
+                       market_price:res.data.reduce.goods.market_price,
+                       time_price:res.data.time_price
                     })
-               }else{
-                   that.setData({
-                       left:0
-                   })
-               }
+                    that.queryCommodityStore(this.data.goods_id)
+                    that.showWitch()
+                   if(this.data.detailsMessage.progress_par>0.17 && this.data.detailsMessage.progress_par<0.83){
+                    let percent=parseInt(this.data.detailsMessage.progress_par*100)-17
+                    that.setData({
+                        left:percent
+                    })
+                   }else if(this.data.detailsMessage.progress_par==0.83 ||this.data.detailsMessage.progress_par>0.83){
+                        that.setData({
+                            left:67
+                        })
+                   }else{
+                       that.setData({
+                           left:0
+                       })
+                   }
+                }
             }else{
+                res=res.data
                 wx.showModal({
-                    content:res.data.data.message,
+                    content:res.message,
                     showCancel: false,
                     
                 })
@@ -659,16 +661,24 @@ Page({
             data:data
         }).then(res =>{
             if (res.statusCode == 200) {
+                res=res.data
+                if(res.status){
+                    wx.showModal({
+                        title:'已重新发起砍价',
+                        duration:2500
+                    })
+                    that.setData({
+                        reduce_items_id:res.data.reduce_items_id
+                    })
+                    that.getMessage()
+                    that.showWitch()
+                }
+            }else{
                 wx.showModal({
-                    title:'已重新发起砍价',
+                    title:'重新发起砍价失败',
                     duration:2500
                 })
-                that.setData({
-                    reduce_items_id:res.data.data.reduce_items_id
-                })
-                that.getMessage()
-                that.showWitch()
-            }else{}
+            }
         })
     },
     showWitch(){
@@ -851,12 +861,13 @@ Page({
                         }
                 }).then(res=>{
                     if (res.statusCode == 200){
+                        res=res.data
                         that.setData({
                             step:2
                         })
                         if(res.data.code==400){
                             wx.showModal({
-                                content:res.data.message,
+                                content:res.message,
                                 showCancel: false
                               })
                               setTimeout(function(){
@@ -871,9 +882,9 @@ Page({
                                 step:2
                             })
                         }
-                            if(res.data.data.reduce_amount){
+                            if(res.data.reduce_amount){
                             that.setData({
-                            reduce_amount:res.data.data.reduce_amount,
+                            reduce_amount:res.data.reduce_amount,
                             step:2
                         })
                     }
@@ -929,13 +940,21 @@ Page({
                 Authorization:cookieStorage.get('user_token')
             },
         }).then(res =>{
-            if(res.data.status){
+            if(res.statusCode == 200){
+                res=res.data
+            if(res.status){
                 _this.setData({
-                    userInfo:res.data.data,
+                    userInfo:resdata,
                 }, () => {
-                    if (res.data.data.agent_code) {
+                    if (res.data.agent_code) {
                         wx.updateShareMenu();
                     }
+                })
+            }
+            }else{
+                wx.showToast({
+                    title:'获取用户信息失败',
+                    duration:2500
                 })
             }
         })
@@ -1021,9 +1040,12 @@ Page({
             api:'api/reduce/help/text'
         }).then(res=>{
             if(res.statusCode == 200){
-                this.setData({
-                    rule:res.data.data.reduce_help_text
-                })
+                res=res.data
+                if(res.status){
+                    this.setData({
+                        rule:res.data.reduce_help_text
+                    })
+                }
             }
         })
     },

@@ -6,25 +6,27 @@
             活动规则
     </view>
     <view class="body_box">
-        <view class="bargain_body" wx:for="{{list}}" wx:for-item="item" wx:key="{{index}}">
-        <view class="bargain_goods">
-            <view class="goods_left">
-                <image src="{{item.goods.img}}" />
-            </view>
-            <view class="goods_right">
-                <view class="goods_name">{{item.goods.name}}</view>
-                <view class="number">剩余{{item.store_nums}}砍价名额</view>
-                <view class="past_price">原价 ￥<span>{{item.goods.max_price}}</span></view>
-                <view class="right_foot">
-                    <view class="new_price">
-                        砍后价￥{{item.price}}
+        <view class="bargain_body" wx:for="{{list}}" wx:for-item="items" wx:key="{{index}}">
+            <view class="bargain_list" wx:for="{{items}}" wx:for-item="item" wx:key="{{item.id}}">
+                 <view class="bargain_goods">
+                    <view class="goods_left">
+                     <image src="{{item.goods.img}}" />
                     </view>
-                    <view class="btn" bindtap="bargain" data-id="{{item.id}}" data-goodsId="{{item.goods_id}}">
-                        发起砍价
+                    <view class="goods_right">
+                        <view class="goods_name">{{item.goods.name}}</view>
+                        <view class="number">剩余{{item.store_nums}}砍价名额</view>
+                        <view class="past_price">原价 ￥<span>{{item.goods.max_price}}</span></view>
+                        <view class="right_foot">
+                            <view class="new_price">
+                                砍后价￥{{item.price}}
+                            </view>
+                            <view class="btn" bindtap="bargain" data-id="{{item.id}}" data-goodsId="{{item.goods_id}}">
+                                发起砍价
+                            </view>
+                        </view>
                     </view>
-                </view>
+                 </view>
             </view>
-        </view>
     </view>
     </view>
     <view class="box_body" wx:if="{{show}}" catchtap="closeRule" catchtouchmove="true">

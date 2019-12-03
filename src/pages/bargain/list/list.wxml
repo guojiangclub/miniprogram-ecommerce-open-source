@@ -1,7 +1,8 @@
 <view style="height:{{Height}}px" class="container">   
     <view class="body_box">
-        <view class="bargain_body" wx:for="{{list}}" wx:for-item="item" :key="{{index}}">
-            <view class="bargain_goods">
+        <view class="bargain_body" wx:for="{{list}}" wx:for-item="items" :key="{{index}}">
+        <view wx:for="{{items}}" wx:for-item="item" :key="{{item.id}}">
+             <view class="bargain_goods">
                 <view class="goods_left">
                     <image src="{{item.reduce.goods.img}}" />
                 </view>
@@ -22,6 +23,8 @@
                     </view>
                 </view>
             </view>
+        </view>
+        
         </view>
     </view>
 </view>

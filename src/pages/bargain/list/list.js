@@ -3,7 +3,7 @@ Page({
     data: {
         list:[],
         Height:'',
-        total_pages:1,
+        total_pages:'',
         current_page:1,
         reduce_items_id:'',
         limit:10
@@ -29,15 +29,34 @@ Page({
             // }
         }).then(res=>{
             if(res.statusCode == 200){
-                    // res.data.data.forEach(item=>{
-                    //     this.data.list.push(item)
-                    // })
-                that.setData({
-                    list:res.data.data,
-                    length:res.data.data.length,
-                    total_pages:res.data.meta.total_pages,
-                    current_page:res.data.meta.pagination.current_page
-                })
+                res=res.data
+                if(res.status){
+                var new_data=[]
+                res.data.forEach(v=>{
+                    if(!this.data.list.length){
+                        new_data.push(v)
+                    }else{
+                        this.data.list.forEach(e => {
+                            if(v.id!=e.id){
+                                new_data.push(v)
+                            }
+                        });
+                    }
+                    })
+                    console.log('new_data',new_data)
+                    that.setData({
+                        current_page:res.meta.pagination.current_page,
+                        [`list[${res.meta.pagination.current_page-1}]`]:new_data,
+                        length:res.data.length,
+                        total_pages:res.meta.pagination.total_pages,
+                    })
+                }else{
+                    wx.showToast({
+                        title:'获取砍价列表失败',
+                        icon: 'none',
+                        duration:2000
+                    })
+                }
             }
         })
     },
@@ -53,7 +72,7 @@ Page({
         
     },
     onReachBottom(){
-        if(this.data.length<this.data.limit){
+        if(this.data.current_page<this.data.total_pages){
             var the_limit=this.data.limit+10
             this.setData({
                 limit:the_limit

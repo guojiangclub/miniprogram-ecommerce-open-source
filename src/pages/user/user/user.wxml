@@ -44,6 +44,10 @@
                 <view>待评价</view>
                 <view class="position-num" wx:if="{{orderInfo.receiveCount}}">{{orderInfo.receiveCount}}</view>
             </view>
+            <view class="item"  bindtap="jumpAfterSales">
+                <view class="iconfont icon-shouhou"></view>
+                <view>售后</view>
+            </view>
         </view>
     </view>
     <view class="info-detail">
