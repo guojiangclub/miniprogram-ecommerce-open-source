@@ -3,7 +3,6 @@
  */
 import {config,pageLogin,getUrl,sandBox,cookieStorage} from '../../../lib/myapp.js';
 import Rater from '../../../component/rater/rater';
-
 Page({
     data: {
         status: {
