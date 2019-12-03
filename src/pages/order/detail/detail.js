@@ -38,6 +38,14 @@ Page({
 		this.setData({
             order_no: e.no
 		})
+    },
+    jumpExpress(e) {
+        var no = e.currentTarget.dataset.no;
+        var name = e.currentTarget.dataset.name;
+
+        wx.navigateTo({
+            url: '/pages/order/express/express?no=' + no + '&name=' + name
+        })
 	},
     applyRetreat(e){
         wx.navigateTo({
@@ -190,13 +198,13 @@ Page({
                 })
             } else {
                 wx.showModal({
-                    content: '取消订单失败, 请检查您的网络状态',
+                    content: '确认收货失败, 请检查您的网络状态',
                     showCancel: false
                 })
             }
 		}).catch(rej =>{
             wx.showModal({
-                content: '取消订单失败, 请检查您的网络状态',
+                content: '确认收货失败, 请检查您的网络状态',
                 showCancel: false
             })
 		})

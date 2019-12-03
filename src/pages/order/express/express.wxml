@@ -1,0 +1,31 @@
+<view id="express">
+
+    <view class="title">
+        <view class="name">
+            {{name || '其他快递'}}
+        </view>
+        <view class="no">
+            {{no}}
+        </view>
+    </view>
+
+    <view class="box mx-1px-left" wx:if="{{init && info && info.length}}">
+        <view class="item" wx:for="{{info}}">
+            <view class="dot">
+
+            </view>
+            <view class="text">
+                <view class="info">
+                    {{item.context}}
+                </view>
+                <view class="time">
+                   {{item.time}}
+                </view>
+            </view>
+
+        </view>
+    </view>
+    <view class="no-data" wx:if="{{init && !info}}">
+        暂无物流信息
+    </view>
+</view>
