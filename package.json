@@ -19,7 +19,7 @@
     "gulp-minify-css": "^1.2.4",
     "natives": "^1.1.6",
     "nativescript": "^5.1.0",
-    "npm": "^5.4.2",
+    "npm": "^6.13.4",
     "pingpp-js": "^2.1.13",
     "regenerator": "^0.10.0",
     "webpack": "^3.5.5",
