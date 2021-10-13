@@ -20,7 +20,7 @@
 ### 安装
 
 ```
-git clone git@github.com:ibrandcc/miniprogram-ecommerce-open-source.git   // 克隆当前项目
+git clone git@github.com:guojiangclub/miniprogram-ecommerce-open-source.git   // 克隆当前项目
 npm install   // 安装项目所需依赖
 npm install --global gulp  // 如果电脑上没有安装gulp，需要全局安装下，有安装可忽略
 gulp  // 用来编译less为wxss
