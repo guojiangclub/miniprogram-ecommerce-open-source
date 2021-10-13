@@ -1,3 +1,11 @@
+## 果酱小店小程序
+
+果酱小店是一个免费的开源电子商务解决方案，基于模块化开发，易扩展，可基于个性需求快速实现定制化需求，功能符合国内电商绝大部分使用场景。
+
+扫码体验小程序：
+
+![体验小店](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/miniprogramcode/ec.qrcode.png)
+
 ## 特性
 - 使用小程序原生语言开发，开发门槛低。
 - 使用gulp+webpack开发，编辑打包更方便。
@@ -12,7 +20,7 @@
 ### 安装
 
 ```
-git clone git@github.com:ibrandcc/miniprogram-ecommerce-open-source.git   // 克隆当前项目
+git clone git@github.com:guojiangclub/miniprogram-ecommerce-open-source.git   // 克隆当前项目
 npm install   // 安装项目所需依赖
 npm install --global gulp  // 如果电脑上没有安装gulp，需要全局安装下，有安装可忽略
 gulp  // 用来编译less为wxss
@@ -23,19 +31,16 @@ npm run build // 编译当前项目
 
 
 ## 功能清单
-[功能清单](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/iBrand%20%E5%BC%80%E6%BA%90%E7%94%B5%E5%95%86.png)
+[功能清单](https://cdn.guojiang.club/yl%E6%9E%9C%E9%85%B1%E5%B0%8F%E5%BA%97.jpg)
 
 ## 后端API
-[后端API](https://github.com/ibrandcc/ecommerce-open-api)
+[后端API](https://github.com/guojiangclub/ecommerce-open-api)
 
 ## 文档
-[iBrand 电商系统教程](https://www.ibrand.cc/open/article?course_id=7&chapter_id=21&article_id=22)
+[果酱小店开源电商系统教程](https://www.ibrand.cc/open/article?course_id=7&chapter_id=21&article_id=22)
 
+## 交流
 
-## 贡献源码
-该项目正在持续迭代更新中，如果你想参与到本项目中来，请提交 Pull Request !
+扫码添加[玖玖]，可获得“陈彼得”绝密编程资源以及25个副业赚钱思维。
 
-如果你发现任何错误或者问题，请提交到 [官方社区](https://www.ibrand.cc/open/discuss) 或者 [提交ISSUE](https://github.com/ibrandcc/miniprogram-ecommerce-open-source/issues)
-
-## 讨论交流
-![image](https://camo.githubusercontent.com/4106aa796a82cb22ace9134bf7f68574ea63dda2/68747470733a2f2f69796f796f2e6f73732d636e2d68616e677a686f752e616c6979756e63732e636f6d2f706f73742f2545342542412538432545372542422542342545372541302538312e6a7067)
+![玖玖|彼得助理 微信二维码](https://cdn.guojiang.club/xiaojunjunqyewx2.jpg)
