@@ -40,7 +40,7 @@ npm run build // 编译当前项目
 [功能清单](https://cdn.guojiang.club/yl%E6%9E%9C%E9%85%B1%E5%B0%8F%E5%BA%97.jpg)
 
 ## 后端API
-[后端API](https://gitee.com/guojiangclub/ecommerce-open-api)
+[后端API](https://github.com/guojiangclub/ecommerce-open-api)
 
 ## 文档
 [果酱小店开源电商系统教程](https://www.ibrand.cc/open/article?course_id=7&chapter_id=21&article_id=22)
