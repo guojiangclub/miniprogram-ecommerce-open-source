@@ -6,6 +6,12 @@
 
 ![体验小店](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/miniprogramcode/ec.qrcode.png)
 
+## 效果截图
+
+![果酱小店](https://cdn.guojiang.club/%E6%9E%9C%E9%85%B1%E5%B0%8F%E5%BA%971.jpg)
+
+![果酱小店](https://cdn.guojiang.club/%E6%9E%9C%E9%85%B1%E5%B0%8F%E5%BA%972.jpg)
+
 ## 特性
 - 使用小程序原生语言开发，开发门槛低。
 - 使用gulp+webpack开发，编辑打包更方便。
@@ -34,13 +40,13 @@ npm run build // 编译当前项目
 [功能清单](https://cdn.guojiang.club/yl%E6%9E%9C%E9%85%B1%E5%B0%8F%E5%BA%97.jpg)
 
 ## 后端API
-[后端API](https://github.com/guojiangclub/ecommerce-open-api)
+[后端API](https://gitee.com/guojiangclub/ecommerce-open-api)
 
 ## 文档
 [果酱小店开源电商系统教程](https://www.ibrand.cc/open/article?course_id=7&chapter_id=21&article_id=22)
 
 ## 交流
 
-扫码添加[玖玖]，可获得“陈彼得”绝密编程资源以及25个副业赚钱思维。
+扫码添加[玖玖|彼得助理]，可获得“陈彼得”为大家精心整理的程序员成长学习路线图，以及前端、Java、Linux、Python等编程学习资料，同时还教你25个副业赚钱思维。
 
 ![玖玖|彼得助理 微信二维码](https://cdn.guojiang.club/xiaojunjunqyewx2.jpg)
