@@ -35,7 +35,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "fs": "0.0.1-security",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-changed": "^3.2.0",
     "gulp-less": "^3.5.0",
     "gulp-notify": "^3.2.0",
