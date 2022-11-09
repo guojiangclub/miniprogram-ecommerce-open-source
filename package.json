@@ -14,7 +14,7 @@
     "babel": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-runtime": "^6.26.0",
-    "copy-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^4.6.0",
     "glob": "^7.1.2",
     "gulp-minify-css": "^1.2.4",
     "natives": "^1.1.6",
